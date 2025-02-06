@@ -1,3 +1,5 @@
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -110,6 +112,17 @@ public class loginform extends javax.swing.JFrame {
         password1.setForeground(new java.awt.Color(255, 255, 255));
         password1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         password1.setText("Dont have an account? Register");
+        password1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                password1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                password1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                password1MouseExited(evt);
+            }
+        });
         RightPanel.add(password1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 220, 30));
 
         password2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -136,6 +149,19 @@ public class loginform extends javax.swing.JFrame {
     private void usertextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usertextfieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_usertextfieldActionPerformed
+
+    private void password1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password1MouseClicked
+        new registrationform().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_password1MouseClicked
+
+    private void password1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password1MouseEntered
+        password1.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_password1MouseEntered
+
+    private void password1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_password1MouseExited
+        password1.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_password1MouseExited
 
     /**
      * @param args the command line arguments
