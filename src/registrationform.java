@@ -114,7 +114,7 @@ public class registrationform extends javax.swing.JFrame {
         school_id.setForeground(new java.awt.Color(255, 255, 255));
         school_id.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         school_id.setText("School ID");
-        RightPanel.add(school_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 90, 30));
+        RightPanel.add(school_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 80, 30));
 
         user_email.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_email.setForeground(new java.awt.Color(255, 255, 255));
@@ -132,7 +132,7 @@ public class registrationform extends javax.swing.JFrame {
         password.setForeground(new java.awt.Color(255, 255, 255));
         password.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         password.setText("Password");
-        RightPanel.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 90, 30));
+        RightPanel.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 70, 30));
 
         pass_textfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,7 +165,7 @@ public class registrationform extends javax.swing.JFrame {
         c_password.setForeground(new java.awt.Color(255, 255, 255));
         c_password.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         c_password.setText("Confirm Password");
-        RightPanel.add(c_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 130, 30));
+        RightPanel.add(c_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 150, 30));
 
         cp_textfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
