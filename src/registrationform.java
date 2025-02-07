@@ -27,20 +27,25 @@ public class registrationform extends javax.swing.JFrame {
     private void initComponents() {
 
         HeaderPanel = new javax.swing.JPanel();
-        Header = new javax.swing.JLabel();
+        header = new javax.swing.JLabel();
         LeftPanel = new javax.swing.JPanel();
-        login = new javax.swing.JLabel();
-        login1 = new javax.swing.JLabel();
-        login3 = new javax.swing.JLabel();
+        violationicon = new javax.swing.JLabel();
+        systemlabel = new javax.swing.JLabel();
+        studentlabel = new javax.swing.JLabel();
         RightPanel = new javax.swing.JPanel();
-        loginbutton = new javax.swing.JLabel();
-        usertextfield = new javax.swing.JTextField();
-        schoolid = new javax.swing.JLabel();
-        password2 = new javax.swing.JLabel();
-        login2 = new javax.swing.JLabel();
-        password3 = new javax.swing.JLabel();
-        passtextfield1 = new javax.swing.JPasswordField();
-        schoolidtextfield = new javax.swing.JTextField();
+        backbutton = new javax.swing.JLabel();
+        ue_textfield = new javax.swing.JTextField();
+        school_id = new javax.swing.JLabel();
+        user_email = new javax.swing.JLabel();
+        registerlabel = new javax.swing.JLabel();
+        password = new javax.swing.JLabel();
+        pass_textfield = new javax.swing.JPasswordField();
+        sid_textfield = new javax.swing.JTextField();
+        contact_n = new javax.swing.JLabel();
+        cn_textfield = new javax.swing.JTextField();
+        c_password = new javax.swing.JLabel();
+        cp_textfield = new javax.swing.JPasswordField();
+        registerbutton = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -48,106 +53,195 @@ public class registrationform extends javax.swing.JFrame {
         HeaderPanel.setBackground(new java.awt.Color(255, 255, 255));
         HeaderPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        Header.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ifoto-ai_1738725918062.png"))); // NOI18N
-        HeaderPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 130));
+        header.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ifoto-ai_1738932128599.png"))); // NOI18N
+        HeaderPanel.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 130));
 
-        getContentPane().add(HeaderPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 130));
+        getContentPane().add(HeaderPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 130));
 
         LeftPanel.setBackground(new java.awt.Color(0, 0, 0));
         LeftPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        login.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        login.setForeground(new java.awt.Color(255, 255, 255));
-        login.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        login.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/violation-logo-860-16424 (1).png"))); // NOI18N
-        LeftPanel.add(login, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 225, 90));
+        violationicon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        violationicon.setForeground(new java.awt.Color(255, 255, 255));
+        violationicon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        violationicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/violation-logo-860-16424 (1).png"))); // NOI18N
+        LeftPanel.add(violationicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 225, 90));
 
-        login1.setFont(new java.awt.Font("Copperplate Gothic Bold", 3, 28)); // NOI18N
-        login1.setForeground(new java.awt.Color(255, 255, 255));
-        login1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        login1.setText("System");
-        LeftPanel.add(login1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 140, 30));
+        systemlabel.setFont(new java.awt.Font("Copperplate Gothic Bold", 3, 28)); // NOI18N
+        systemlabel.setForeground(new java.awt.Color(255, 255, 255));
+        systemlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        systemlabel.setText("System");
+        LeftPanel.add(systemlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 140, 30));
 
-        login3.setFont(new java.awt.Font("Copperplate Gothic Bold", 3, 30)); // NOI18N
-        login3.setForeground(new java.awt.Color(255, 255, 255));
-        login3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        login3.setText("Student");
-        LeftPanel.add(login3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 160, 40));
+        studentlabel.setFont(new java.awt.Font("Copperplate Gothic Bold", 3, 30)); // NOI18N
+        studentlabel.setForeground(new java.awt.Color(255, 255, 255));
+        studentlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        studentlabel.setText("Student");
+        LeftPanel.add(studentlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 160, 40));
 
         getContentPane().add(LeftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 250, 220));
 
         RightPanel.setBackground(new java.awt.Color(204, 0, 0));
         RightPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        loginbutton.setBackground(new java.awt.Color(255, 255, 255));
-        loginbutton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        loginbutton.setForeground(new java.awt.Color(255, 255, 255));
-        loginbutton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        loginbutton.setText("Register");
-        loginbutton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        RightPanel.add(loginbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 90, 30));
-
-        usertextfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usertextfieldActionPerformed(evt);
+        backbutton.setBackground(new java.awt.Color(255, 255, 255));
+        backbutton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backbutton.setForeground(new java.awt.Color(255, 255, 255));
+        backbutton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backbutton.setText("Back");
+        backbutton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        backbutton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                backbuttonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backbuttonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backbuttonMouseExited(evt);
             }
         });
-        RightPanel.add(usertextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 220, -1));
+        RightPanel.add(backbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 90, 30));
 
-        schoolid.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        schoolid.setForeground(new java.awt.Color(255, 255, 255));
-        schoolid.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        schoolid.setText("School ID");
-        RightPanel.add(schoolid, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 90, 30));
-
-        password2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        password2.setForeground(new java.awt.Color(255, 255, 255));
-        password2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        password2.setText("Username");
-        RightPanel.add(password2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 90, 30));
-
-        login2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        login2.setForeground(new java.awt.Color(255, 255, 255));
-        login2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        login2.setText("REGISTER");
-        RightPanel.add(login2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 110, 30));
-
-        password3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        password3.setForeground(new java.awt.Color(255, 255, 255));
-        password3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        password3.setText("Password");
-        RightPanel.add(password3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 90, 30));
-
-        passtextfield1.addActionListener(new java.awt.event.ActionListener() {
+        ue_textfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passtextfield1ActionPerformed(evt);
+                ue_textfieldActionPerformed(evt);
             }
         });
-        RightPanel.add(passtextfield1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 220, -1));
+        RightPanel.add(ue_textfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 220, -1));
 
-        schoolidtextfield.addActionListener(new java.awt.event.ActionListener() {
+        school_id.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        school_id.setForeground(new java.awt.Color(255, 255, 255));
+        school_id.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        school_id.setText("School ID");
+        RightPanel.add(school_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 90, 30));
+
+        user_email.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_email.setForeground(new java.awt.Color(255, 255, 255));
+        user_email.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_email.setText("Username/Email");
+        RightPanel.add(user_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 130, 30));
+
+        registerlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        registerlabel.setForeground(new java.awt.Color(255, 255, 255));
+        registerlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        registerlabel.setText("REGISTER");
+        RightPanel.add(registerlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 110, 30));
+
+        password.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        password.setForeground(new java.awt.Color(255, 255, 255));
+        password.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        password.setText("Password");
+        RightPanel.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 90, 30));
+
+        pass_textfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                schoolidtextfieldActionPerformed(evt);
+                pass_textfieldActionPerformed(evt);
             }
         });
-        RightPanel.add(schoolidtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 220, -1));
+        RightPanel.add(pass_textfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 220, -1));
 
-        getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 250, 220));
+        sid_textfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sid_textfieldActionPerformed(evt);
+            }
+        });
+        RightPanel.add(sid_textfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 220, -1));
+
+        contact_n.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        contact_n.setForeground(new java.awt.Color(255, 255, 255));
+        contact_n.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        contact_n.setText("Contact Number");
+        RightPanel.add(contact_n, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 110, 30));
+
+        cn_textfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cn_textfieldActionPerformed(evt);
+            }
+        });
+        RightPanel.add(cn_textfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 220, -1));
+
+        c_password.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        c_password.setForeground(new java.awt.Color(255, 255, 255));
+        c_password.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        c_password.setText("Confirm Password");
+        RightPanel.add(c_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 130, 30));
+
+        cp_textfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cp_textfieldActionPerformed(evt);
+            }
+        });
+        RightPanel.add(cp_textfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 220, -1));
+
+        registerbutton.setBackground(new java.awt.Color(255, 255, 255));
+        registerbutton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        registerbutton.setForeground(new java.awt.Color(255, 255, 255));
+        registerbutton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        registerbutton.setText("Register");
+        registerbutton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        registerbutton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registerbuttonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                registerbuttonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                registerbuttonMouseExited(evt);
+            }
+        });
+        RightPanel.add(registerbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 90, 30));
+
+        getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 250, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void usertextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usertextfieldActionPerformed
+    private void ue_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ue_textfieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usertextfieldActionPerformed
+    }//GEN-LAST:event_ue_textfieldActionPerformed
 
-    private void passtextfield1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passtextfield1ActionPerformed
+    private void pass_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pass_textfieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_passtextfield1ActionPerformed
+    }//GEN-LAST:event_pass_textfieldActionPerformed
 
-    private void schoolidtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_schoolidtextfieldActionPerformed
+    private void sid_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sid_textfieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_schoolidtextfieldActionPerformed
+    }//GEN-LAST:event_sid_textfieldActionPerformed
+
+    private void cn_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cn_textfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cn_textfieldActionPerformed
+
+    private void cp_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cp_textfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cp_textfieldActionPerformed
+
+    private void backbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backbuttonMouseClicked
+        new loginform().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_backbuttonMouseClicked
+
+    private void backbuttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backbuttonMouseEntered
+        backbutton.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_backbuttonMouseEntered
+
+    private void backbuttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backbuttonMouseExited
+        backbutton.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_backbuttonMouseExited
+
+    private void registerbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerbuttonMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_registerbuttonMouseClicked
+
+    private void registerbuttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerbuttonMouseEntered
+        registerbutton.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_registerbuttonMouseEntered
+
+    private void registerbuttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerbuttonMouseExited
+        registerbutton.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_registerbuttonMouseExited
 
     /**
      * @param args the command line arguments
@@ -185,20 +279,25 @@ public class registrationform extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Header;
     private javax.swing.JPanel HeaderPanel;
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
-    private javax.swing.JLabel login;
-    private javax.swing.JLabel login1;
-    private javax.swing.JLabel login2;
-    private javax.swing.JLabel login3;
-    private javax.swing.JLabel loginbutton;
-    private javax.swing.JPasswordField passtextfield1;
-    private javax.swing.JLabel password2;
-    private javax.swing.JLabel password3;
-    private javax.swing.JLabel schoolid;
-    private javax.swing.JTextField schoolidtextfield;
-    private javax.swing.JTextField usertextfield;
+    private javax.swing.JLabel backbutton;
+    private javax.swing.JLabel c_password;
+    private javax.swing.JTextField cn_textfield;
+    private javax.swing.JLabel contact_n;
+    private javax.swing.JPasswordField cp_textfield;
+    private javax.swing.JLabel header;
+    private javax.swing.JPasswordField pass_textfield;
+    private javax.swing.JLabel password;
+    private javax.swing.JLabel registerbutton;
+    private javax.swing.JLabel registerlabel;
+    private javax.swing.JLabel school_id;
+    private javax.swing.JTextField sid_textfield;
+    private javax.swing.JLabel studentlabel;
+    private javax.swing.JLabel systemlabel;
+    private javax.swing.JTextField ue_textfield;
+    private javax.swing.JLabel user_email;
+    private javax.swing.JLabel violationicon;
     // End of variables declaration//GEN-END:variables
 }
