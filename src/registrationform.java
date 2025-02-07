@@ -193,7 +193,7 @@ public class registrationform extends javax.swing.JFrame {
         });
         RightPanel.add(registerbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 90, 30));
 
-        getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 250, 350));
+        getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 260, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
