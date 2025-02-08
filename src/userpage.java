@@ -15,7 +15,7 @@ import net.proteanit.sql.DbUtils;
 public class userpage extends javax.swing.JFrame {
 
     /**
-     * Creates new form userpage
+     * 
      */
     public userpage() {
         initComponents();
@@ -47,7 +47,6 @@ public class userpage extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         user_table = new javax.swing.JTable();
         refresh = new javax.swing.JLabel();
-        edit = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -56,7 +55,7 @@ public class userpage extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 500));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         user_table.setModel(new javax.swing.table.DefaultTableModel(
@@ -72,7 +71,7 @@ public class userpage extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(user_table);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 640, 350));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 660, 350));
 
         refresh.setBackground(new java.awt.Color(255, 102, 102));
         refresh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -90,25 +89,7 @@ public class userpage extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        jPanel2.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 90, 30));
-
-        edit.setBackground(new java.awt.Color(255, 102, 102));
-        edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        edit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        edit.setText("EDIT");
-        edit.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        edit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                editMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                editMouseExited(evt);
-            }
-        });
-        jPanel2.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 90, 30));
+        jPanel2.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 90, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 660, 500));
 
@@ -126,18 +107,6 @@ public class userpage extends javax.swing.JFrame {
     private void refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseClicked
         displayData();
     }//GEN-LAST:event_refreshMouseClicked
-
-    private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-        
-    }//GEN-LAST:event_editMouseClicked
-
-    private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
-        edit.setForeground(new java.awt.Color(255, 102, 102));
-    }//GEN-LAST:event_editMouseEntered
-
-    private void editMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseExited
-        edit.setForeground(new java.awt.Color(0, 0, 0));
-    }//GEN-LAST:event_editMouseExited
 
     /**
      * @param args the command line arguments
@@ -175,7 +144,6 @@ public class userpage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel edit;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

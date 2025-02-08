@@ -1,4 +1,12 @@
 
+import config.dbConnector;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
+
 
 
 
@@ -90,6 +98,9 @@ public class loginform extends javax.swing.JFrame {
         loginbutton.setText("Log in");
         loginbutton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         loginbutton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loginbuttonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 loginbuttonMouseEntered(evt);
             }
@@ -184,6 +195,50 @@ public class loginform extends javax.swing.JFrame {
     private void loginbuttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginbuttonMouseExited
         loginbutton.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_loginbuttonMouseExited
+
+    private void loginbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginbuttonMouseClicked
+        String user_email = usertextfield.getText();
+        String user_password = new String(passtextfield.getPassword());
+
+        if (user_email.isEmpty() || user_password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter both email and password.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String sql = "SELECT * FROM user_table WHERE user_email = ? AND user_password = ?";
+
+        dbConnector db = new dbConnector(); // Create an instance of dbConnector
+
+        try (Connection conn = db.getConnection();  // Get connection from dbConnector
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+
+            pst.setString(1, user_email);
+            pst.setString(2, user_password);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                String user_type = rs.getString("user_type");
+
+                if (user_type.equals("Admin")) {
+                    adminpage admin = new adminpage();
+                    admin.setVisible(true);
+                } else {
+                    userpage user = new userpage();
+                    user.setVisible(true);
+                }
+
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Incorrect username or password.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_loginbuttonMouseClicked
 
     /**
      * @param args the command line arguments

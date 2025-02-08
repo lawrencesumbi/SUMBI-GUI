@@ -1,18 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package config;
 
 import java.sql.*;
-/**
- *
- * @author Admin
- */
+
 public class dbConnector {
  
-    private Connection connect;
+    public Connection connect;
     
     public dbConnector(){
         try{
@@ -22,10 +14,14 @@ public class dbConnector {
         }
     } 
     
-    public ResultSet getData(String sql)throws SQLException{       
+    public ResultSet getData(String sql)throws SQLException{
         Statement stmt = connect.createStatement();
         ResultSet rst = stmt.executeQuery(sql);       
         return rst;        
+    }
+    
+    public Connection getConnection() {
+        return connect;
     }
 
 }
