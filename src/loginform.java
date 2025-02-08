@@ -1,5 +1,8 @@
 
 
+
+
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -96,19 +99,21 @@ public class loginform extends javax.swing.JFrame {
         });
         RightPanel.add(loginbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 90, 30));
 
+        usertextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         usertextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 usertextfieldActionPerformed(evt);
             }
         });
-        RightPanel.add(usertextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 220, -1));
+        RightPanel.add(usertextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 200, -1));
 
+        passtextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         passtextfield.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passtextfieldActionPerformed(evt);
             }
         });
-        RightPanel.add(passtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 220, -1));
+        RightPanel.add(passtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 200, -1));
 
         username.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         username.setForeground(new java.awt.Color(255, 255, 255));
@@ -159,7 +164,8 @@ public class loginform extends javax.swing.JFrame {
     }//GEN-LAST:event_usertextfieldActionPerformed
 
     private void donthaveaccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_donthaveaccMouseClicked
-        new registrationform().setVisible(true);
+        registrationform rf = new registrationform();
+        rf.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_donthaveaccMouseClicked
 

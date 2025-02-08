@@ -6,13 +6,12 @@
 package config;
 
 import java.sql.*;
-
 /**
  *
  * @author Admin
  */
 public class dbConnector {
-    
+ 
     private Connection connect;
     
     public dbConnector(){
@@ -27,6 +26,6 @@ public class dbConnector {
         Statement stmt = connect.createStatement();
         ResultSet rst = stmt.executeQuery(sql);       
         return rst;        
-    }   
-        
+    }
+
 }

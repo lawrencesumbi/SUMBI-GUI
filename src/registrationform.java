@@ -1,3 +1,12 @@
+
+
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,6 +25,8 @@ public class registrationform extends javax.swing.JFrame {
     public registrationform() {
         initComponents();
     }
+    
+    public String action;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,18 +45,18 @@ public class registrationform extends javax.swing.JFrame {
         studentlabel = new javax.swing.JLabel();
         RightPanel = new javax.swing.JPanel();
         backbutton = new javax.swing.JLabel();
-        ue_textfield = new javax.swing.JTextField();
-        school_id = new javax.swing.JLabel();
-        user_email = new javax.swing.JLabel();
+        emailTextField = new javax.swing.JTextField();
+        user_emaillabel = new javax.swing.JLabel();
         registerlabel = new javax.swing.JLabel();
-        password = new javax.swing.JLabel();
-        pass_textfield = new javax.swing.JPasswordField();
-        sid_textfield = new javax.swing.JTextField();
-        contact_n = new javax.swing.JLabel();
-        cn_textfield = new javax.swing.JTextField();
-        c_password = new javax.swing.JLabel();
-        cp_textfield = new javax.swing.JPasswordField();
+        user_passwordlabel = new javax.swing.JLabel();
+        passwordField = new javax.swing.JPasswordField();
+        user_fnamelabel = new javax.swing.JLabel();
+        fullNameTextField = new javax.swing.JTextField();
         registerbutton = new javax.swing.JLabel();
+        user_cnumberlabel = new javax.swing.JLabel();
+        contactNumberTextField = new javax.swing.JTextField();
+        user_typelabel = new javax.swing.JLabel();
+        userTypeComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -103,24 +114,19 @@ public class registrationform extends javax.swing.JFrame {
         });
         RightPanel.add(backbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 90, 30));
 
-        ue_textfield.addActionListener(new java.awt.event.ActionListener() {
+        emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        emailTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ue_textfieldActionPerformed(evt);
+                emailTextFieldActionPerformed(evt);
             }
         });
-        RightPanel.add(ue_textfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 220, -1));
+        RightPanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 200, -1));
 
-        school_id.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        school_id.setForeground(new java.awt.Color(255, 255, 255));
-        school_id.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        school_id.setText("School ID");
-        RightPanel.add(school_id, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 80, 30));
-
-        user_email.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        user_email.setForeground(new java.awt.Color(255, 255, 255));
-        user_email.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_email.setText("Username/Email");
-        RightPanel.add(user_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 130, 30));
+        user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
+        user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_emaillabel.setText("Username/Email");
+        RightPanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 130, 30));
 
         registerlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         registerlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -128,51 +134,33 @@ public class registrationform extends javax.swing.JFrame {
         registerlabel.setText("REGISTER");
         RightPanel.add(registerlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 110, 30));
 
-        password.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        password.setForeground(new java.awt.Color(255, 255, 255));
-        password.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        password.setText("Password");
-        RightPanel.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 70, 30));
+        user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
+        user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_passwordlabel.setText("Password");
+        RightPanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 70, 30));
 
-        pass_textfield.addActionListener(new java.awt.event.ActionListener() {
+        passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pass_textfieldActionPerformed(evt);
+                passwordFieldActionPerformed(evt);
             }
         });
-        RightPanel.add(pass_textfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 220, -1));
+        RightPanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 200, -1));
 
-        sid_textfield.addActionListener(new java.awt.event.ActionListener() {
+        user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
+        user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_fnamelabel.setText("Full Name");
+        RightPanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 30, 110, 30));
+
+        fullNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        fullNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sid_textfieldActionPerformed(evt);
+                fullNameTextFieldActionPerformed(evt);
             }
         });
-        RightPanel.add(sid_textfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 220, -1));
-
-        contact_n.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        contact_n.setForeground(new java.awt.Color(255, 255, 255));
-        contact_n.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        contact_n.setText("Contact Number");
-        RightPanel.add(contact_n, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 110, 30));
-
-        cn_textfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cn_textfieldActionPerformed(evt);
-            }
-        });
-        RightPanel.add(cn_textfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 220, -1));
-
-        c_password.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        c_password.setForeground(new java.awt.Color(255, 255, 255));
-        c_password.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        c_password.setText("Confirm Password");
-        RightPanel.add(c_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 150, 30));
-
-        cp_textfield.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cp_textfieldActionPerformed(evt);
-            }
-        });
-        RightPanel.add(cp_textfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 220, -1));
+        RightPanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 200, -1));
 
         registerbutton.setBackground(new java.awt.Color(255, 255, 255));
         registerbutton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -193,30 +181,51 @@ public class registrationform extends javax.swing.JFrame {
         });
         RightPanel.add(registerbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 90, 30));
 
+        user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
+        user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_cnumberlabel.setText("Contact Number");
+        RightPanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 110, 30));
+
+        contactNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        contactNumberTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contactNumberTextFieldActionPerformed(evt);
+            }
+        });
+        RightPanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 200, -1));
+
+        user_typelabel.setBackground(new java.awt.Color(255, 255, 255));
+        user_typelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_typelabel.setForeground(new java.awt.Color(255, 255, 255));
+        user_typelabel.setText("User Type");
+        RightPanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 70, -1));
+
+        userTypeComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        userTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
+        userTypeComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userTypeComboBoxActionPerformed(evt);
+            }
+        });
+        RightPanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 200, -1));
+
         getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 260, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ue_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ue_textfieldActionPerformed
+    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ue_textfieldActionPerformed
+    }//GEN-LAST:event_emailTextFieldActionPerformed
 
-    private void pass_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pass_textfieldActionPerformed
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_pass_textfieldActionPerformed
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
-    private void sid_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sid_textfieldActionPerformed
+    private void fullNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullNameTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_sid_textfieldActionPerformed
-
-    private void cn_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cn_textfieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cn_textfieldActionPerformed
-
-    private void cp_textfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cp_textfieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cp_textfieldActionPerformed
+    }//GEN-LAST:event_fullNameTextFieldActionPerformed
 
     private void backbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backbuttonMouseClicked
         new loginform().setVisible(true);
@@ -232,7 +241,51 @@ public class registrationform extends javax.swing.JFrame {
     }//GEN-LAST:event_backbuttonMouseExited
 
     private void registerbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerbuttonMouseClicked
-        // TODO add your handling code here:
+        String user_fname = fullNameTextField.getText();
+        String user_cnumber = contactNumberTextField.getText();
+        String user_email = emailTextField.getText();
+        String user_password = new String(passwordField.getPassword());
+        String user_type = userTypeComboBox.getSelectedItem().toString();
+
+        if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty() || user_password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+        
+        try {
+          
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+      
+            String sql = "INSERT INTO user_table (user_fname, user_cnumber, user_email, user_password, user_type) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            
+            pstmt.setString(1, user_fname);
+            pstmt.setString(2, user_cnumber);
+            pstmt.setString(3, user_email);
+            pstmt.setString(4, user_password);
+            pstmt.setString(5, user_type);
+
+
+            int rowsInserted = pstmt.executeUpdate();
+            if (rowsInserted > 0) {
+                JOptionPane.showMessageDialog(this, "Registration Successful!");
+                this.dispose();
+                new loginform().setVisible(true);
+            }
+
+
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_registerbuttonMouseClicked
 
     private void registerbuttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerbuttonMouseEntered
@@ -242,6 +295,14 @@ public class registrationform extends javax.swing.JFrame {
     private void registerbuttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerbuttonMouseExited
         registerbutton.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_registerbuttonMouseExited
+
+    private void contactNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactNumberTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contactNumberTextFieldActionPerformed
+
+    private void userTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userTypeComboBoxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,21 +344,21 @@ public class registrationform extends javax.swing.JFrame {
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
     private javax.swing.JLabel backbutton;
-    private javax.swing.JLabel c_password;
-    private javax.swing.JTextField cn_textfield;
-    private javax.swing.JLabel contact_n;
-    private javax.swing.JPasswordField cp_textfield;
+    private javax.swing.JTextField contactNumberTextField;
+    private javax.swing.JTextField emailTextField;
+    private javax.swing.JTextField fullNameTextField;
     private javax.swing.JLabel header;
-    private javax.swing.JPasswordField pass_textfield;
-    private javax.swing.JLabel password;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel registerbutton;
     private javax.swing.JLabel registerlabel;
-    private javax.swing.JLabel school_id;
-    private javax.swing.JTextField sid_textfield;
     private javax.swing.JLabel studentlabel;
     private javax.swing.JLabel systemlabel;
-    private javax.swing.JTextField ue_textfield;
-    private javax.swing.JLabel user_email;
+    private javax.swing.JComboBox<String> userTypeComboBox;
+    private javax.swing.JLabel user_cnumberlabel;
+    private javax.swing.JLabel user_emaillabel;
+    private javax.swing.JLabel user_fnamelabel;
+    private javax.swing.JLabel user_passwordlabel;
+    private javax.swing.JLabel user_typelabel;
     private javax.swing.JLabel violationicon;
     // End of variables declaration//GEN-END:variables
 }
