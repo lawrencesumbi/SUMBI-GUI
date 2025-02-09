@@ -24,7 +24,8 @@ public class registrationform extends javax.swing.JFrame {
     public registrationform() {
         initComponents();
     }
-      
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,6 +56,8 @@ public class registrationform extends javax.swing.JFrame {
         contactNumberTextField = new javax.swing.JTextField();
         user_typelabel = new javax.swing.JLabel();
         userTypeComboBox = new javax.swing.JComboBox<>();
+        cn_error = new javax.swing.JLabel();
+        pass_error = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -124,7 +127,7 @@ public class registrationform extends javax.swing.JFrame {
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_emaillabel.setText("Email");
-        RightPanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 60, 30));
+        RightPanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 60, 20));
 
         registerlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         registerlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,7 +139,7 @@ public class registrationform extends javax.swing.JFrame {
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel.setText("Password");
-        RightPanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 70, 30));
+        RightPanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 70, 20));
 
         passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -150,7 +153,7 @@ public class registrationform extends javax.swing.JFrame {
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel.setText("Full Name");
-        RightPanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 30, 110, 30));
+        RightPanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 90, -1));
 
         fullNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         fullNameTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -183,12 +186,20 @@ public class registrationform extends javax.swing.JFrame {
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_cnumberlabel.setText("Contact Number");
-        RightPanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 110, 30));
+        RightPanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 110, -1));
 
         contactNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         contactNumberTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 contactNumberTextFieldActionPerformed(evt);
+            }
+        });
+        contactNumberTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                contactNumberTextFieldKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                contactNumberTextFieldKeyReleased(evt);
             }
         });
         RightPanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 200, -1));
@@ -197,7 +208,7 @@ public class registrationform extends javax.swing.JFrame {
         user_typelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_typelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_typelabel.setText("User Type");
-        RightPanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 70, -1));
+        RightPanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 70, 20));
 
         userTypeComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         userTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
@@ -208,7 +219,22 @@ public class registrationform extends javax.swing.JFrame {
         });
         RightPanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 200, -1));
 
-        getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 260, 360));
+        cn_error.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cn_error.setForeground(new java.awt.Color(255, 255, 0));
+        cn_error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        RightPanel.add(cn_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 100, 20));
+
+        pass_error.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        pass_error.setForeground(new java.awt.Color(255, 255, 0));
+        pass_error.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pass_error.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                pass_errorKeyReleased(evt);
+            }
+        });
+        RightPanel.add(pass_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 100, 20));
+
+        getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 250, 360));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -247,6 +273,16 @@ public class registrationform extends javax.swing.JFrame {
 
         if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty() || user_password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if(!user_cnumber.matches("\\d+")){
+            JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if(user_password.length()<8){
+            JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
@@ -295,12 +331,34 @@ public class registrationform extends javax.swing.JFrame {
     }//GEN-LAST:event_registerbuttonMouseExited
 
     private void contactNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactNumberTextFieldActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_contactNumberTextFieldActionPerformed
 
     private void userTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userTypeComboBoxActionPerformed
+
+    private void contactNumberTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactNumberTextFieldKeyReleased
+        String user_cnumber = contactNumberTextField.getText();
+        if(!user_cnumber.matches("\\d+")){
+            cn_error.setText("must be digit!");
+        }else{
+            cn_error.setText(null);
+        }
+    }//GEN-LAST:event_contactNumberTextFieldKeyReleased
+
+    private void contactNumberTextFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_contactNumberTextFieldKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contactNumberTextFieldKeyPressed
+
+    private void pass_errorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pass_errorKeyReleased
+        String user_password = passwordField.getText();
+        if(user_password.length()<8){
+            pass_error.setText("at least 8 characters!");
+        }else{
+            pass_error.setText(null);
+        }
+    }//GEN-LAST:event_pass_errorKeyReleased
 
     /**
      * @param args the command line arguments
@@ -342,10 +400,12 @@ public class registrationform extends javax.swing.JFrame {
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
     private javax.swing.JLabel backbutton;
+    private javax.swing.JLabel cn_error;
     private javax.swing.JTextField contactNumberTextField;
     private javax.swing.JTextField emailTextField;
     private javax.swing.JTextField fullNameTextField;
     private javax.swing.JLabel header;
+    private javax.swing.JLabel pass_error;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel registerbutton;
     private javax.swing.JLabel registerlabel;

@@ -108,6 +108,11 @@ public class loginform extends javax.swing.JFrame {
                 loginbuttonMouseExited(evt);
             }
         });
+        loginbutton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                loginbuttonKeyPressed(evt);
+            }
+        });
         RightPanel.add(loginbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 90, 30));
 
         usertextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -130,7 +135,7 @@ public class loginform extends javax.swing.JFrame {
         username.setForeground(new java.awt.Color(255, 255, 255));
         username.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         username.setText("Email");
-        RightPanel.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 60, 30));
+        RightPanel.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 60, 20));
 
         donthaveacc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         donthaveacc.setForeground(new java.awt.Color(255, 255, 255));
@@ -153,7 +158,7 @@ public class loginform extends javax.swing.JFrame {
         password.setForeground(new java.awt.Color(255, 255, 255));
         password.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         password.setText("Password");
-        RightPanel.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 90, 30));
+        RightPanel.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 90, 20));
 
         loginlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         loginlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -239,6 +244,10 @@ public class loginform extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_loginbuttonMouseClicked
+
+    private void loginbuttonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginbuttonKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginbuttonKeyPressed
 
     /**
      * @param args the command line arguments
