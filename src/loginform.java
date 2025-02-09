@@ -129,8 +129,8 @@ public class loginform extends javax.swing.JFrame {
         username.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         username.setForeground(new java.awt.Color(255, 255, 255));
         username.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        username.setText("Username");
-        RightPanel.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 90, 30));
+        username.setText("Email");
+        RightPanel.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 60, 30));
 
         donthaveacc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         donthaveacc.setForeground(new java.awt.Color(255, 255, 255));

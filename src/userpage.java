@@ -6,7 +6,6 @@
 import config.dbConnector;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 /**
  *
@@ -19,18 +18,7 @@ public class userpage extends javax.swing.JFrame {
      */
     public userpage() {
         initComponents();
-        displayData();
-    }
-
-    public void displayData(){
-        try{
-            dbConnector dbc = new dbConnector();
-            ResultSet rs = dbc.getData("SELECT * FROM user_table");
-            user_table.setModel(DbUtils.resultSetToTableModel(rs));
-            
-        }catch(SQLException ex){
-            System.out.println("Errors"+ex.getMessage());
-        }
+        
     }
     
     /**
@@ -42,71 +30,93 @@ public class userpage extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        user_table = new javax.swing.JTable();
-        refresh = new javax.swing.JLabel();
+        leftpanel = new javax.swing.JPanel();
+        logout = new javax.swing.JLabel();
+        icon = new javax.swing.JLabel();
+        violation = new javax.swing.JLabel();
+        student = new javax.swing.JLabel();
+        record = new javax.swing.JLabel();
+        dashboard = new javax.swing.JLabel();
+        user_cnumber = new javax.swing.JLabel();
+        user_fname = new javax.swing.JLabel();
+        user_email = new javax.swing.JLabel();
+        user_type = new javax.swing.JLabel();
+        userspanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 102, 102));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 500));
+        leftpanel.setBackground(new java.awt.Color(0, 0, 0));
+        leftpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(204, 204, 204));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        logout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        logout.setForeground(new java.awt.Color(255, 255, 255));
+        logout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logout.setText("LOG OUT");
+        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 140, 50));
 
-        user_table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(user_table);
+        icon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        icon.setForeground(new java.awt.Color(255, 255, 255));
+        icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/117891351.png"))); // NOI18N
+        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 80, 80));
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 660, 350));
+        violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        violation.setForeground(new java.awt.Color(255, 255, 255));
+        violation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        violation.setText("VIOLATION");
+        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 140, 50));
 
-        refresh.setBackground(new java.awt.Color(255, 102, 102));
-        refresh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        refresh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        refresh.setText("REFESH");
-        refresh.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        refresh.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                refreshMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                refreshMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                refreshMouseExited(evt);
-            }
-        });
-        jPanel2.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 90, 30));
+        student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        student.setForeground(new java.awt.Color(255, 255, 255));
+        student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        student.setText("STUDENT");
+        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 140, 50));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 660, 500));
+        record.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        record.setForeground(new java.awt.Color(255, 255, 255));
+        record.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        record.setText("RECORD");
+        leftpanel.add(record, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 140, 50));
+
+        dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        dashboard.setForeground(new java.awt.Color(255, 255, 255));
+        dashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dashboard.setText("DASHBOARD");
+        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 140, 50));
+
+        user_cnumber.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        user_cnumber.setForeground(new java.awt.Color(255, 255, 255));
+        user_cnumber.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_cnumber.setText("Contact Number");
+        leftpanel.add(user_cnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 100, -1));
+
+        user_fname.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        user_fname.setForeground(new java.awt.Color(255, 255, 255));
+        user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_fname.setText("Fullname");
+        leftpanel.add(user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
+
+        user_email.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        user_email.setForeground(new java.awt.Color(255, 255, 255));
+        user_email.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_email.setText("Email Account");
+        leftpanel.add(user_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 100, -1));
+
+        user_type.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        user_type.setForeground(new java.awt.Color(255, 255, 255));
+        user_type.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_type.setText("UserType");
+        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 150, 70, -1));
+
+        getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 500));
+
+        userspanel.setBackground(new java.awt.Color(204, 0, 0));
+        userspanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 660, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseEntered
-        refresh.setForeground(new java.awt.Color(255, 102, 102));
-    }//GEN-LAST:event_refreshMouseEntered
-
-    private void refreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseExited
-        refresh.setForeground(new java.awt.Color(0, 0, 0));
-    }//GEN-LAST:event_refreshMouseExited
-
-    private void refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseClicked
-        displayData();
-    }//GEN-LAST:event_refreshMouseClicked
 
     /**
      * @param args the command line arguments
@@ -144,10 +154,17 @@ public class userpage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel refresh;
-    private javax.swing.JTable user_table;
+    private javax.swing.JLabel dashboard;
+    private javax.swing.JLabel icon;
+    private javax.swing.JPanel leftpanel;
+    private javax.swing.JLabel logout;
+    private javax.swing.JLabel record;
+    private javax.swing.JLabel student;
+    private javax.swing.JLabel user_cnumber;
+    private javax.swing.JLabel user_email;
+    private javax.swing.JLabel user_fname;
+    private javax.swing.JLabel user_type;
+    private javax.swing.JPanel userspanel;
+    private javax.swing.JLabel violation;
     // End of variables declaration//GEN-END:variables
 }

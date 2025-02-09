@@ -1,6 +1,5 @@
 
 
-import javax.swing.JOptionPane;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,8 +24,7 @@ public class registrationform extends javax.swing.JFrame {
     public registrationform() {
         initComponents();
     }
-    
-    public String action;
+      
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -64,7 +62,7 @@ public class registrationform extends javax.swing.JFrame {
         HeaderPanel.setBackground(new java.awt.Color(255, 255, 255));
         HeaderPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        header.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ifoto-ai_1738932128599.png"))); // NOI18N
+        header.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ifoto-ai_17389321285991.png"))); // NOI18N
         HeaderPanel.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 130));
 
         getContentPane().add(HeaderPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 130));
@@ -90,7 +88,7 @@ public class registrationform extends javax.swing.JFrame {
         studentlabel.setText("Student");
         LeftPanel.add(studentlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 160, 40));
 
-        getContentPane().add(LeftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 250, 220));
+        getContentPane().add(LeftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 250, 230));
 
         RightPanel.setBackground(new java.awt.Color(204, 0, 0));
         RightPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -112,7 +110,7 @@ public class registrationform extends javax.swing.JFrame {
                 backbuttonMouseExited(evt);
             }
         });
-        RightPanel.add(backbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 90, 30));
+        RightPanel.add(backbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 90, 30));
 
         emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         emailTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -125,14 +123,14 @@ public class registrationform extends javax.swing.JFrame {
         user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_emaillabel.setText("Username/Email");
-        RightPanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 130, 30));
+        user_emaillabel.setText("Email");
+        RightPanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 60, 30));
 
         registerlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         registerlabel.setForeground(new java.awt.Color(255, 255, 255));
         registerlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         registerlabel.setText("REGISTER");
-        RightPanel.add(registerlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 110, 30));
+        RightPanel.add(registerlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 110, 40));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -179,7 +177,7 @@ public class registrationform extends javax.swing.JFrame {
                 registerbuttonMouseExited(evt);
             }
         });
-        RightPanel.add(registerbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 90, 30));
+        RightPanel.add(registerbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 90, 30));
 
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -210,7 +208,7 @@ public class registrationform extends javax.swing.JFrame {
         });
         RightPanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 200, -1));
 
-        getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 260, 350));
+        getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 260, 360));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
