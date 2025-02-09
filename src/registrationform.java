@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-
+import java.sql.ResultSet;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -147,6 +147,11 @@ public class registrationform extends javax.swing.JFrame {
                 passwordFieldActionPerformed(evt);
             }
         });
+        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyPressed(evt);
+            }
+        });
         RightPanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 200, -1));
 
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -232,11 +237,12 @@ public class registrationform extends javax.swing.JFrame {
                 pass_errorKeyReleased(evt);
             }
         });
-        RightPanel.add(pass_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 190, 100, 20));
+        RightPanel.add(pass_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 130, 20));
 
         getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 250, 360));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
@@ -275,36 +281,38 @@ public class registrationform extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        if(!user_cnumber.matches("\\d+")){
+
+        if (!user_cnumber.matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        if(user_password.length()<8){
+
+        if (user_password.length() < 8) {
             JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
         String user = "root";
         String pass = "";
-        
+
         try {
-          
             Connection conn = DriverManager.getConnection(url, user, pass);
 
-      
+            if (isEmailDuplicate(conn, user_email)) {
+                JOptionPane.showMessageDialog(this, "Email already exists. Please use a different email.", "Error", JOptionPane.ERROR_MESSAGE);
+                conn.close();
+                return;
+            }
+
             String sql = "INSERT INTO user_table (user_fname, user_cnumber, user_email, user_password, user_type) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            
             pstmt.setString(1, user_fname);
             pstmt.setString(2, user_cnumber);
             pstmt.setString(3, user_email);
             pstmt.setString(4, user_password);
             pstmt.setString(5, user_type);
-
 
             int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted > 0) {
@@ -312,7 +320,6 @@ public class registrationform extends javax.swing.JFrame {
                 this.dispose();
                 new loginform().setVisible(true);
             }
-
 
             pstmt.close();
             conn.close();
@@ -322,6 +329,24 @@ public class registrationform extends javax.swing.JFrame {
         
     }//GEN-LAST:event_registerbuttonMouseClicked
 
+    private boolean isEmailDuplicate(Connection conn, String email) {
+        boolean exists = false;
+        String query = "SELECT COUNT(*) FROM user_table WHERE user_email = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                exists = rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return exists;
+    }
+    
     private void registerbuttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerbuttonMouseEntered
         registerbutton.setForeground(new java.awt.Color(255, 255, 0));
     }//GEN-LAST:event_registerbuttonMouseEntered
@@ -352,13 +377,17 @@ public class registrationform extends javax.swing.JFrame {
     }//GEN-LAST:event_contactNumberTextFieldKeyPressed
 
     private void pass_errorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pass_errorKeyReleased
+        
+    }//GEN-LAST:event_pass_errorKeyReleased
+
+    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
         String user_password = passwordField.getText();
-        if(user_password.length()<8){
+        if(user_password.length()<7){
             pass_error.setText("at least 8 characters!");
         }else{
             pass_error.setText(null);
         }
-    }//GEN-LAST:event_pass_errorKeyReleased
+    }//GEN-LAST:event_passwordFieldKeyPressed
 
     /**
      * @param args the command line arguments

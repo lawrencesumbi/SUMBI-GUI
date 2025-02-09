@@ -169,6 +169,7 @@ public class loginform extends javax.swing.JFrame {
         getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 250, 220));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void passtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passtextfieldActionPerformed
