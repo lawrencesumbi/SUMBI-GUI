@@ -71,6 +71,8 @@ public class adminpage extends javax.swing.JFrame {
         user_typelabel = new javax.swing.JLabel();
         userTypeComboBox = new javax.swing.JComboBox<>();
         save = new javax.swing.JLabel();
+        search = new javax.swing.JLabel();
+        searchfield = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -181,7 +183,7 @@ public class adminpage extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        userspanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 90, 30));
+        userspanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 70, 30));
 
         add.setBackground(new java.awt.Color(255, 255, 255));
         add.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -200,7 +202,7 @@ public class adminpage extends javax.swing.JFrame {
                 addMouseExited(evt);
             }
         });
-        userspanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 90, 30));
+        userspanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 60, 30));
 
         edit.setBackground(new java.awt.Color(255, 255, 255));
         edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -219,7 +221,7 @@ public class adminpage extends javax.swing.JFrame {
                 editMouseExited(evt);
             }
         });
-        userspanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, 90, 30));
+        userspanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 60, 30));
 
         delete.setBackground(new java.awt.Color(255, 255, 255));
         delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -238,7 +240,7 @@ public class adminpage extends javax.swing.JFrame {
                 deleteMouseExited(evt);
             }
         });
-        userspanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 90, 30));
+        userspanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 60, 30));
 
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -328,7 +330,34 @@ public class adminpage extends javax.swing.JFrame {
                 saveMouseExited(evt);
             }
         });
-        userspanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 190, 90, 30));
+        userspanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 50, 30));
+
+        search.setBackground(new java.awt.Color(255, 255, 255));
+        search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        search.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        search.setText("SEARCH");
+        search.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        search.setOpaque(true);
+        search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                searchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                searchMouseExited(evt);
+            }
+        });
+        userspanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 190, 70, 30));
+
+        searchfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        searchfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchfieldActionPerformed(evt);
+            }
+        });
+        userspanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, 160, 30));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 660, 500));
 
@@ -416,6 +445,22 @@ public class adminpage extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_saveMouseExited
 
+    private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchMouseClicked
+
+    private void searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchMouseEntered
+
+    private void searchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchMouseExited
+
+    private void searchfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchfieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -467,6 +512,8 @@ public class adminpage extends javax.swing.JFrame {
     private javax.swing.JLabel record;
     private javax.swing.JLabel refresh;
     private javax.swing.JLabel save;
+    private javax.swing.JLabel search;
+    private javax.swing.JTextField searchfield;
     private javax.swing.JLabel student;
     private javax.swing.JComboBox<String> userTypeComboBox;
     private javax.swing.JLabel user_cnumber;
