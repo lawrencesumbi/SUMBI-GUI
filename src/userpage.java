@@ -6,6 +6,7 @@
 import config.dbConnector;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 /**
  *
@@ -52,6 +53,17 @@ public class userpage extends javax.swing.JFrame {
         logout.setForeground(new java.awt.Color(255, 255, 255));
         logout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logout.setText("LOG OUT");
+        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoutMouseExited(evt);
+            }
+        });
         leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 140, 50));
 
         icon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -64,18 +76,42 @@ public class userpage extends javax.swing.JFrame {
         violation.setForeground(new java.awt.Color(255, 255, 255));
         violation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         violation.setText("VIOLATION");
+        violation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                violationMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                violationMouseExited(evt);
+            }
+        });
         leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 140, 50));
 
         student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         student.setForeground(new java.awt.Color(255, 255, 255));
         student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         student.setText("STUDENT");
+        student.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                studentMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                studentMouseExited(evt);
+            }
+        });
         leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 140, 50));
 
         dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         dashboard.setForeground(new java.awt.Color(255, 255, 255));
         dashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dashboard.setText("DASHBOARD");
+        dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dashboardMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                dashboardMouseExited(evt);
+            }
+        });
         leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 140, 50));
 
         user_cnumber.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
@@ -111,6 +147,51 @@ public class userpage extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void dashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseEntered
+        dashboard.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_dashboardMouseEntered
+
+    private void dashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseExited
+        dashboard.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_dashboardMouseExited
+
+    private void studentMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseEntered
+        student.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_studentMouseEntered
+
+    private void studentMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseExited
+        student.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_studentMouseExited
+
+    private void violationMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseEntered
+        violation.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_violationMouseEntered
+
+    private void violationMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseExited
+        violation.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_violationMouseExited
+
+    private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
+        logout.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_logoutMouseEntered
+
+    private void logoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseExited
+        logout.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_logoutMouseExited
+
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
+        int response = JOptionPane.showConfirmDialog(this, 
+        "Confirm Log Out?", 
+        "Logout Confirmation", 
+        JOptionPane.YES_NO_OPTION);
+
+        if (response == JOptionPane.YES_OPTION) {
+            new loginform().setVisible(true);
+            this.dispose();
+        } else {           
+        }        
+    }//GEN-LAST:event_logoutMouseClicked
 
     /**
      * @param args the command line arguments

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2025 at 08:55 AM
+-- Generation Time: Feb 16, 2025 at 03:50 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `user_table` (
-  `user_id` int(5) NOT NULL,
+  `user_id` int(50) NOT NULL,
   `user_fname` varchar(50) NOT NULL,
   `user_cnumber` varchar(50) NOT NULL,
   `user_email` varchar(50) NOT NULL,
@@ -42,7 +42,14 @@ CREATE TABLE `user_table` (
 
 INSERT INTO `user_table` (`user_id`, `user_fname`, `user_cnumber`, `user_email`, `user_password`, `user_type`) VALUES
 (1, 'Lawrence Sumbi', '09753140724', 'guiansumbi@gmail.com', '12345678', 'User'),
-(2, 'Mike Bustamante', '09123456789', 'mikebustamante@gmail.com', '12345678', 'Admin');
+(2, 'Patricia Obaob', '09059641855', 'patobaob@gmail.com', '12345678', 'User'),
+(3, 'Mike Bustamante', '09123456789', 'mikebustamante@gmail.com', '87654321', 'Admin'),
+(4, 'Diovely Campo', '09876543210', 'dyubli@gmail.com', '12345678', 'User'),
+(5, 'Sample', '12345678910', 'sample@gmail.com', '1234567', 'User'),
+(6, 'Sample1', '12345678910', 'sample1@gmail.com', '12345678', 'User'),
+(7, 'Guian Sumbi', '09303172724', 'sumbiguian@gmail.com', '12345678', 'User'),
+(8, 'Sample2', '09123456789', 'sample2@gmail.com', '12345678', 'User'),
+(9, 'Sample3', '09123456789', 'sample3@gmal.com', '12345678', 'User');
 
 --
 -- Indexes for dumped tables
@@ -62,7 +69,7 @@ ALTER TABLE `user_table`
 -- AUTO_INCREMENT for table `user_table`
 --
 ALTER TABLE `user_table`
-  MODIFY `user_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
