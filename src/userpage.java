@@ -35,7 +35,6 @@ public class userpage extends javax.swing.JFrame {
         icon = new javax.swing.JLabel();
         violation = new javax.swing.JLabel();
         student = new javax.swing.JLabel();
-        record = new javax.swing.JLabel();
         dashboard = new javax.swing.JLabel();
         user_cnumber = new javax.swing.JLabel();
         user_fname = new javax.swing.JLabel();
@@ -53,7 +52,7 @@ public class userpage extends javax.swing.JFrame {
         logout.setForeground(new java.awt.Color(255, 255, 255));
         logout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logout.setText("LOG OUT");
-        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 430, 140, 50));
+        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 140, 50));
 
         icon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         icon.setForeground(new java.awt.Color(255, 255, 255));
@@ -65,25 +64,19 @@ public class userpage extends javax.swing.JFrame {
         violation.setForeground(new java.awt.Color(255, 255, 255));
         violation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         violation.setText("VIOLATION");
-        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 140, 50));
+        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 140, 50));
 
         student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         student.setForeground(new java.awt.Color(255, 255, 255));
         student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         student.setText("STUDENT");
-        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 140, 50));
-
-        record.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        record.setForeground(new java.awt.Color(255, 255, 255));
-        record.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        record.setText("RECORD");
-        leftpanel.add(record, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 140, 50));
+        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 140, 50));
 
         dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         dashboard.setForeground(new java.awt.Color(255, 255, 255));
         dashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dashboard.setText("DASHBOARD");
-        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 140, 50));
+        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 140, 50));
 
         user_cnumber.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         user_cnumber.setForeground(new java.awt.Color(255, 255, 255));
@@ -159,7 +152,6 @@ public class userpage extends javax.swing.JFrame {
     private javax.swing.JLabel icon;
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel logout;
-    private javax.swing.JLabel record;
     private javax.swing.JLabel student;
     private javax.swing.JLabel user_cnumber;
     private javax.swing.JLabel user_email;
