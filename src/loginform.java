@@ -61,9 +61,9 @@ public class loginform extends javax.swing.JFrame {
         HeaderPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         Header.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ifoto-ai_1738725918062.png"))); // NOI18N
-        HeaderPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 130));
+        HeaderPanel.add(Header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 150));
 
-        getContentPane().add(HeaderPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 130));
+        getContentPane().add(HeaderPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 500, 150));
 
         LeftPanel.setBackground(new java.awt.Color(0, 0, 0));
         LeftPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -72,21 +72,21 @@ public class loginform extends javax.swing.JFrame {
         violationicon.setForeground(new java.awt.Color(255, 255, 255));
         violationicon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         violationicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/violation-logo-860-16424 (1).png"))); // NOI18N
-        LeftPanel.add(violationicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 225, 90));
+        LeftPanel.add(violationicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 225, 90));
 
         systemlabel.setFont(new java.awt.Font("Copperplate Gothic Bold", 3, 28)); // NOI18N
         systemlabel.setForeground(new java.awt.Color(255, 255, 255));
         systemlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         systemlabel.setText("System");
-        LeftPanel.add(systemlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 140, 30));
+        LeftPanel.add(systemlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 140, 30));
 
         studentlabel.setFont(new java.awt.Font("Copperplate Gothic Bold", 3, 30)); // NOI18N
         studentlabel.setForeground(new java.awt.Color(255, 255, 255));
         studentlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         studentlabel.setText("Student");
-        LeftPanel.add(studentlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 160, 40));
+        LeftPanel.add(studentlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 160, 40));
 
-        getContentPane().add(LeftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 250, 220));
+        getContentPane().add(LeftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 250, 200));
 
         RightPanel.setBackground(new java.awt.Color(204, 0, 0));
         RightPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -96,7 +96,7 @@ public class loginform extends javax.swing.JFrame {
         loginbutton.setForeground(new java.awt.Color(255, 255, 255));
         loginbutton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginbutton.setText("Log in");
-        loginbutton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        loginbutton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         loginbutton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 loginbuttonMouseClicked(evt);
@@ -113,7 +113,7 @@ public class loginform extends javax.swing.JFrame {
                 loginbuttonKeyPressed(evt);
             }
         });
-        RightPanel.add(loginbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 90, 30));
+        RightPanel.add(loginbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 90, 30));
 
         usertextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         usertextfield.addActionListener(new java.awt.event.ActionListener() {
@@ -121,7 +121,7 @@ public class loginform extends javax.swing.JFrame {
                 usertextfieldActionPerformed(evt);
             }
         });
-        RightPanel.add(usertextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 200, -1));
+        RightPanel.add(usertextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 200, -1));
 
         passtextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         passtextfield.addActionListener(new java.awt.event.ActionListener() {
@@ -129,13 +129,13 @@ public class loginform extends javax.swing.JFrame {
                 passtextfieldActionPerformed(evt);
             }
         });
-        RightPanel.add(passtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 200, -1));
+        RightPanel.add(passtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 200, -1));
 
         username.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         username.setForeground(new java.awt.Color(255, 255, 255));
         username.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         username.setText("Email");
-        RightPanel.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 60, 20));
+        RightPanel.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 60, 20));
 
         donthaveacc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         donthaveacc.setForeground(new java.awt.Color(255, 255, 255));
@@ -152,21 +152,21 @@ public class loginform extends javax.swing.JFrame {
                 donthaveaccMouseExited(evt);
             }
         });
-        RightPanel.add(donthaveacc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 220, 30));
+        RightPanel.add(donthaveacc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 220, 30));
 
         password.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         password.setForeground(new java.awt.Color(255, 255, 255));
         password.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         password.setText("Password");
-        RightPanel.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 90, 20));
+        RightPanel.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 90, 20));
 
         loginlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         loginlabel.setForeground(new java.awt.Color(255, 255, 255));
         loginlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginlabel.setText("LOG IN");
-        RightPanel.add(loginlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 110, 30));
+        RightPanel.add(loginlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 110, 30));
 
-        getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 130, 250, 220));
+        getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 250, 200));
 
         pack();
         setLocationRelativeTo(null);

@@ -64,13 +64,13 @@ public class userpage extends javax.swing.JFrame {
                 logoutMouseExited(evt);
             }
         });
-        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 140, 50));
+        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 140, 50));
 
         icon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         icon.setForeground(new java.awt.Color(255, 255, 255));
         icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/117891351.png"))); // NOI18N
-        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 80, 80));
+        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 80, 80));
 
         violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         violation.setForeground(new java.awt.Color(255, 255, 255));
@@ -84,7 +84,7 @@ public class userpage extends javax.swing.JFrame {
                 violationMouseExited(evt);
             }
         });
-        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 140, 50));
+        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 140, 50));
 
         student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         student.setForeground(new java.awt.Color(255, 255, 255));
@@ -98,7 +98,7 @@ public class userpage extends javax.swing.JFrame {
                 studentMouseExited(evt);
             }
         });
-        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 140, 50));
+        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 140, 50));
 
         dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         dashboard.setForeground(new java.awt.Color(255, 255, 255));
@@ -112,37 +112,37 @@ public class userpage extends javax.swing.JFrame {
                 dashboardMouseExited(evt);
             }
         });
-        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 140, 50));
+        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 140, 50));
 
         user_cnumber.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         user_cnumber.setForeground(new java.awt.Color(255, 255, 255));
         user_cnumber.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_cnumber.setText("Contact Number");
-        leftpanel.add(user_cnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 100, -1));
+        leftpanel.add(user_cnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 100, -1));
 
         user_fname.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         user_fname.setForeground(new java.awt.Color(255, 255, 255));
         user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fname.setText("Fullname");
-        leftpanel.add(user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
+        leftpanel.add(user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
 
         user_email.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         user_email.setForeground(new java.awt.Color(255, 255, 255));
         user_email.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_email.setText("Email Account");
-        leftpanel.add(user_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 100, -1));
+        leftpanel.add(user_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 100, -1));
 
         user_type.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         user_type.setForeground(new java.awt.Color(255, 255, 255));
         user_type.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_type.setText("User");
-        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 150, 70, -1));
+        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 70, -1));
 
-        getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 500));
+        getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 600));
 
         userspanel.setBackground(new java.awt.Color(204, 0, 0));
         userspanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 660, 500));
+        getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
         pack();
         setLocationRelativeTo(null);

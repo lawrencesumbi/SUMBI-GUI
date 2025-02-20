@@ -65,10 +65,10 @@ public class registrationform extends javax.swing.JFrame {
         HeaderPanel.setBackground(new java.awt.Color(255, 255, 255));
         HeaderPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        header.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ifoto-ai_17389321285991.png"))); // NOI18N
-        HeaderPanel.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 130));
+        header.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ifoto-ai_17389321285992.png"))); // NOI18N
+        HeaderPanel.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 150));
 
-        getContentPane().add(HeaderPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 130));
+        getContentPane().add(HeaderPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 150));
 
         LeftPanel.setBackground(new java.awt.Color(0, 0, 0));
         LeftPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -77,21 +77,21 @@ public class registrationform extends javax.swing.JFrame {
         violationicon.setForeground(new java.awt.Color(255, 255, 255));
         violationicon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         violationicon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/violation-logo-860-16424 (1).png"))); // NOI18N
-        LeftPanel.add(violationicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 225, 90));
+        LeftPanel.add(violationicon, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 225, 90));
 
         systemlabel.setFont(new java.awt.Font("Copperplate Gothic Bold", 3, 28)); // NOI18N
         systemlabel.setForeground(new java.awt.Color(255, 255, 255));
         systemlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         systemlabel.setText("System");
-        LeftPanel.add(systemlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 140, 30));
+        LeftPanel.add(systemlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 140, 30));
 
         studentlabel.setFont(new java.awt.Font("Copperplate Gothic Bold", 3, 30)); // NOI18N
         studentlabel.setForeground(new java.awt.Color(255, 255, 255));
         studentlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         studentlabel.setText("Student");
-        LeftPanel.add(studentlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 160, 40));
+        LeftPanel.add(studentlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 160, 40));
 
-        getContentPane().add(LeftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 250, 230));
+        getContentPane().add(LeftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 250, 200));
 
         RightPanel.setBackground(new java.awt.Color(204, 0, 0));
         RightPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -101,7 +101,7 @@ public class registrationform extends javax.swing.JFrame {
         backbutton.setForeground(new java.awt.Color(255, 255, 255));
         backbutton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         backbutton.setText("Back");
-        backbutton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        backbutton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         backbutton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 backbuttonMouseClicked(evt);
@@ -113,7 +113,7 @@ public class registrationform extends javax.swing.JFrame {
                 backbuttonMouseExited(evt);
             }
         });
-        RightPanel.add(backbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 90, 30));
+        RightPanel.add(backbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 80, 30));
 
         emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         emailTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -127,7 +127,7 @@ public class registrationform extends javax.swing.JFrame {
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_emaillabel.setText("Email");
-        RightPanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 60, 20));
+        RightPanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 60, 20));
 
         registerlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         registerlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -139,7 +139,7 @@ public class registrationform extends javax.swing.JFrame {
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel.setText("Password");
-        RightPanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 70, 20));
+        RightPanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 70, 20));
 
         passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -158,7 +158,7 @@ public class registrationform extends javax.swing.JFrame {
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel.setText("Full Name");
-        RightPanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 90, -1));
+        RightPanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 90, -1));
 
         fullNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         fullNameTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -173,7 +173,7 @@ public class registrationform extends javax.swing.JFrame {
         registerbutton.setForeground(new java.awt.Color(255, 255, 255));
         registerbutton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         registerbutton.setText("Register");
-        registerbutton.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        registerbutton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         registerbutton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 registerbuttonMouseClicked(evt);
@@ -185,13 +185,13 @@ public class registrationform extends javax.swing.JFrame {
                 registerbuttonMouseExited(evt);
             }
         });
-        RightPanel.add(registerbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 90, 30));
+        RightPanel.add(registerbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 300, 80, 30));
 
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_cnumberlabel.setText("Contact Number");
-        RightPanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 110, -1));
+        RightPanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, -1));
 
         contactNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         contactNumberTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -213,7 +213,7 @@ public class registrationform extends javax.swing.JFrame {
         user_typelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_typelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_typelabel.setText("User Type");
-        RightPanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 70, 20));
+        RightPanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 240, -1, 20));
 
         userTypeComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         userTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
@@ -239,7 +239,7 @@ public class registrationform extends javax.swing.JFrame {
         });
         RightPanel.add(pass_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 130, 20));
 
-        getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 250, 360));
+        getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 250, 350));
 
         pack();
         setLocationRelativeTo(null);

@@ -74,24 +74,6 @@ public class adminpage extends javax.swing.JFrame {
         save = new javax.swing.JLabel();
         search = new javax.swing.JLabel();
         searchfield = new javax.swing.JTextField();
-        recordpanel = new javax.swing.JPanel();
-        refresh1 = new javax.swing.JLabel();
-        add1 = new javax.swing.JLabel();
-        edit1 = new javax.swing.JLabel();
-        delete1 = new javax.swing.JLabel();
-        user_fnamelabel1 = new javax.swing.JLabel();
-        fullNameTextField1 = new javax.swing.JTextField();
-        user_cnumberlabel1 = new javax.swing.JLabel();
-        contactNumberTextField1 = new javax.swing.JTextField();
-        user_emaillabel1 = new javax.swing.JLabel();
-        emailTextField1 = new javax.swing.JTextField();
-        user_passwordlabel1 = new javax.swing.JLabel();
-        passwordField1 = new javax.swing.JPasswordField();
-        user_typelabel1 = new javax.swing.JLabel();
-        userTypeComboBox1 = new javax.swing.JComboBox<>();
-        save1 = new javax.swing.JLabel();
-        search1 = new javax.swing.JLabel();
-        searchfield1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -114,13 +96,13 @@ public class adminpage extends javax.swing.JFrame {
                 logoutMouseExited(evt);
             }
         });
-        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 140, 50));
+        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 140, 50));
 
         icon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         icon.setForeground(new java.awt.Color(255, 255, 255));
         icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/117891351.png"))); // NOI18N
-        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 80, 80));
+        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 80, 80));
 
         violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         violation.setForeground(new java.awt.Color(255, 255, 255));
@@ -137,7 +119,7 @@ public class adminpage extends javax.swing.JFrame {
                 violationMouseExited(evt);
             }
         });
-        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 140, 50));
+        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 140, 50));
 
         users.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         users.setForeground(new java.awt.Color(255, 255, 255));
@@ -151,7 +133,7 @@ public class adminpage extends javax.swing.JFrame {
                 usersMouseExited(evt);
             }
         });
-        leftpanel.add(users, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 140, 50));
+        leftpanel.add(users, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 140, 50));
 
         student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         student.setForeground(new java.awt.Color(255, 255, 255));
@@ -165,7 +147,7 @@ public class adminpage extends javax.swing.JFrame {
                 studentMouseExited(evt);
             }
         });
-        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 140, 50));
+        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 140, 50));
 
         record.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         record.setForeground(new java.awt.Color(255, 255, 255));
@@ -182,7 +164,7 @@ public class adminpage extends javax.swing.JFrame {
                 recordMouseExited(evt);
             }
         });
-        leftpanel.add(record, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 140, 50));
+        leftpanel.add(record, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 140, 50));
 
         dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         dashboard.setForeground(new java.awt.Color(255, 255, 255));
@@ -196,33 +178,33 @@ public class adminpage extends javax.swing.JFrame {
                 dashboardMouseExited(evt);
             }
         });
-        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 140, 50));
+        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 140, 50));
 
         user_cnumber.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         user_cnumber.setForeground(new java.awt.Color(255, 255, 255));
         user_cnumber.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_cnumber.setText("Contact Number");
-        leftpanel.add(user_cnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 100, -1));
+        leftpanel.add(user_cnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 100, -1));
 
         user_fname.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         user_fname.setForeground(new java.awt.Color(255, 255, 255));
         user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fname.setText("Fullname");
-        leftpanel.add(user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, -1));
+        leftpanel.add(user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, -1, -1));
 
         user_email.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
         user_email.setForeground(new java.awt.Color(255, 255, 255));
         user_email.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_email.setText("Email Account");
-        leftpanel.add(user_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 100, -1));
+        leftpanel.add(user_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 100, -1));
 
         user_type.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         user_type.setForeground(new java.awt.Color(255, 255, 255));
         user_type.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_type.setText("Admin");
-        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 150, 70, -1));
+        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 70, -1));
 
-        getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 140, 500));
+        getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 600));
 
         userspanel.setBackground(new java.awt.Color(204, 0, 0));
         userspanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -242,7 +224,7 @@ public class adminpage extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(user_table);
 
-        userspanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 660, 270));
+        userspanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 710, 300));
 
         refresh.setBackground(new java.awt.Color(255, 255, 255));
         refresh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -261,7 +243,7 @@ public class adminpage extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        userspanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 70, 30));
+        userspanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 70, 30));
 
         add.setBackground(new java.awt.Color(255, 255, 255));
         add.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -280,7 +262,7 @@ public class adminpage extends javax.swing.JFrame {
                 addMouseExited(evt);
             }
         });
-        userspanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 60, 30));
+        userspanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 60, 30));
 
         edit.setBackground(new java.awt.Color(255, 255, 255));
         edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -299,7 +281,7 @@ public class adminpage extends javax.swing.JFrame {
                 editMouseExited(evt);
             }
         });
-        userspanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 60, 30));
+        userspanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 60, 30));
 
         delete.setBackground(new java.awt.Color(255, 255, 255));
         delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -318,13 +300,13 @@ public class adminpage extends javax.swing.JFrame {
                 deleteMouseExited(evt);
             }
         });
-        userspanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 60, 30));
+        userspanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 60, 30));
 
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel.setText("Full Name");
-        userspanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 110, 20));
+        userspanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 110, 20));
 
         fullNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         fullNameTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -332,13 +314,13 @@ public class adminpage extends javax.swing.JFrame {
                 fullNameTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 200, -1));
+        userspanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 200, -1));
 
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_cnumberlabel.setText("Contact Number");
-        userspanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 110, 20));
+        userspanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 110, 20));
 
         contactNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         contactNumberTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -346,13 +328,13 @@ public class adminpage extends javax.swing.JFrame {
                 contactNumberTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 200, -1));
+        userspanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 200, -1));
 
         user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_emaillabel.setText("Email");
-        userspanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 70, 20));
+        userspanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 70, 20));
 
         emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         emailTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -360,13 +342,13 @@ public class adminpage extends javax.swing.JFrame {
                 emailTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 200, -1));
+        userspanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 200, -1));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel.setText("Password");
-        userspanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 80, 20));
+        userspanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 80, 20));
 
         passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -374,13 +356,13 @@ public class adminpage extends javax.swing.JFrame {
                 passwordFieldActionPerformed(evt);
             }
         });
-        userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 200, -1));
+        userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 200, -1));
 
         user_typelabel.setBackground(new java.awt.Color(255, 255, 255));
         user_typelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_typelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_typelabel.setText("User Type");
-        userspanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 70, -1));
+        userspanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 70, -1));
 
         userTypeComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         userTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
@@ -389,7 +371,7 @@ public class adminpage extends javax.swing.JFrame {
                 userTypeComboBoxActionPerformed(evt);
             }
         });
-        userspanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 200, -1));
+        userspanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 200, -1));
 
         save.setBackground(new java.awt.Color(255, 255, 255));
         save.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -408,7 +390,7 @@ public class adminpage extends javax.swing.JFrame {
                 saveMouseExited(evt);
             }
         });
-        userspanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 50, 30));
+        userspanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 50, 30));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -427,7 +409,7 @@ public class adminpage extends javax.swing.JFrame {
                 searchMouseExited(evt);
             }
         });
-        userspanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 190, 70, 30));
+        userspanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 250, 70, 30));
 
         searchfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         searchfield.addActionListener(new java.awt.event.ActionListener() {
@@ -435,207 +417,9 @@ public class adminpage extends javax.swing.JFrame {
                 searchfieldActionPerformed(evt);
             }
         });
-        userspanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, 160, 30));
+        userspanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 160, 30));
 
-        getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 660, 500));
-
-        recordpanel.setBackground(new java.awt.Color(204, 0, 0));
-        recordpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        refresh1.setBackground(new java.awt.Color(255, 255, 255));
-        refresh1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        refresh1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        refresh1.setText("REFRESH");
-        refresh1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        refresh1.setOpaque(true);
-        refresh1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                refresh1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                refresh1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                refresh1MouseExited(evt);
-            }
-        });
-        recordpanel.add(refresh1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 70, 30));
-
-        add1.setBackground(new java.awt.Color(255, 255, 255));
-        add1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        add1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        add1.setText("ADD");
-        add1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        add1.setOpaque(true);
-        add1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                add1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                add1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                add1MouseExited(evt);
-            }
-        });
-        recordpanel.add(add1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 60, 30));
-
-        edit1.setBackground(new java.awt.Color(255, 255, 255));
-        edit1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        edit1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        edit1.setText("EDIT");
-        edit1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        edit1.setOpaque(true);
-        edit1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                edit1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                edit1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                edit1MouseExited(evt);
-            }
-        });
-        recordpanel.add(edit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 60, 30));
-
-        delete1.setBackground(new java.awt.Color(255, 255, 255));
-        delete1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        delete1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        delete1.setText("DELETE");
-        delete1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        delete1.setOpaque(true);
-        delete1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                delete1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                delete1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                delete1MouseExited(evt);
-            }
-        });
-        recordpanel.add(delete1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 60, 30));
-
-        user_fnamelabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
-        user_fnamelabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_fnamelabel1.setText("Full Name");
-        recordpanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 110, 20));
-
-        fullNameTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        fullNameTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fullNameTextField1ActionPerformed(evt);
-            }
-        });
-        recordpanel.add(fullNameTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 200, -1));
-
-        user_cnumberlabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        user_cnumberlabel1.setForeground(new java.awt.Color(255, 255, 255));
-        user_cnumberlabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_cnumberlabel1.setText("Contact Number");
-        recordpanel.add(user_cnumberlabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 110, 20));
-
-        contactNumberTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        contactNumberTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                contactNumberTextField1ActionPerformed(evt);
-            }
-        });
-        recordpanel.add(contactNumberTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 40, 200, -1));
-
-        user_emaillabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        user_emaillabel1.setForeground(new java.awt.Color(255, 255, 255));
-        user_emaillabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_emaillabel1.setText("Email");
-        recordpanel.add(user_emaillabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, 70, 20));
-
-        emailTextField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        emailTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailTextField1ActionPerformed(evt);
-            }
-        });
-        recordpanel.add(emailTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 200, -1));
-
-        user_passwordlabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        user_passwordlabel1.setForeground(new java.awt.Color(255, 255, 255));
-        user_passwordlabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_passwordlabel1.setText("Password");
-        recordpanel.add(user_passwordlabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 70, 80, 20));
-
-        passwordField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        passwordField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordField1ActionPerformed(evt);
-            }
-        });
-        recordpanel.add(passwordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 90, 200, -1));
-
-        user_typelabel1.setBackground(new java.awt.Color(255, 255, 255));
-        user_typelabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        user_typelabel1.setForeground(new java.awt.Color(255, 255, 255));
-        user_typelabel1.setText("User Type");
-        recordpanel.add(user_typelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 70, -1));
-
-        userTypeComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        userTypeComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
-        userTypeComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userTypeComboBox1ActionPerformed(evt);
-            }
-        });
-        recordpanel.add(userTypeComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 200, -1));
-
-        save1.setBackground(new java.awt.Color(255, 255, 255));
-        save1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        save1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        save1.setText("SAVE");
-        save1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        save1.setOpaque(true);
-        save1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                save1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                save1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                save1MouseExited(evt);
-            }
-        });
-        recordpanel.add(save1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 50, 30));
-
-        search1.setBackground(new java.awt.Color(255, 255, 255));
-        search1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        search1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        search1.setText("SEARCH");
-        search1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        search1.setOpaque(true);
-        search1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                search1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                search1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                search1MouseExited(evt);
-            }
-        });
-        recordpanel.add(search1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 190, 70, 30));
-
-        searchfield1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        searchfield1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchfield1ActionPerformed(evt);
-            }
-        });
-        recordpanel.add(searchfield1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, 160, 30));
-
-        getContentPane().add(recordpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 660, 500));
+        getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
         pack();
         setLocationRelativeTo(null);
@@ -802,102 +586,6 @@ public class adminpage extends javax.swing.JFrame {
         }        
     }//GEN-LAST:event_logoutMouseClicked
 
-    private void refresh1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refresh1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_refresh1MouseClicked
-
-    private void refresh1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refresh1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_refresh1MouseEntered
-
-    private void refresh1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refresh1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_refresh1MouseExited
-
-    private void add1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_add1MouseClicked
-
-    private void add1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_add1MouseEntered
-
-    private void add1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_add1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_add1MouseExited
-
-    private void edit1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edit1MouseClicked
-
-    private void edit1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edit1MouseEntered
-
-    private void edit1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_edit1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_edit1MouseExited
-
-    private void delete1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_delete1MouseClicked
-
-    private void delete1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_delete1MouseEntered
-
-    private void delete1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delete1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_delete1MouseExited
-
-    private void fullNameTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullNameTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fullNameTextField1ActionPerformed
-
-    private void contactNumberTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactNumberTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_contactNumberTextField1ActionPerformed
-
-    private void emailTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_emailTextField1ActionPerformed
-
-    private void passwordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordField1ActionPerformed
-
-    private void userTypeComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_userTypeComboBox1ActionPerformed
-
-    private void save1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_save1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_save1MouseClicked
-
-    private void save1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_save1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_save1MouseEntered
-
-    private void save1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_save1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_save1MouseExited
-
-    private void search1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search1MouseClicked
-
-    private void search1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search1MouseEntered
-
-    private void search1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search1MouseExited
-
-    private void searchfield1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchfield1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_searchfield1ActionPerformed
-
     private void recordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseClicked
         
     }//GEN-LAST:event_recordMouseClicked
@@ -939,52 +627,34 @@ public class adminpage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel add;
-    private javax.swing.JLabel add1;
     private javax.swing.JTextField contactNumberTextField;
-    private javax.swing.JTextField contactNumberTextField1;
     private javax.swing.JLabel dashboard;
     private javax.swing.JLabel delete;
-    private javax.swing.JLabel delete1;
     private javax.swing.JLabel edit;
-    private javax.swing.JLabel edit1;
     private javax.swing.JTextField emailTextField;
-    private javax.swing.JTextField emailTextField1;
     private javax.swing.JTextField fullNameTextField;
-    private javax.swing.JTextField fullNameTextField1;
     private javax.swing.JLabel icon;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel logout;
     private javax.swing.JPasswordField passwordField;
-    private javax.swing.JPasswordField passwordField1;
     private javax.swing.JLabel record;
-    private javax.swing.JPanel recordpanel;
     private javax.swing.JLabel refresh;
-    private javax.swing.JLabel refresh1;
     private javax.swing.JLabel save;
-    private javax.swing.JLabel save1;
     private javax.swing.JLabel search;
-    private javax.swing.JLabel search1;
     private javax.swing.JTextField searchfield;
-    private javax.swing.JTextField searchfield1;
     private javax.swing.JLabel student;
     private javax.swing.JComboBox<String> userTypeComboBox;
-    private javax.swing.JComboBox<String> userTypeComboBox1;
     private javax.swing.JLabel user_cnumber;
     private javax.swing.JLabel user_cnumberlabel;
-    private javax.swing.JLabel user_cnumberlabel1;
     private javax.swing.JLabel user_email;
     private javax.swing.JLabel user_emaillabel;
-    private javax.swing.JLabel user_emaillabel1;
     private javax.swing.JLabel user_fname;
     private javax.swing.JLabel user_fnamelabel;
-    private javax.swing.JLabel user_fnamelabel1;
     private javax.swing.JLabel user_passwordlabel;
-    private javax.swing.JLabel user_passwordlabel1;
     private javax.swing.JTable user_table;
     private javax.swing.JLabel user_type;
     private javax.swing.JLabel user_typelabel;
-    private javax.swing.JLabel user_typelabel1;
     private javax.swing.JLabel users;
     private javax.swing.JPanel userspanel;
     private javax.swing.JLabel violation;
