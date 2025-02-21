@@ -50,10 +50,9 @@ public class adminpage extends javax.swing.JFrame {
         student = new javax.swing.JLabel();
         record = new javax.swing.JLabel();
         dashboard = new javax.swing.JLabel();
-        user_cnumber = new javax.swing.JLabel();
         user_fname = new javax.swing.JLabel();
-        user_email = new javax.swing.JLabel();
         user_type = new javax.swing.JLabel();
+        settings = new javax.swing.JLabel();
         userspanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         user_table = new javax.swing.JTable();
@@ -74,6 +73,7 @@ public class adminpage extends javax.swing.JFrame {
         save = new javax.swing.JLabel();
         search = new javax.swing.JLabel();
         searchfield = new javax.swing.JTextField();
+        addprofile = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -96,13 +96,13 @@ public class adminpage extends javax.swing.JFrame {
                 logoutMouseExited(evt);
             }
         });
-        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 140, 50));
+        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 530, 80, 50));
 
         icon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         icon.setForeground(new java.awt.Color(255, 255, 255));
         icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/117891351.png"))); // NOI18N
-        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 80, 80));
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview1.png"))); // NOI18N
+        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 110, 110));
 
         violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         violation.setForeground(new java.awt.Color(255, 255, 255));
@@ -119,7 +119,7 @@ public class adminpage extends javax.swing.JFrame {
                 violationMouseExited(evt);
             }
         });
-        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 140, 50));
+        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 100, 50));
 
         users.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         users.setForeground(new java.awt.Color(255, 255, 255));
@@ -133,7 +133,7 @@ public class adminpage extends javax.swing.JFrame {
                 usersMouseExited(evt);
             }
         });
-        leftpanel.add(users, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 140, 50));
+        leftpanel.add(users, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 60, 50));
 
         student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         student.setForeground(new java.awt.Color(255, 255, 255));
@@ -147,7 +147,7 @@ public class adminpage extends javax.swing.JFrame {
                 studentMouseExited(evt);
             }
         });
-        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 140, 50));
+        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 90, 50));
 
         record.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         record.setForeground(new java.awt.Color(255, 255, 255));
@@ -164,7 +164,7 @@ public class adminpage extends javax.swing.JFrame {
                 recordMouseExited(evt);
             }
         });
-        leftpanel.add(record, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 140, 50));
+        leftpanel.add(record, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 80, 50));
 
         dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         dashboard.setForeground(new java.awt.Color(255, 255, 255));
@@ -178,31 +178,33 @@ public class adminpage extends javax.swing.JFrame {
                 dashboardMouseExited(evt);
             }
         });
-        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 140, 50));
+        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 120, 50));
 
-        user_cnumber.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        user_cnumber.setForeground(new java.awt.Color(255, 255, 255));
-        user_cnumber.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_cnumber.setText("Contact Number");
-        leftpanel.add(user_cnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 100, -1));
-
-        user_fname.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        user_fname.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         user_fname.setForeground(new java.awt.Color(255, 255, 255));
         user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fname.setText("Fullname");
-        leftpanel.add(user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, -1, -1));
-
-        user_email.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        user_email.setForeground(new java.awt.Color(255, 255, 255));
-        user_email.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_email.setText("Email Account");
-        leftpanel.add(user_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 100, -1));
+        leftpanel.add(user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 90, -1));
 
         user_type.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         user_type.setForeground(new java.awt.Color(255, 255, 255));
         user_type.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_type.setText("Admin");
-        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, 70, -1));
+        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 70, -1));
+
+        settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        settings.setForeground(new java.awt.Color(255, 255, 255));
+        settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        settings.setText("SETTINGS");
+        settings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                settingsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                settingsMouseExited(evt);
+            }
+        });
+        leftpanel.add(settings, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 480, 90, 50));
 
         getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 600));
 
@@ -306,7 +308,7 @@ public class adminpage extends javax.swing.JFrame {
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel.setText("Full Name");
-        userspanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, 110, 20));
+        userspanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 110, 20));
 
         fullNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         fullNameTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -314,13 +316,13 @@ public class adminpage extends javax.swing.JFrame {
                 fullNameTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 200, -1));
+        userspanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 200, -1));
 
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_cnumberlabel.setText("Contact Number");
-        userspanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, 110, 20));
+        userspanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 110, 20));
 
         contactNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         contactNumberTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -328,13 +330,13 @@ public class adminpage extends javax.swing.JFrame {
                 contactNumberTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, 200, -1));
+        userspanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 200, -1));
 
         user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_emaillabel.setText("Email");
-        userspanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 70, 20));
+        userspanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 70, 20));
 
         emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         emailTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -348,7 +350,7 @@ public class adminpage extends javax.swing.JFrame {
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel.setText("Password");
-        userspanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 80, 20));
+        userspanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 80, 20));
 
         passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -362,7 +364,7 @@ public class adminpage extends javax.swing.JFrame {
         user_typelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_typelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_typelabel.setText("User Type");
-        userspanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, 70, -1));
+        userspanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 70, 20));
 
         userTypeComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         userTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
@@ -371,7 +373,7 @@ public class adminpage extends javax.swing.JFrame {
                 userTypeComboBoxActionPerformed(evt);
             }
         });
-        userspanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 200, -1));
+        userspanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 200, 30));
 
         save.setBackground(new java.awt.Color(255, 255, 255));
         save.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -418,6 +420,12 @@ public class adminpage extends javax.swing.JFrame {
             }
         });
         userspanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 160, 30));
+
+        addprofile.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        addprofile.setForeground(new java.awt.Color(255, 255, 255));
+        addprofile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addprofile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
+        userspanel.add(addprofile, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 140, 130));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -590,6 +598,14 @@ public class adminpage extends javax.swing.JFrame {
         
     }//GEN-LAST:event_recordMouseClicked
 
+    private void settingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settingsMouseEntered
+
+    private void settingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settingsMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -627,6 +643,7 @@ public class adminpage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel add;
+    private javax.swing.JLabel addprofile;
     private javax.swing.JTextField contactNumberTextField;
     private javax.swing.JLabel dashboard;
     private javax.swing.JLabel delete;
@@ -643,11 +660,10 @@ public class adminpage extends javax.swing.JFrame {
     private javax.swing.JLabel save;
     private javax.swing.JLabel search;
     private javax.swing.JTextField searchfield;
+    private javax.swing.JLabel settings;
     private javax.swing.JLabel student;
     private javax.swing.JComboBox<String> userTypeComboBox;
-    private javax.swing.JLabel user_cnumber;
     private javax.swing.JLabel user_cnumberlabel;
-    private javax.swing.JLabel user_email;
     private javax.swing.JLabel user_emaillabel;
     private javax.swing.JLabel user_fname;
     private javax.swing.JLabel user_fnamelabel;
