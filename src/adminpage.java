@@ -3,17 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import javax.swing.*;
+import java.sql.*;
 import config.dbConnector;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 /**
  *
  * @author Admin
  */
 public class adminpage extends javax.swing.JFrame {
-
     /**
      * Creates new form adminpage
      */
@@ -22,14 +25,19 @@ public class adminpage extends javax.swing.JFrame {
         displayData();
     }
     
+    public adminpage(String user_fname){
+        initComponents();
+        J_user_fname.setText(user_fname);
+        displayData();
+    }
+    
     public void displayData(){
-        try{
+        try {
             dbConnector dbc = new dbConnector();
             ResultSet rs = dbc.getData("SELECT * FROM user_table");
-            user_table.setModel(DbUtils.resultSetToTableModel(rs));
-            
-        }catch(SQLException ex){
-            System.out.println("Errors"+ex.getMessage());
+            user_table.setModel(DbUtils.resultSetToTableModel(rs));   
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
         }
     }
 
@@ -50,9 +58,16 @@ public class adminpage extends javax.swing.JFrame {
         student = new javax.swing.JLabel();
         record = new javax.swing.JLabel();
         dashboard = new javax.swing.JLabel();
-        user_fname = new javax.swing.JLabel();
-        user_type = new javax.swing.JLabel();
+        J_user_fname = new javax.swing.JLabel();
         settings = new javax.swing.JLabel();
+        user_type1 = new javax.swing.JLabel();
+        dash_icon = new javax.swing.JLabel();
+        stud_icon = new javax.swing.JLabel();
+        vio_icon = new javax.swing.JLabel();
+        rec_icon = new javax.swing.JLabel();
+        users_icon = new javax.swing.JLabel();
+        sett_icon = new javax.swing.JLabel();
+        log_icon = new javax.swing.JLabel();
         userspanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         user_table = new javax.swing.JTable();
@@ -96,7 +111,7 @@ public class adminpage extends javax.swing.JFrame {
                 logoutMouseExited(evt);
             }
         });
-        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 530, 80, 50));
+        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, 90, 50));
 
         icon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         icon.setForeground(new java.awt.Color(255, 255, 255));
@@ -119,7 +134,7 @@ public class adminpage extends javax.swing.JFrame {
                 violationMouseExited(evt);
             }
         });
-        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 330, 100, 50));
+        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 110, 50));
 
         users.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         users.setForeground(new java.awt.Color(255, 255, 255));
@@ -133,7 +148,7 @@ public class adminpage extends javax.swing.JFrame {
                 usersMouseExited(evt);
             }
         });
-        leftpanel.add(users, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 60, 50));
+        leftpanel.add(users, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 70, 50));
 
         student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         student.setForeground(new java.awt.Color(255, 255, 255));
@@ -147,7 +162,7 @@ public class adminpage extends javax.swing.JFrame {
                 studentMouseExited(evt);
             }
         });
-        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 90, 50));
+        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 280, -1, 50));
 
         record.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         record.setForeground(new java.awt.Color(255, 255, 255));
@@ -164,7 +179,7 @@ public class adminpage extends javax.swing.JFrame {
                 recordMouseExited(evt);
             }
         });
-        leftpanel.add(record, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 80, 50));
+        leftpanel.add(record, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 90, 50));
 
         dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         dashboard.setForeground(new java.awt.Color(255, 255, 255));
@@ -178,19 +193,12 @@ public class adminpage extends javax.swing.JFrame {
                 dashboardMouseExited(evt);
             }
         });
-        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 120, 50));
+        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 230, -1, 50));
 
-        user_fname.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        user_fname.setForeground(new java.awt.Color(255, 255, 255));
-        user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_fname.setText("Fullname");
-        leftpanel.add(user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 90, -1));
-
-        user_type.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        user_type.setForeground(new java.awt.Color(255, 255, 255));
-        user_type.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_type.setText("Admin");
-        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 70, -1));
+        J_user_fname.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        J_user_fname.setForeground(new java.awt.Color(255, 255, 255));
+        J_user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        leftpanel.add(J_user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 30));
 
         settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         settings.setForeground(new java.awt.Color(255, 255, 255));
@@ -204,7 +212,41 @@ public class adminpage extends javax.swing.JFrame {
                 settingsMouseExited(evt);
             }
         });
-        leftpanel.add(settings, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 480, 90, 50));
+        leftpanel.add(settings, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 480, 100, 50));
+
+        user_type1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        user_type1.setForeground(new java.awt.Color(255, 255, 255));
+        user_type1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_type1.setText("Admin");
+        leftpanel.add(user_type1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 70, -1));
+
+        dash_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-dashboard-layout-24.png"))); // NOI18N
+        dash_icon.setText("jLabel1");
+        leftpanel.add(dash_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 30, 30));
+
+        stud_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-student-male-24.png"))); // NOI18N
+        stud_icon.setText("jLabel1");
+        leftpanel.add(stud_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 30, 30));
+
+        vio_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-foul-30.png"))); // NOI18N
+        vio_icon.setText("jLabel1");
+        leftpanel.add(vio_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 30, 30));
+
+        rec_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-record-50.png"))); // NOI18N
+        rec_icon.setText("jLabel1");
+        leftpanel.add(rec_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 30, 30));
+
+        users_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-user-icon-30.png"))); // NOI18N
+        users_icon.setText("jLabel1");
+        leftpanel.add(users_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 30, 30));
+
+        sett_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-settings-50.png"))); // NOI18N
+        sett_icon.setText("jLabel1");
+        leftpanel.add(sett_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 30, 30));
+
+        log_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-open-pane-24.png"))); // NOI18N
+        log_icon.setText("jLabel1");
+        leftpanel.add(log_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 30, 30));
 
         getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 600));
 
@@ -599,11 +641,11 @@ public class adminpage extends javax.swing.JFrame {
     }//GEN-LAST:event_recordMouseClicked
 
     private void settingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseEntered
-        // TODO add your handling code here:
+        settings.setForeground(new java.awt.Color(255, 255, 0));
     }//GEN-LAST:event_settingsMouseEntered
 
     private void settingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseExited
-        // TODO add your handling code here:
+        settings.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_settingsMouseExited
 
     /**
@@ -642,9 +684,11 @@ public class adminpage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel J_user_fname;
     private javax.swing.JLabel add;
     private javax.swing.JLabel addprofile;
     private javax.swing.JTextField contactNumberTextField;
+    private javax.swing.JLabel dash_icon;
     private javax.swing.JLabel dashboard;
     private javax.swing.JLabel delete;
     private javax.swing.JLabel edit;
@@ -653,26 +697,31 @@ public class adminpage extends javax.swing.JFrame {
     private javax.swing.JLabel icon;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
+    private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JLabel rec_icon;
     private javax.swing.JLabel record;
     private javax.swing.JLabel refresh;
     private javax.swing.JLabel save;
     private javax.swing.JLabel search;
     private javax.swing.JTextField searchfield;
+    private javax.swing.JLabel sett_icon;
     private javax.swing.JLabel settings;
+    private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
     private javax.swing.JComboBox<String> userTypeComboBox;
     private javax.swing.JLabel user_cnumberlabel;
     private javax.swing.JLabel user_emaillabel;
-    private javax.swing.JLabel user_fname;
     private javax.swing.JLabel user_fnamelabel;
     private javax.swing.JLabel user_passwordlabel;
     private javax.swing.JTable user_table;
-    private javax.swing.JLabel user_type;
+    private javax.swing.JLabel user_type1;
     private javax.swing.JLabel user_typelabel;
     private javax.swing.JLabel users;
+    private javax.swing.JLabel users_icon;
     private javax.swing.JPanel userspanel;
+    private javax.swing.JLabel vio_icon;
     private javax.swing.JLabel violation;
     // End of variables declaration//GEN-END:variables
 }

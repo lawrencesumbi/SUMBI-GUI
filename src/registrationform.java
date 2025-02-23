@@ -126,7 +126,7 @@ public class registrationform extends javax.swing.JFrame {
         user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_emaillabel.setText("Email");
+        user_emaillabel.setText("Email:");
         RightPanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 60, 20));
 
         registerlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -138,7 +138,7 @@ public class registrationform extends javax.swing.JFrame {
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_passwordlabel.setText("Password");
+        user_passwordlabel.setText("Password:");
         RightPanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 70, 20));
 
         passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -157,7 +157,7 @@ public class registrationform extends javax.swing.JFrame {
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_fnamelabel.setText("Full Name");
+        user_fnamelabel.setText("Full Name:");
         RightPanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 90, -1));
 
         fullNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -190,8 +190,8 @@ public class registrationform extends javax.swing.JFrame {
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_cnumberlabel.setText("Contact Number");
-        RightPanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 110, -1));
+        user_cnumberlabel.setText("Contact Number:");
+        RightPanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 130, -1));
 
         contactNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         contactNumberTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -212,8 +212,8 @@ public class registrationform extends javax.swing.JFrame {
         user_typelabel.setBackground(new java.awt.Color(255, 255, 255));
         user_typelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_typelabel.setForeground(new java.awt.Color(255, 255, 255));
-        user_typelabel.setText("User Type");
-        RightPanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 240, -1, 20));
+        user_typelabel.setText("User Type:");
+        RightPanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 80, 20));
 
         userTypeComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         userTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));

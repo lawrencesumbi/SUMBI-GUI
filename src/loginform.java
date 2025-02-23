@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.event.*;
 
 
 
@@ -129,13 +131,18 @@ public class loginform extends javax.swing.JFrame {
                 passtextfieldActionPerformed(evt);
             }
         });
+        passtextfield.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passtextfieldKeyPressed(evt);
+            }
+        });
         RightPanel.add(passtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 200, -1));
 
         username.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         username.setForeground(new java.awt.Color(255, 255, 255));
         username.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        username.setText("Email");
-        RightPanel.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 60, 20));
+        username.setText("Email:");
+        RightPanel.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 40, 20));
 
         donthaveacc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         donthaveacc.setForeground(new java.awt.Color(255, 255, 255));
@@ -157,8 +164,8 @@ public class loginform extends javax.swing.JFrame {
         password.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         password.setForeground(new java.awt.Color(255, 255, 255));
         password.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        password.setText("Password");
-        RightPanel.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 90, 20));
+        password.setText("Password:");
+        RightPanel.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 70, 20));
 
         loginlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         loginlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -223,15 +230,17 @@ public class loginform extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
+
                 JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 String user_type = rs.getString("user_type");
+                String user_fname = rs.getString("user_fname");
 
                 if (user_type.equals("Admin")) {
-                    adminpage admin = new adminpage();
+                    adminpage admin = new adminpage(user_fname);
                     admin.setVisible(true);
                 } else {
-                    userpage user = new userpage();
+                    userpage user = new userpage(user_fname);
                     user.setVisible(true);
                 }
 
@@ -249,6 +258,54 @@ public class loginform extends javax.swing.JFrame {
     private void loginbuttonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginbuttonKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginbuttonKeyPressed
+
+    private void passtextfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passtextfieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { 
+            String user_email = usertextfield.getText();
+        String user_password = new String(passtextfield.getPassword());
+
+        if (user_email.isEmpty() || user_password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter both email and password.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String sql = "SELECT * FROM user_table WHERE user_email = ? AND user_password = ?";
+
+        dbConnector db = new dbConnector(); // Create an instance of dbConnector
+
+        try (Connection conn = db.getConnection();  // Get connection from dbConnector
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+
+            pst.setString(1, user_email);
+            pst.setString(2, user_password);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+
+                JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                String user_type = rs.getString("user_type");
+                String user_fname = rs.getString("user_fname");
+
+                if (user_type.equals("Admin")) {
+                    adminpage admin = new adminpage(user_fname);
+                    admin.setVisible(true);
+                } else {
+                    userpage user = new userpage(user_fname);
+                    user.setVisible(true);
+                }
+
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Incorrect username or password.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        }
+    }//GEN-LAST:event_passtextfieldKeyPressed
 
     /**
      * @param args the command line arguments

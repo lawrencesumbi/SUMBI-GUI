@@ -18,8 +18,12 @@ public class userpage extends javax.swing.JFrame {
      * 
      */
     public userpage() {
+        initComponents();        
+    }
+    
+    public userpage(String user_fname) {
         initComponents();
-        
+        J_user_fname.setText(user_fname);        
     }
     
     /**
@@ -32,22 +36,144 @@ public class userpage extends javax.swing.JFrame {
     private void initComponents() {
 
         leftpanel = new javax.swing.JPanel();
-        logout = new javax.swing.JLabel();
         icon = new javax.swing.JLabel();
-        violation = new javax.swing.JLabel();
-        student = new javax.swing.JLabel();
-        dashboard = new javax.swing.JLabel();
-        user_cnumber = new javax.swing.JLabel();
-        user_fname = new javax.swing.JLabel();
-        user_email = new javax.swing.JLabel();
         user_type = new javax.swing.JLabel();
-        userspanel = new javax.swing.JPanel();
+        J_user_fname = new javax.swing.JLabel();
+        dash_icon = new javax.swing.JLabel();
+        stud_icon = new javax.swing.JLabel();
+        vio_icon = new javax.swing.JLabel();
+        sett_icon = new javax.swing.JLabel();
+        log_icon = new javax.swing.JLabel();
+        dashboard = new javax.swing.JLabel();
+        student = new javax.swing.JLabel();
+        violation = new javax.swing.JLabel();
+        settings = new javax.swing.JLabel();
+        logout = new javax.swing.JLabel();
+        studentpanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        student_table = new javax.swing.JTable();
+        add = new javax.swing.JLabel();
+        edit = new javax.swing.JLabel();
+        delete = new javax.swing.JLabel();
+        refresh = new javax.swing.JLabel();
+        save = new javax.swing.JLabel();
+        searchfield = new javax.swing.JTextField();
+        search = new javax.swing.JLabel();
+        user_fnamelabel = new javax.swing.JLabel();
+        fullNameTextField = new javax.swing.JTextField();
+        user_cnumberlabel = new javax.swing.JLabel();
+        contactNumberTextField = new javax.swing.JTextField();
+        user_emaillabel = new javax.swing.JLabel();
+        emailTextField = new javax.swing.JTextField();
+        user_passwordlabel = new javax.swing.JLabel();
+        passwordField = new javax.swing.JPasswordField();
+        user_passwordlabel1 = new javax.swing.JLabel();
+        passwordField1 = new javax.swing.JPasswordField();
+        user_passwordlabel2 = new javax.swing.JLabel();
+        passwordField2 = new javax.swing.JPasswordField();
+        addprofile = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         leftpanel.setBackground(new java.awt.Color(0, 0, 0));
         leftpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        icon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        icon.setForeground(new java.awt.Color(255, 255, 255));
+        icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview1.png"))); // NOI18N
+        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 110, 110));
+
+        user_type.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        user_type.setForeground(new java.awt.Color(255, 255, 255));
+        user_type.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_type.setText("User");
+        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 60, -1));
+
+        J_user_fname.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        J_user_fname.setForeground(new java.awt.Color(255, 255, 255));
+        J_user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        leftpanel.add(J_user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 30));
+
+        dash_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-dashboard-layout-24.png"))); // NOI18N
+        dash_icon.setText("jLabel1");
+        leftpanel.add(dash_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 30, 30));
+
+        stud_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-student-male-24.png"))); // NOI18N
+        stud_icon.setText("jLabel1");
+        leftpanel.add(stud_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 30, 30));
+
+        vio_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-foul-30.png"))); // NOI18N
+        vio_icon.setText("jLabel1");
+        leftpanel.add(vio_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 30, 30));
+
+        sett_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-settings-50.png"))); // NOI18N
+        sett_icon.setText("jLabel1");
+        leftpanel.add(sett_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 30, 30));
+
+        log_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-open-pane-24.png"))); // NOI18N
+        log_icon.setText("jLabel1");
+        leftpanel.add(log_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 30, 30));
+
+        dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        dashboard.setForeground(new java.awt.Color(255, 255, 255));
+        dashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dashboard.setText("DASHBOARD");
+        dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dashboardMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                dashboardMouseExited(evt);
+            }
+        });
+        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, 50));
+
+        student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        student.setForeground(new java.awt.Color(255, 255, 255));
+        student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        student.setText("STUDENT");
+        student.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                studentMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                studentMouseExited(evt);
+            }
+        });
+        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, 90, 50));
+
+        violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        violation.setForeground(new java.awt.Color(255, 255, 255));
+        violation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        violation.setText("VIOLATION");
+        violation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                violationMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                violationMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                violationMouseExited(evt);
+            }
+        });
+        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 110, 50));
+
+        settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        settings.setForeground(new java.awt.Color(255, 255, 255));
+        settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        settings.setText("SETTINGS");
+        settings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                settingsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                settingsMouseExited(evt);
+            }
+        });
+        leftpanel.add(settings, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 100, 50));
 
         logout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         logout.setForeground(new java.awt.Color(255, 255, 255));
@@ -64,85 +190,243 @@ public class userpage extends javax.swing.JFrame {
                 logoutMouseExited(evt);
             }
         });
-        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 140, 50));
-
-        icon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        icon.setForeground(new java.awt.Color(255, 255, 255));
-        icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/117891351.png"))); // NOI18N
-        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 80, 80));
-
-        violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        violation.setForeground(new java.awt.Color(255, 255, 255));
-        violation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        violation.setText("VIOLATION");
-        violation.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                violationMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                violationMouseExited(evt);
-            }
-        });
-        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, 140, 50));
-
-        student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        student.setForeground(new java.awt.Color(255, 255, 255));
-        student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        student.setText("STUDENT");
-        student.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                studentMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                studentMouseExited(evt);
-            }
-        });
-        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 140, 50));
-
-        dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        dashboard.setForeground(new java.awt.Color(255, 255, 255));
-        dashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        dashboard.setText("DASHBOARD");
-        dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                dashboardMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                dashboardMouseExited(evt);
-            }
-        });
-        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 140, 50));
-
-        user_cnumber.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        user_cnumber.setForeground(new java.awt.Color(255, 255, 255));
-        user_cnumber.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_cnumber.setText("Contact Number");
-        leftpanel.add(user_cnumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 100, -1));
-
-        user_fname.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        user_fname.setForeground(new java.awt.Color(255, 255, 255));
-        user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_fname.setText("Fullname");
-        leftpanel.add(user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
-
-        user_email.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        user_email.setForeground(new java.awt.Color(255, 255, 255));
-        user_email.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_email.setText("Email Account");
-        leftpanel.add(user_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 100, -1));
-
-        user_type.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        user_type.setForeground(new java.awt.Color(255, 255, 255));
-        user_type.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_type.setText("User");
-        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 70, -1));
+        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 90, 50));
 
         getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 600));
 
-        userspanel.setBackground(new java.awt.Color(204, 0, 0));
-        userspanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
+        studentpanel.setBackground(new java.awt.Color(204, 0, 0));
+        studentpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jScrollPane1.setBackground(new java.awt.Color(204, 0, 0));
+
+        student_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(student_table);
+
+        studentpanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 710, 300));
+
+        add.setBackground(new java.awt.Color(255, 255, 255));
+        add.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        add.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        add.setText("ADD");
+        add.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add.setOpaque(true);
+        add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addMouseExited(evt);
+            }
+        });
+        studentpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 60, 30));
+
+        edit.setBackground(new java.awt.Color(255, 255, 255));
+        edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        edit.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        edit.setText("EDIT");
+        edit.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        edit.setOpaque(true);
+        edit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editMouseExited(evt);
+            }
+        });
+        studentpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 60, 30));
+
+        delete.setBackground(new java.awt.Color(255, 255, 255));
+        delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        delete.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        delete.setText("DELETE");
+        delete.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        delete.setOpaque(true);
+        delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteMouseExited(evt);
+            }
+        });
+        studentpanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 60, 30));
+
+        refresh.setBackground(new java.awt.Color(255, 255, 255));
+        refresh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        refresh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        refresh.setText("REFRESH");
+        refresh.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        refresh.setOpaque(true);
+        refresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                refreshMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                refreshMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                refreshMouseExited(evt);
+            }
+        });
+        studentpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 70, 30));
+
+        save.setBackground(new java.awt.Color(255, 255, 255));
+        save.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        save.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        save.setText("SAVE");
+        save.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        save.setOpaque(true);
+        save.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                saveMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                saveMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                saveMouseExited(evt);
+            }
+        });
+        studentpanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 50, 30));
+
+        searchfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        searchfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchfieldActionPerformed(evt);
+            }
+        });
+        studentpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 160, 30));
+
+        search.setBackground(new java.awt.Color(255, 255, 255));
+        search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        search.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        search.setText("SEARCH");
+        search.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        search.setOpaque(true);
+        search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                searchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                searchMouseExited(evt);
+            }
+        });
+        studentpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 250, 70, 30));
+
+        user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
+        user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_fnamelabel.setText("Student Program");
+        studentpanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 120, 20));
+
+        fullNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        fullNameTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fullNameTextFieldActionPerformed(evt);
+            }
+        });
+        studentpanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 200, -1));
+
+        user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
+        user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_cnumberlabel.setText("Student Section");
+        studentpanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 130, 20));
+
+        contactNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        contactNumberTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contactNumberTextFieldActionPerformed(evt);
+            }
+        });
+        studentpanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 200, -1));
+
+        user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
+        user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_emaillabel.setText("Student First Name");
+        studentpanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 140, 20));
+
+        emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        emailTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailTextFieldActionPerformed(evt);
+            }
+        });
+        studentpanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 200, -1));
+
+        user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
+        user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_passwordlabel.setText("Student Last Name");
+        studentpanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 150, 20));
+
+        passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
+        studentpanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 200, -1));
+
+        user_passwordlabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_passwordlabel1.setForeground(new java.awt.Color(255, 255, 255));
+        user_passwordlabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_passwordlabel1.setText("Student Address");
+        studentpanel.add(user_passwordlabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 120, 20));
+
+        passwordField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        passwordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordField1ActionPerformed(evt);
+            }
+        });
+        studentpanel.add(passwordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 200, -1));
+
+        user_passwordlabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_passwordlabel2.setForeground(new java.awt.Color(255, 255, 255));
+        user_passwordlabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_passwordlabel2.setText("Student Contact Number");
+        studentpanel.add(user_passwordlabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 180, 20));
+
+        passwordField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        passwordField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordField2ActionPerformed(evt);
+            }
+        });
+        studentpanel.add(passwordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 200, -1));
+
+        addprofile.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        addprofile.setForeground(new java.awt.Color(255, 255, 255));
+        addprofile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addprofile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
+        studentpanel.add(addprofile, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 140, 130));
+
+        getContentPane().add(studentpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
         pack();
         setLocationRelativeTo(null);
@@ -164,6 +448,10 @@ public class userpage extends javax.swing.JFrame {
         student.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_studentMouseExited
 
+    private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_violationMouseClicked
+
     private void violationMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseEntered
         violation.setForeground(new java.awt.Color(255, 255, 0));
     }//GEN-LAST:event_violationMouseEntered
@@ -171,6 +459,27 @@ public class userpage extends javax.swing.JFrame {
     private void violationMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseExited
         violation.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_violationMouseExited
+
+    private void settingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseEntered
+        settings.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_settingsMouseEntered
+
+    private void settingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseExited
+        settings.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_settingsMouseExited
+
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
+        int response = JOptionPane.showConfirmDialog(this,
+            "Confirm Log Out?",
+            "Logout Confirmation",
+            JOptionPane.YES_NO_OPTION);
+
+        if (response == JOptionPane.YES_OPTION) {
+            new loginform().setVisible(true);
+            this.dispose();
+        } else {
+        }
+    }//GEN-LAST:event_logoutMouseClicked
 
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
         logout.setForeground(new java.awt.Color(255, 255, 0));
@@ -180,18 +489,105 @@ public class userpage extends javax.swing.JFrame {
         logout.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_logoutMouseExited
 
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        int response = JOptionPane.showConfirmDialog(this, 
-        "Confirm Log Out?", 
-        "Logout Confirmation", 
-        JOptionPane.YES_NO_OPTION);
+    private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addMouseClicked
 
-        if (response == JOptionPane.YES_OPTION) {
-            new loginform().setVisible(true);
-            this.dispose();
-        } else {           
-        }        
-    }//GEN-LAST:event_logoutMouseClicked
+    private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addMouseEntered
+
+    private void addMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addMouseExited
+
+    private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editMouseClicked
+
+    private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editMouseEntered
+
+    private void editMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editMouseExited
+
+    private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteMouseClicked
+
+    private void deleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteMouseEntered
+
+    private void deleteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteMouseExited
+
+    private void refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseClicked
+
+    }//GEN-LAST:event_refreshMouseClicked
+
+    private void refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseEntered
+        refresh.setForeground(new java.awt.Color(255, 102, 102));
+    }//GEN-LAST:event_refreshMouseEntered
+
+    private void refreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseExited
+        refresh.setForeground(new java.awt.Color(0, 0, 0));
+    }//GEN-LAST:event_refreshMouseExited
+
+    private void saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveMouseClicked
+
+    private void saveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveMouseEntered
+
+    private void saveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_saveMouseExited
+
+    private void searchfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchfieldActionPerformed
+
+    private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchMouseClicked
+
+    private void searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchMouseEntered
+
+    private void searchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchMouseExited
+
+    private void fullNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullNameTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fullNameTextFieldActionPerformed
+
+    private void contactNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactNumberTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_contactNumberTextFieldActionPerformed
+
+    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailTextFieldActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void passwordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordField1ActionPerformed
+
+    private void passwordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordField2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,16 +625,42 @@ public class userpage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel J_user_fname;
+    private javax.swing.JLabel add;
+    private javax.swing.JLabel addprofile;
+    private javax.swing.JTextField contactNumberTextField;
+    private javax.swing.JLabel dash_icon;
     private javax.swing.JLabel dashboard;
+    private javax.swing.JLabel delete;
+    private javax.swing.JLabel edit;
+    private javax.swing.JTextField emailTextField;
+    private javax.swing.JTextField fullNameTextField;
     private javax.swing.JLabel icon;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
+    private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JPasswordField passwordField1;
+    private javax.swing.JPasswordField passwordField2;
+    private javax.swing.JLabel refresh;
+    private javax.swing.JLabel save;
+    private javax.swing.JLabel search;
+    private javax.swing.JTextField searchfield;
+    private javax.swing.JLabel sett_icon;
+    private javax.swing.JLabel settings;
+    private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
-    private javax.swing.JLabel user_cnumber;
-    private javax.swing.JLabel user_email;
-    private javax.swing.JLabel user_fname;
+    private javax.swing.JTable student_table;
+    private javax.swing.JPanel studentpanel;
+    private javax.swing.JLabel user_cnumberlabel;
+    private javax.swing.JLabel user_emaillabel;
+    private javax.swing.JLabel user_fnamelabel;
+    private javax.swing.JLabel user_passwordlabel;
+    private javax.swing.JLabel user_passwordlabel1;
+    private javax.swing.JLabel user_passwordlabel2;
     private javax.swing.JLabel user_type;
-    private javax.swing.JPanel userspanel;
+    private javax.swing.JLabel vio_icon;
     private javax.swing.JLabel violation;
     // End of variables declaration//GEN-END:variables
 }
