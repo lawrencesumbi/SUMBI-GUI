@@ -16,16 +16,16 @@ import java.sql.PreparedStatement;
  *
  * @author Admin
  */
-public class adminpage extends javax.swing.JFrame {
+public class adminUsers extends javax.swing.JFrame {
     /**
-     * Creates new form adminpage
+     * Creates new form
      */
-    public adminpage() {
+    public adminUsers() {
         initComponents();
         displayData();
     }
     
-    public adminpage(String user_fname){
+    public adminUsers(String user_fname){
         initComponents();
         J_user_fname.setText(user_fname);
         displayData();
@@ -89,6 +89,8 @@ public class adminpage extends javax.swing.JFrame {
         search = new javax.swing.JLabel();
         searchfield = new javax.swing.JTextField();
         addprofile = new javax.swing.JLabel();
+        user_statuslabel = new javax.swing.JLabel();
+        userStatusComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -406,7 +408,7 @@ public class adminpage extends javax.swing.JFrame {
         user_typelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_typelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_typelabel.setText("User Type");
-        userspanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 70, 20));
+        userspanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 70, 20));
 
         userTypeComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         userTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
@@ -415,7 +417,7 @@ public class adminpage extends javax.swing.JFrame {
                 userTypeComboBoxActionPerformed(evt);
             }
         });
-        userspanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 200, 30));
+        userspanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 200, 30));
 
         save.setBackground(new java.awt.Color(255, 255, 255));
         save.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -468,6 +470,21 @@ public class adminpage extends javax.swing.JFrame {
         addprofile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         addprofile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
         userspanel.add(addprofile, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 140, 130));
+
+        user_statuslabel.setBackground(new java.awt.Color(255, 255, 255));
+        user_statuslabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_statuslabel.setForeground(new java.awt.Color(255, 255, 255));
+        user_statuslabel.setText("User Status");
+        userspanel.add(user_statuslabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 80, 20));
+
+        userStatusComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        userStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved" }));
+        userStatusComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userStatusComboBoxActionPerformed(evt);
+            }
+        });
+        userspanel.add(userStatusComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 200, 30));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -648,6 +665,10 @@ public class adminpage extends javax.swing.JFrame {
         settings.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_settingsMouseExited
 
+    private void userStatusComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userStatusComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userStatusComboBoxActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -665,20 +686,20 @@ public class adminpage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(adminpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminUsers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(adminpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminUsers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(adminpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminUsers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(adminpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(adminUsers.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new adminpage().setVisible(true);
+                new adminUsers().setVisible(true);
             }
         });
     }
@@ -710,11 +731,13 @@ public class adminpage extends javax.swing.JFrame {
     private javax.swing.JLabel settings;
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
+    private javax.swing.JComboBox<String> userStatusComboBox;
     private javax.swing.JComboBox<String> userTypeComboBox;
     private javax.swing.JLabel user_cnumberlabel;
     private javax.swing.JLabel user_emaillabel;
     private javax.swing.JLabel user_fnamelabel;
     private javax.swing.JLabel user_passwordlabel;
+    private javax.swing.JLabel user_statuslabel;
     private javax.swing.JTable user_table;
     private javax.swing.JLabel user_type1;
     private javax.swing.JLabel user_typelabel;

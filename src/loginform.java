@@ -237,10 +237,10 @@ public class loginform extends javax.swing.JFrame {
                 String user_fname = rs.getString("user_fname");
 
                 if (user_type.equals("Admin")) {
-                    adminpage admin = new adminpage(user_fname);
+                    adminUsers admin = new adminUsers(user_fname);
                     admin.setVisible(true);
                 } else {
-                    userpage user = new userpage(user_fname);
+                    userStudent user = new userStudent(user_fname);
                     user.setVisible(true);
                 }
 
@@ -288,10 +288,10 @@ public class loginform extends javax.swing.JFrame {
                 String user_fname = rs.getString("user_fname");
 
                 if (user_type.equals("Admin")) {
-                    adminpage admin = new adminpage(user_fname);
+                    adminUsers admin = new adminUsers(user_fname);
                     admin.setVisible(true);
                 } else {
-                    userpage user = new userpage(user_fname);
+                    userStudent user = new userStudent(user_fname);
                     user.setVisible(true);
                 }
 
