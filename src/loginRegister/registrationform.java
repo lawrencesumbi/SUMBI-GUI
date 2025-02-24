@@ -276,6 +276,7 @@ public class registrationform extends javax.swing.JFrame {
         String user_email = emailTextField.getText();
         String user_password = new String(passwordField.getPassword());
         String user_type = userTypeComboBox.getSelectedItem().toString();
+        String user_status = "Pending";
 
         if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty() || user_password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -305,7 +306,7 @@ public class registrationform extends javax.swing.JFrame {
                 return;
             }
 
-            String sql = "INSERT INTO user_table (user_fname, user_cnumber, user_email, user_password, user_type) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO user_table (user_fname, user_cnumber, user_email, user_password, user_type, user_status) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, user_fname);
@@ -313,10 +314,11 @@ public class registrationform extends javax.swing.JFrame {
             pstmt.setString(3, user_email);
             pstmt.setString(4, user_password);
             pstmt.setString(5, user_type);
+            pstmt.setString(6, user_status);
 
             int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted > 0) {
-                JOptionPane.showMessageDialog(this, "Registration Successful!");
+                JOptionPane.showMessageDialog(this, "Registration successful! Please wait for admin approval.");
                 this.dispose();
                 new loginform().setVisible(true);
             }
