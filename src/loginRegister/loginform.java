@@ -9,10 +9,6 @@ import javax.swing.*;
 import java.awt.event.*;
 
 
-
-
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -237,7 +233,7 @@ public class loginform extends javax.swing.JFrame {
                 String user_fname = rs.getString("user_fname");
 
                 if (user_type.equals("Admin")) {
-                    adminUsers admin = new adminUsers(user_fname);
+                    adminDashboard admin = new adminDashboard(user_fname);
                     admin.setVisible(true);
                 } else {
                     userStudent user = new userStudent(user_fname);
@@ -261,7 +257,7 @@ public class loginform extends javax.swing.JFrame {
 
     private void passtextfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passtextfieldKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) { 
-            String user_email = usertextfield.getText();
+        String user_email = usertextfield.getText();
         String user_password = new String(passtextfield.getPassword());
 
         if (user_email.isEmpty() || user_password.isEmpty()) {
@@ -288,7 +284,7 @@ public class loginform extends javax.swing.JFrame {
                 String user_fname = rs.getString("user_fname");
 
                 if (user_type.equals("Admin")) {
-                    adminUsers admin = new adminUsers(user_fname);
+                    adminDashboard admin = new adminDashboard(user_fname);
                     admin.setVisible(true);
                 } else {
                     userStudent user = new userStudent(user_fname);

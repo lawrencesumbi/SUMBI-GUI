@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/OneDrive/Documents/NetBeansProjects/sumbistudvio/src/adminUsers.java</file>
-            <file>file:/C:/Users/Admin/OneDrive/Documents/NetBeansProjects/sumbistudvio/src/adminDashboard.java</file>
-            <file>file:/C:/Users/Admin/OneDrive/Documents/NetBeansProjects/sumbistudvio/src/loginform.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/NetBeansProjects/sumbistudvio/src/adminPackage/adminUsers.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/NetBeansProjects/sumbistudvio/src/loginRegister/loginform.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Documents/NetBeansProjects/sumbistudvio/src/adminPackage/adminDashboard.java</file>
         </group>
     </open-files>
 </project-private>

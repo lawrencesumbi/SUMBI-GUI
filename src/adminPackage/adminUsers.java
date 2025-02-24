@@ -17,6 +17,7 @@ import java.sql.PreparedStatement;
  * @author Admin
  */
 public class adminUsers extends javax.swing.JFrame {
+    private String user_fname;
     /**
      * Creates new form
      */
@@ -26,6 +27,7 @@ public class adminUsers extends javax.swing.JFrame {
     }
     
     public adminUsers(String user_fname){
+        this.user_fname = user_fname;
         initComponents();
         J_user_fname.setText(user_fname);
         displayData();
@@ -188,6 +190,9 @@ public class adminUsers extends javax.swing.JFrame {
         dashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dashboard.setText("DASHBOARD");
         dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dashboardMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dashboardMouseEntered(evt);
             }
@@ -668,6 +673,11 @@ public class adminUsers extends javax.swing.JFrame {
     private void userStatusComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userStatusComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userStatusComboBoxActionPerformed
+
+    private void dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseClicked
+        new adminDashboard(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_dashboardMouseClicked
 
     /**
      * @param args the command line arguments
