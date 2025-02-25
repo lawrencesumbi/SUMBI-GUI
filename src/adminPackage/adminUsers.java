@@ -34,6 +34,12 @@ public class adminUsers extends javax.swing.JFrame {
         try {
             dbConnector dbc = new dbConnector();
             ResultSet rs = dbc.getData("SELECT * FROM user_table");
+            fullNameTextField.setText("");  
+            contactNumberTextField.setText("");  
+            emailTextField.setText("");  
+            passwordField.setText("");  
+            userTypeComboBox.setSelectedIndex(-1);
+            userStatusComboBox.setSelectedIndex(-1);
             user_table.setModel(DbUtils.resultSetToTableModel(rs));   
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
@@ -84,7 +90,6 @@ public class adminUsers extends javax.swing.JFrame {
         user_passwordlabel = new javax.swing.JLabel();
         user_typelabel = new javax.swing.JLabel();
         userTypeComboBox = new javax.swing.JComboBox<>();
-        save = new javax.swing.JLabel();
         search = new javax.swing.JLabel();
         searchfield = new javax.swing.JTextField();
         addprofile = new javax.swing.JLabel();
@@ -302,7 +307,7 @@ public class adminUsers extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        userspanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 70, 30));
+        userspanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 70, 30));
 
         add.setBackground(new java.awt.Color(255, 255, 255));
         add.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -321,7 +326,7 @@ public class adminUsers extends javax.swing.JFrame {
                 addMouseExited(evt);
             }
         });
-        userspanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 60, 30));
+        userspanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 60, 30));
 
         edit.setBackground(new java.awt.Color(255, 255, 255));
         edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -340,7 +345,7 @@ public class adminUsers extends javax.swing.JFrame {
                 editMouseExited(evt);
             }
         });
-        userspanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 60, 30));
+        userspanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 60, 30));
 
         delete.setBackground(new java.awt.Color(255, 255, 255));
         delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -359,7 +364,7 @@ public class adminUsers extends javax.swing.JFrame {
                 deleteMouseExited(evt);
             }
         });
-        userspanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 60, 30));
+        userspanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 60, 30));
 
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -373,7 +378,7 @@ public class adminUsers extends javax.swing.JFrame {
                 fullNameTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 200, -1));
+        userspanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 180, -1));
 
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -387,7 +392,7 @@ public class adminUsers extends javax.swing.JFrame {
                 contactNumberTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 200, -1));
+        userspanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 180, -1));
 
         user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -401,7 +406,7 @@ public class adminUsers extends javax.swing.JFrame {
                 emailTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 200, -1));
+        userspanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 180, -1));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -422,26 +427,7 @@ public class adminUsers extends javax.swing.JFrame {
                 userTypeComboBoxActionPerformed(evt);
             }
         });
-        userspanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 200, -1));
-
-        save.setBackground(new java.awt.Color(255, 255, 255));
-        save.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        save.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        save.setText("SAVE");
-        save.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        save.setOpaque(true);
-        save.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                saveMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                saveMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                saveMouseExited(evt);
-            }
-        });
-        userspanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 50, 30));
+        userspanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 180, -1));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -460,7 +446,7 @@ public class adminUsers extends javax.swing.JFrame {
                 searchMouseExited(evt);
             }
         });
-        userspanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 250, 70, 30));
+        userspanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 250, 70, 30));
 
         searchfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         searchfield.addActionListener(new java.awt.event.ActionListener() {
@@ -468,7 +454,7 @@ public class adminUsers extends javax.swing.JFrame {
                 searchfieldActionPerformed(evt);
             }
         });
-        userspanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 160, 30));
+        userspanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 160, 30));
 
         addprofile.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         addprofile.setForeground(new java.awt.Color(255, 255, 255));
@@ -489,7 +475,7 @@ public class adminUsers extends javax.swing.JFrame {
                 userStatusComboBoxActionPerformed(evt);
             }
         });
-        userspanel.add(userStatusComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 200, -1));
+        userspanel.add(userStatusComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 180, -1));
 
         passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -497,7 +483,7 @@ public class adminUsers extends javax.swing.JFrame {
                 passwordFieldActionPerformed(evt);
             }
         });
-        userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 200, -1));
+        userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, 180, -1));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -507,10 +493,16 @@ public class adminUsers extends javax.swing.JFrame {
 
     private void refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseClicked
         displayData();
+        fullNameTextField.setText("");  
+        contactNumberTextField.setText("");  
+        emailTextField.setText("");  
+        passwordField.setText("");  
+        userTypeComboBox.setSelectedIndex(-1);
+        userStatusComboBox.setSelectedIndex(-1);
     }//GEN-LAST:event_refreshMouseClicked
 
     private void refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseEntered
-        refresh.setForeground(new java.awt.Color(255, 102, 102));
+        refresh.setForeground(new java.awt.Color(204, 0, 0));
     }//GEN-LAST:event_refreshMouseEntered
 
     private void refreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseExited
@@ -518,9 +510,82 @@ public class adminUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshMouseExited
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-        // TODO add your handling code here:
+        String user_fname = fullNameTextField.getText();
+        String user_cnumber = contactNumberTextField.getText();
+        String user_email = emailTextField.getText();
+        String user_password = new String(passwordField.getText());
+        String user_type = userTypeComboBox.getSelectedItem().toString();
+        String user_status = "Pending";
+        
+        if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty() || user_password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!user_cnumber.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (user_password.length() < 8) {
+            JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            if (isEmailDuplicate(conn, user_email)) {
+                JOptionPane.showMessageDialog(this, "Email already exists. Please use a different email.", "Error", JOptionPane.ERROR_MESSAGE);
+                conn.close();
+                return;
+            }
+
+            String sql = "INSERT INTO user_table (user_fname, user_cnumber, user_email, user_password, user_type, user_status) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, user_fname);
+            pstmt.setString(2, user_cnumber);
+            pstmt.setString(3, user_email);
+            pstmt.setString(4, user_password);
+            pstmt.setString(5, user_type);
+            pstmt.setString(6, user_status);
+
+            int rowsInserted = pstmt.executeUpdate();
+            if (rowsInserted > 0) {
+                JOptionPane.showMessageDialog(this, "Registration successful!");
+            }
+
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+              
     }//GEN-LAST:event_addMouseClicked
 
+    private boolean isEmailDuplicate(Connection conn, String email) {
+        boolean exists = false;
+        String query = "SELECT COUNT(*) FROM user_table WHERE user_email = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                exists = rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return exists;
+    }
+    
     private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_addMouseEntered
@@ -530,7 +595,63 @@ public class adminUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_addMouseExited
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-        // TODO add your handling code here:
+        String user_fname = fullNameTextField.getText();
+        String user_cnumber = contactNumberTextField.getText();
+        String user_email = emailTextField.getText();
+        String user_password = new String(passwordField.getText());
+        String user_type = userTypeComboBox.getSelectedItem().toString();
+        String user_status = userStatusComboBox.getSelectedItem().toString();
+
+        if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty() || user_password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!user_cnumber.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (user_password.length() < 8) {
+            JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            if (!isEmailDuplicate(conn, user_email)) {
+                JOptionPane.showMessageDialog(this, "Email does not exist. Please check the email.", "Error", JOptionPane.ERROR_MESSAGE);
+                conn.close();
+                return;
+            }
+
+            String sql = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, user_password = ?, user_type = ?, user_status = ? WHERE user_email = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, user_fname);
+            pstmt.setString(2, user_cnumber);
+            pstmt.setString(3, user_password);
+            pstmt.setString(4, user_type);
+            pstmt.setString(5, user_status);
+            pstmt.setString(6, user_email);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "User information updated successfully!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_editMouseClicked
 
     private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
@@ -542,7 +663,48 @@ public class adminUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_editMouseExited
 
     private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
-        // TODO add your handling code here:
+        String user_email = emailTextField.getText();
+
+        if (user_email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter an email.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            if (!isEmailDuplicate(conn, user_email)) {
+                JOptionPane.showMessageDialog(this, "Email does not exist. Please check the email.", "Error", JOptionPane.ERROR_MESSAGE);
+                conn.close();
+                return;
+            }
+
+            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+            if (confirm != JOptionPane.YES_OPTION) {
+                conn.close();
+                return;
+            }
+
+            String sql = "DELETE FROM user_table WHERE user_email = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user_email);
+
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(this, "User deleted successfully!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Deletion failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_deleteMouseClicked
 
     private void deleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
@@ -568,18 +730,6 @@ public class adminUsers extends javax.swing.JFrame {
     private void userTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userTypeComboBoxActionPerformed
-
-    private void saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveMouseClicked
-
-    private void saveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveMouseEntered
-
-    private void saveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveMouseExited
 
     private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
         // TODO add your handling code here:
@@ -690,10 +840,10 @@ public class adminUsers extends javax.swing.JFrame {
         contactNumberTextField.setText(model.getValueAt(i,2).toString());
         emailTextField.setText(model.getValueAt(i,3).toString());
         passwordField.setText(model.getValueAt(i,4).toString());
-        String role = model.getValueAt(i, 5).toString();
-        userTypeComboBox.setSelectedItem(role);
-        model.getValueAt(i, 6).toString();
-        userStatusComboBox.setSelectedItem(role);
+        String type = model.getValueAt(i, 5).toString();
+        userTypeComboBox.setSelectedItem(type);
+        String status = model.getValueAt(i, 6).toString();
+        userStatusComboBox.setSelectedItem(status);
     }//GEN-LAST:event_user_tableMouseClicked
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
@@ -759,7 +909,6 @@ public class adminUsers extends javax.swing.JFrame {
     private javax.swing.JLabel rec_icon;
     private javax.swing.JLabel record;
     private javax.swing.JLabel refresh;
-    private javax.swing.JLabel save;
     private javax.swing.JLabel search;
     private javax.swing.JTextField searchfield;
     private javax.swing.JLabel sett_icon;

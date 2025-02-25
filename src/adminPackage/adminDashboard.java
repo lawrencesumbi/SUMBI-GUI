@@ -419,7 +419,7 @@ public class adminDashboard extends javax.swing.JFrame {
         if (response == JOptionPane.YES_OPTION) {
             new loginform().setVisible(true);
             this.dispose();
-        } else {           
+        } else {
         }        
     }//GEN-LAST:event_logoutMouseClicked
 
