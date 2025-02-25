@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 import javax.swing.*;
 import java.sql.*;
 import config.dbConnector;
@@ -12,6 +8,7 @@ import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import javax.swing.table.TableModel;
 /**
  *
  * @author Admin
@@ -42,6 +39,7 @@ public class adminUsers extends javax.swing.JFrame {
             System.out.println("Error: " + ex.getMessage());
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,7 +82,6 @@ public class adminUsers extends javax.swing.JFrame {
         user_emaillabel = new javax.swing.JLabel();
         emailTextField = new javax.swing.JTextField();
         user_passwordlabel = new javax.swing.JLabel();
-        passwordField = new javax.swing.JPasswordField();
         user_typelabel = new javax.swing.JLabel();
         userTypeComboBox = new javax.swing.JComboBox<>();
         save = new javax.swing.JLabel();
@@ -93,6 +90,7 @@ public class adminUsers extends javax.swing.JFrame {
         addprofile = new javax.swing.JLabel();
         user_statuslabel = new javax.swing.JLabel();
         userStatusComboBox = new javax.swing.JComboBox<>();
+        passwordField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -261,6 +259,11 @@ public class adminUsers extends javax.swing.JFrame {
         userspanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setBackground(new java.awt.Color(204, 0, 0));
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
 
         user_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -273,6 +276,11 @@ public class adminUsers extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        user_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                user_tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(user_table);
 
         userspanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 710, 300));
@@ -401,14 +409,6 @@ public class adminUsers extends javax.swing.JFrame {
         user_passwordlabel.setText("Password");
         userspanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 80, 20));
 
-        passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
-        userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 200, -1));
-
         user_typelabel.setBackground(new java.awt.Color(255, 255, 255));
         user_typelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_typelabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -422,7 +422,7 @@ public class adminUsers extends javax.swing.JFrame {
                 userTypeComboBoxActionPerformed(evt);
             }
         });
-        userspanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 200, 30));
+        userspanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 200, -1));
 
         save.setBackground(new java.awt.Color(255, 255, 255));
         save.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -489,7 +489,15 @@ public class adminUsers extends javax.swing.JFrame {
                 userStatusComboBoxActionPerformed(evt);
             }
         });
-        userspanel.add(userStatusComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 200, 30));
+        userspanel.add(userStatusComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 200, -1));
+
+        passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
+        userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 200, -1));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -556,10 +564,6 @@ public class adminUsers extends javax.swing.JFrame {
     private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_emailTextFieldActionPerformed
-
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void userTypeComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userTypeComboBoxActionPerformed
         // TODO add your handling code here:
@@ -679,6 +683,27 @@ public class adminUsers extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_dashboardMouseClicked
 
+    private void user_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_user_tableMouseClicked
+        int i = user_table.getSelectedRow();
+        TableModel model = user_table.getModel();
+        fullNameTextField.setText(model.getValueAt(i,1).toString());
+        contactNumberTextField.setText(model.getValueAt(i,2).toString());
+        emailTextField.setText(model.getValueAt(i,3).toString());
+        passwordField.setText(model.getValueAt(i,4).toString());
+        String role = model.getValueAt(i, 5).toString();
+        userTypeComboBox.setSelectedItem(role);
+        model.getValueAt(i, 6).toString();
+        userStatusComboBox.setSelectedItem(role);
+    }//GEN-LAST:event_user_tableMouseClicked
+
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+
+    }//GEN-LAST:event_jScrollPane1MouseClicked
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -730,7 +755,7 @@ public class adminUsers extends javax.swing.JFrame {
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
-    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JTextField passwordField;
     private javax.swing.JLabel rec_icon;
     private javax.swing.JLabel record;
     private javax.swing.JLabel refresh;

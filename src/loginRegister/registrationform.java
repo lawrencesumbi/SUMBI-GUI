@@ -48,7 +48,6 @@ public class registrationform extends javax.swing.JFrame {
         user_emaillabel = new javax.swing.JLabel();
         registerlabel = new javax.swing.JLabel();
         user_passwordlabel = new javax.swing.JLabel();
-        passwordField = new javax.swing.JPasswordField();
         user_fnamelabel = new javax.swing.JLabel();
         fullNameTextField = new javax.swing.JTextField();
         registerbutton = new javax.swing.JLabel();
@@ -58,6 +57,7 @@ public class registrationform extends javax.swing.JFrame {
         userTypeComboBox = new javax.swing.JComboBox<>();
         cn_error = new javax.swing.JLabel();
         pass_error = new javax.swing.JLabel();
+        passwordField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -140,19 +140,6 @@ public class registrationform extends javax.swing.JFrame {
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel.setText("Password:");
         RightPanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 70, 20));
-
-        passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
-        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                passwordFieldKeyPressed(evt);
-            }
-        });
-        RightPanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 200, -1));
 
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -239,6 +226,19 @@ public class registrationform extends javax.swing.JFrame {
         });
         RightPanel.add(pass_error, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 130, 20));
 
+        passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
+        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyPressed(evt);
+            }
+        });
+        RightPanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 200, -1));
+
         getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 250, 350));
 
         pack();
@@ -248,10 +248,6 @@ public class registrationform extends javax.swing.JFrame {
     private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_emailTextFieldActionPerformed
-
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void fullNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullNameTextFieldActionPerformed
         // TODO add your handling code here:
@@ -274,7 +270,7 @@ public class registrationform extends javax.swing.JFrame {
         String user_fname = fullNameTextField.getText();
         String user_cnumber = contactNumberTextField.getText();
         String user_email = emailTextField.getText();
-        String user_password = new String(passwordField.getPassword());
+        String user_password = new String(passwordField.getText());
         String user_type = userTypeComboBox.getSelectedItem().toString();
         String user_status = "Pending";
 
@@ -382,6 +378,10 @@ public class registrationform extends javax.swing.JFrame {
         
     }//GEN-LAST:event_pass_errorKeyReleased
 
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
     private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
         String user_password = passwordField.getText();
         if(user_password.length()<7){
@@ -437,7 +437,7 @@ public class registrationform extends javax.swing.JFrame {
     private javax.swing.JTextField fullNameTextField;
     private javax.swing.JLabel header;
     private javax.swing.JLabel pass_error;
-    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JTextField passwordField;
     private javax.swing.JLabel registerbutton;
     private javax.swing.JLabel registerlabel;
     private javax.swing.JLabel studentlabel;
