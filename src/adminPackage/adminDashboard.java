@@ -265,7 +265,7 @@ public class adminDashboard extends javax.swing.JFrame {
         user_type3.setText("0");
         stat_panel.add(user_type3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
-        userspanel.add(stat_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 150, 190, 120));
+        userspanel.add(stat_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, 190, 120));
 
         studnum_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -282,7 +282,7 @@ public class adminDashboard extends javax.swing.JFrame {
         user_type13.setText("2024-2025");
         studnum_panel.add(user_type13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 100, 30));
 
-        userspanel.add(studnum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, 190, 120));
+        userspanel.add(studnum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 190, 120));
 
         vionum_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -299,7 +299,7 @@ public class adminDashboard extends javax.swing.JFrame {
         user_type9.setText("0");
         vionum_panel.add(user_type9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
-        userspanel.add(vionum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 150, 190, 120));
+        userspanel.add(vionum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 190, 120));
 
         studnum_panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -316,7 +316,7 @@ public class adminDashboard extends javax.swing.JFrame {
         user_type10.setText("0");
         studnum_panel1.add(user_type10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
-        userspanel.add(studnum_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 190, 120));
+        userspanel.add(studnum_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 190, 120));
 
         stat_panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -333,7 +333,7 @@ public class adminDashboard extends javax.swing.JFrame {
         user_type12.setText("0");
         stat_panel1.add(user_type12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
-        userspanel.add(stat_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 300, 190, 120));
+        userspanel.add(stat_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 190, 120));
 
         vionum_panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -350,7 +350,7 @@ public class adminDashboard extends javax.swing.JFrame {
         user_type11.setText("0");
         vionum_panel1.add(user_type11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
-        userspanel.add(vionum_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 190, 120));
+        userspanel.add(vionum_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, 190, 120));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
