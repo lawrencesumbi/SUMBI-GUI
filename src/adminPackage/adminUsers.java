@@ -56,6 +56,7 @@ public class adminUsers extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCheckBox1 = new javax.swing.JCheckBox();
         leftpanel = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
         icon = new javax.swing.JLabel();
@@ -96,6 +97,8 @@ public class adminUsers extends javax.swing.JFrame {
         user_statuslabel = new javax.swing.JLabel();
         userStatusComboBox = new javax.swing.JComboBox<>();
         passwordField = new javax.swing.JTextField();
+
+        jCheckBox1.setText("jCheckBox1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -307,7 +310,7 @@ public class adminUsers extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        userspanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 70, 30));
+        userspanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 70, 30));
 
         add.setBackground(new java.awt.Color(255, 255, 255));
         add.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -326,7 +329,7 @@ public class adminUsers extends javax.swing.JFrame {
                 addMouseExited(evt);
             }
         });
-        userspanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 60, 30));
+        userspanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 60, 30));
 
         edit.setBackground(new java.awt.Color(255, 255, 255));
         edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -345,7 +348,7 @@ public class adminUsers extends javax.swing.JFrame {
                 editMouseExited(evt);
             }
         });
-        userspanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 60, 30));
+        userspanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 60, 30));
 
         delete.setBackground(new java.awt.Color(255, 255, 255));
         delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -364,7 +367,7 @@ public class adminUsers extends javax.swing.JFrame {
                 deleteMouseExited(evt);
             }
         });
-        userspanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 60, 30));
+        userspanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 60, 30));
 
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -469,7 +472,7 @@ public class adminUsers extends javax.swing.JFrame {
         userspanel.add(user_statuslabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 80, 20));
 
         userStatusComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        userStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Approved" }));
+        userStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Active" }));
         userStatusComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 userStatusComboBoxActionPerformed(evt);
@@ -901,6 +904,7 @@ public class adminUsers extends javax.swing.JFrame {
     private javax.swing.JTextField emailTextField;
     private javax.swing.JTextField fullNameTextField;
     private javax.swing.JLabel icon;
+    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 16, 2025 at 03:50 PM
+-- Generation Time: Feb 27, 2025 at 07:59 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -33,23 +33,26 @@ CREATE TABLE `user_table` (
   `user_cnumber` varchar(50) NOT NULL,
   `user_email` varchar(50) NOT NULL,
   `user_password` varchar(50) NOT NULL,
-  `user_type` varchar(50) NOT NULL
+  `user_type` varchar(50) NOT NULL,
+  `user_status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_table`
 --
 
-INSERT INTO `user_table` (`user_id`, `user_fname`, `user_cnumber`, `user_email`, `user_password`, `user_type`) VALUES
-(1, 'Lawrence Sumbi', '09753140724', 'guiansumbi@gmail.com', '12345678', 'User'),
-(2, 'Patricia Obaob', '09059641855', 'patobaob@gmail.com', '12345678', 'User'),
-(3, 'Mike Bustamante', '09123456789', 'mikebustamante@gmail.com', '87654321', 'Admin'),
-(4, 'Diovely Campo', '09876543210', 'dyubli@gmail.com', '12345678', 'User'),
-(5, 'Sample', '12345678910', 'sample@gmail.com', '1234567', 'User'),
-(6, 'Sample1', '12345678910', 'sample1@gmail.com', '12345678', 'User'),
-(7, 'Guian Sumbi', '09303172724', 'sumbiguian@gmail.com', '12345678', 'User'),
-(8, 'Sample2', '09123456789', 'sample2@gmail.com', '12345678', 'User'),
-(9, 'Sample3', '09123456789', 'sample3@gmal.com', '12345678', 'User');
+INSERT INTO `user_table` (`user_id`, `user_fname`, `user_cnumber`, `user_email`, `user_password`, `user_type`, `user_status`) VALUES
+(1, 'Lawrence Sumbi', '09753140724', 'guiansumbi@gmail.com', '12345678', 'User', 'Active'),
+(2, 'Patricia Obaob', '09059641855', 'patobaob@gmail.com', '12345678', 'User', 'Pending'),
+(3, 'Mike Bustamante', '09123456789', 'mikebustamante@gmail.com', '87654321', 'Admin', 'Active'),
+(4, 'Diovely Campo', '09876543210', 'dyubli@gmail.com', '12345678', 'User', 'Pending'),
+(5, 'Sample', '12345678910', 'sample@gmail.com', '12345678', 'User', 'Pending'),
+(6, 'Sample1', '12345678910', 'sample1@gmail.com', '12345678', 'User', 'Pending'),
+(7, 'Guian Sumbi', '09303172724', 'sumbiguian@gmail.com', '12345678', 'Admin', 'Active'),
+(8, 'Sample2', '09123456789', 'sample2@gmail.com', '12345678', 'User', 'Pending'),
+(9, 'Sample3', '09123456789', 'sample3@gmal.com', '12345678', 'User', 'Pending'),
+(12, 'Sample6', '09123456789', 'sample6@gmail.com', '12345678', 'User', 'Pending'),
+(13, 'Sample8', '09123456789', 'sample7@gmail.com', '12345678', 'User', 'Active');
 
 --
 -- Indexes for dumped tables
@@ -69,7 +72,7 @@ ALTER TABLE `user_table`
 -- AUTO_INCREMENT for table `user_table`
 --
 ALTER TABLE `user_table`
-  MODIFY `user_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

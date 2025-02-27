@@ -206,49 +206,55 @@ public class loginform extends javax.swing.JFrame {
     }//GEN-LAST:event_loginbuttonMouseExited
 
     private void loginbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginbuttonMouseClicked
-        String user_email = usertextfield.getText();
-        String user_password = new String(passtextfield.getPassword());
+    String user_email = usertextfield.getText();
+    String user_password = new String(passtextfield.getPassword());
 
-        if (user_email.isEmpty() || user_password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter both email and password.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (user_email.isEmpty() || user_password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter both email and password.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        String sql = "SELECT * FROM user_table WHERE user_email = ? AND user_password = ?";
+    String sql = "SELECT * FROM user_table WHERE user_email = ? AND user_password = ?";
 
-        dbConnector db = new dbConnector(); // Create an instance of dbConnector
+    dbConnector db = new dbConnector();
 
-        try (Connection conn = db.getConnection();  // Get connection from dbConnector
-             PreparedStatement pst = conn.prepareStatement(sql)) {
+    try (Connection conn = db.getConnection();
+         PreparedStatement pst = conn.prepareStatement(sql)) {
 
-            pst.setString(1, user_email);
-            pst.setString(2, user_password);
-            ResultSet rs = pst.executeQuery();
+        pst.setString(1, user_email);
+        pst.setString(2, user_password);
+        ResultSet rs = pst.executeQuery();
 
-            if (rs.next()) {
+        if (rs.next()) {
+            String user_status = rs.getString("user_status");
 
-                JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
-                String user_type = rs.getString("user_type");
-                String user_fname = rs.getString("user_fname");
-
-                if (user_type.equals("Admin")) {
-                    adminDashboard admin = new adminDashboard(user_fname);
-                    admin.setVisible(true);
-                } else {
-                    userStudent user = new userStudent(user_fname);
-                    user.setVisible(true);
-                }
-
-                this.dispose();
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Incorrect username or password.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (user_status.equalsIgnoreCase("Pending")) {
+                JOptionPane.showMessageDialog(this, "Account Pending. Please contact the Admin.", "Access Denied", JOptionPane.WARNING_MESSAGE);
+                return;
             }
 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            String user_type = rs.getString("user_type");
+            String user_fname = rs.getString("user_fname");
+
+            if (user_type.equalsIgnoreCase("Admin")) {
+                adminDashboard admin = new adminDashboard(user_fname);
+                admin.setVisible(true);
+            } else {
+                userStudent user = new userStudent(user_fname);
+                user.setVisible(true);
+            }
+
+            this.dispose();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Incorrect username or password.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_loginbuttonMouseClicked
 
     private void loginbuttonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginbuttonKeyPressed
@@ -267,9 +273,9 @@ public class loginform extends javax.swing.JFrame {
 
         String sql = "SELECT * FROM user_table WHERE user_email = ? AND user_password = ?";
 
-        dbConnector db = new dbConnector(); // Create an instance of dbConnector
+        dbConnector db = new dbConnector();
 
-        try (Connection conn = db.getConnection();  // Get connection from dbConnector
+        try (Connection conn = db.getConnection();
              PreparedStatement pst = conn.prepareStatement(sql)) {
 
             pst.setString(1, user_email);
@@ -277,13 +283,19 @@ public class loginform extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
+                String user_status = rs.getString("user_status");
+
+                if (user_status.equalsIgnoreCase("Pending")) {
+                    JOptionPane.showMessageDialog(this, "Account Pending. Please contact the Admin.", "Access Denied", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
 
                 JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 String user_type = rs.getString("user_type");
                 String user_fname = rs.getString("user_fname");
 
-                if (user_type.equals("Admin")) {
+                if (user_type.equalsIgnoreCase("Admin")) {
                     adminDashboard admin = new adminDashboard(user_fname);
                     admin.setVisible(true);
                 } else {

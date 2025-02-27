@@ -56,7 +56,6 @@ public class userStudent extends javax.swing.JFrame {
         edit = new javax.swing.JLabel();
         delete = new javax.swing.JLabel();
         refresh = new javax.swing.JLabel();
-        save = new javax.swing.JLabel();
         searchfield = new javax.swing.JTextField();
         search = new javax.swing.JLabel();
         user_fnamelabel = new javax.swing.JLabel();
@@ -231,7 +230,7 @@ public class userStudent extends javax.swing.JFrame {
                 addMouseExited(evt);
             }
         });
-        studentpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 60, 30));
+        studentpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 60, 30));
 
         edit.setBackground(new java.awt.Color(255, 255, 255));
         edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -250,7 +249,7 @@ public class userStudent extends javax.swing.JFrame {
                 editMouseExited(evt);
             }
         });
-        studentpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 60, 30));
+        studentpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 60, 30));
 
         delete.setBackground(new java.awt.Color(255, 255, 255));
         delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -269,7 +268,7 @@ public class userStudent extends javax.swing.JFrame {
                 deleteMouseExited(evt);
             }
         });
-        studentpanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 60, 30));
+        studentpanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 60, 30));
 
         refresh.setBackground(new java.awt.Color(255, 255, 255));
         refresh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -288,26 +287,7 @@ public class userStudent extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        studentpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 70, 30));
-
-        save.setBackground(new java.awt.Color(255, 255, 255));
-        save.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        save.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        save.setText("SAVE");
-        save.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        save.setOpaque(true);
-        save.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                saveMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                saveMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                saveMouseExited(evt);
-            }
-        });
-        studentpanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 250, 50, 30));
+        studentpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 70, 30));
 
         searchfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         searchfield.addActionListener(new java.awt.event.ActionListener() {
@@ -315,7 +295,7 @@ public class userStudent extends javax.swing.JFrame {
                 searchfieldActionPerformed(evt);
             }
         });
-        studentpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 160, 30));
+        studentpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 160, 30));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -334,7 +314,7 @@ public class userStudent extends javax.swing.JFrame {
                 searchMouseExited(evt);
             }
         });
-        studentpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 250, 70, 30));
+        studentpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 250, 70, 30));
 
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -348,7 +328,7 @@ public class userStudent extends javax.swing.JFrame {
                 fullNameTextFieldActionPerformed(evt);
             }
         });
-        studentpanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 200, -1));
+        studentpanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 180, -1));
 
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -362,7 +342,7 @@ public class userStudent extends javax.swing.JFrame {
                 contactNumberTextFieldActionPerformed(evt);
             }
         });
-        studentpanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 200, -1));
+        studentpanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 180, -1));
 
         user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -376,7 +356,7 @@ public class userStudent extends javax.swing.JFrame {
                 emailTextFieldActionPerformed(evt);
             }
         });
-        studentpanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, 200, -1));
+        studentpanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 180, -1));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -390,7 +370,7 @@ public class userStudent extends javax.swing.JFrame {
                 passwordFieldActionPerformed(evt);
             }
         });
-        studentpanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 200, -1));
+        studentpanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, 180, -1));
 
         user_passwordlabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -404,7 +384,7 @@ public class userStudent extends javax.swing.JFrame {
                 passwordField1ActionPerformed(evt);
             }
         });
-        studentpanel.add(passwordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 200, -1));
+        studentpanel.add(passwordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 180, -1));
 
         user_passwordlabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -418,7 +398,7 @@ public class userStudent extends javax.swing.JFrame {
                 passwordField2ActionPerformed(evt);
             }
         });
-        studentpanel.add(passwordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 200, -1));
+        studentpanel.add(passwordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 180, -1));
 
         addprofile.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         addprofile.setForeground(new java.awt.Color(255, 255, 255));
@@ -537,18 +517,6 @@ public class userStudent extends javax.swing.JFrame {
         refresh.setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_refreshMouseExited
 
-    private void saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveMouseClicked
-
-    private void saveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveMouseEntered
-
-    private void saveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveMouseExited
-
     private void searchfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchfieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchfieldActionPerformed
@@ -644,7 +612,6 @@ public class userStudent extends javax.swing.JFrame {
     private javax.swing.JPasswordField passwordField1;
     private javax.swing.JPasswordField passwordField2;
     private javax.swing.JLabel refresh;
-    private javax.swing.JLabel save;
     private javax.swing.JLabel search;
     private javax.swing.JTextField searchfield;
     private javax.swing.JLabel sett_icon;
