@@ -6,6 +6,8 @@
 import javax.swing.*;
 import java.sql.*;
 import config.dbConnector;
+import java.awt.Color;
+import java.awt.Image;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -13,6 +15,8 @@ import net.proteanit.sql.DbUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import javax.swing.JLabel;
+import javax.swing.border.Border;
+import javax.swing.table.TableModel;
 /**
  *
  * @author Admin
@@ -24,7 +28,6 @@ public class adminDashboard extends javax.swing.JFrame {
      */
     public adminDashboard() {
         initComponents(); 
-        displayDashboard();
     }
 
     public adminDashboard(String user_fname){
@@ -32,28 +35,85 @@ public class adminDashboard extends javax.swing.JFrame {
         initComponents();
         J_user_fname.setText(user_fname);
         displayDashboard();
+        displayImage(user_fname);
+        displayData();
     }
     
-    public void displayDashboard(){
+    public void displayDashboard() {
         try {
-        dbConnector dbc = new dbConnector();
+            dbConnector dbc = new dbConnector();
 
-        // Query to get the count of pending users
-        String sql = "SELECT COUNT(*) AS pending_count FROM user_table WHERE user_status = 'Pending'";
-        ResultSet pendingResultSet = dbc.getData(sql);
+            String sqlPending = "SELECT COUNT(*) AS pending_count FROM user_table WHERE user_status = 'Pending'";
+            ResultSet pendingResultSet = dbc.getData(sqlPending);
 
-        int pendingCount = 0;
-        if (pendingResultSet.next()) {
-            pendingCount = pendingResultSet.getInt("pending_count");
+            int pendingCount = 0;
+            if (pendingResultSet.next()) {
+                pendingCount = pendingResultSet.getInt("pending_count");
+            }
+            pendingUsers.setText("" + pendingCount);
+
+            String sqlStudents = "SELECT COUNT(stud_fname) AS student_count FROM stud_table";
+            ResultSet studentResultSet = dbc.getData(sqlStudents);
+
+            int studentCount = 0;
+            if (studentResultSet.next()) {
+                studentCount = studentResultSet.getInt("student_count");
+            }
+            totalStudents.setText("" + studentCount);
+
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            pendingUsers.setText("Error fetching data");
+            totalStudents.setText("Error fetching data");
         }
-
-        // Update the JLabel with the pending users count
-        pendingUsers.setText("" + pendingCount);
-
-    } catch (SQLException ex) {
-        System.out.println("Error: " + ex.getMessage());
-        pendingUsers.setText("Error fetching data");
     }
+    
+    public void displayData() {
+        try {
+            dbConnector dbc = new dbConnector();
+
+            String sql = "SELECT * FROM user_table WHERE user_status = 'Pending'";
+            ResultSet rs = dbc.getData(sql);
+
+            user_table.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+    
+    private void displayImage(String user_fname) {
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+            String sql = "SELECT user_image FROM user_table WHERE user_fname = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user_fname);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                byte[] imgBytes = rs.getBytes("user_image");
+
+                if (imgBytes != null && imgBytes.length > 0) {
+                    ImageIcon getIcon = new ImageIcon(imgBytes);
+                    Image img = getIcon.getImage().getScaledInstance(displayImage.getWidth(), displayImage.getHeight(), Image.SCALE_SMOOTH);
+                    displayImage.setIcon(new ImageIcon(img));
+                } else {
+                    displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+                }
+            } else {
+                displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+            }
+
+            Border border = BorderFactory.createLineBorder(Color.WHITE, 2);
+            displayImage.setBorder(border);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error Loading User Image!");
+        }
     }
     
     /**
@@ -67,7 +127,7 @@ public class adminDashboard extends javax.swing.JFrame {
 
         leftpanel = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
-        icon = new javax.swing.JLabel();
+        displayImage = new javax.swing.JLabel();
         violation = new javax.swing.JLabel();
         users = new javax.swing.JLabel();
         student = new javax.swing.JLabel();
@@ -95,7 +155,7 @@ public class adminDashboard extends javax.swing.JFrame {
         vionum_panel = new javax.swing.JPanel();
         user_type5 = new javax.swing.JLabel();
         dash_icon3 = new javax.swing.JLabel();
-        user_type9 = new javax.swing.JLabel();
+        totalStudents = new javax.swing.JLabel();
         studnum_panel1 = new javax.swing.JPanel();
         user_type6 = new javax.swing.JLabel();
         dash_icon5 = new javax.swing.JLabel();
@@ -108,6 +168,8 @@ public class adminDashboard extends javax.swing.JFrame {
         user_type1 = new javax.swing.JLabel();
         dash_icon6 = new javax.swing.JLabel();
         user_type11 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        user_table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -132,11 +194,11 @@ public class adminDashboard extends javax.swing.JFrame {
         });
         leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, 90, 50));
 
-        icon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        icon.setForeground(new java.awt.Color(255, 255, 255));
-        icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview1.png"))); // NOI18N
-        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 110, 110));
+        displayImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        displayImage.setForeground(new java.awt.Color(255, 255, 255));
+        displayImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview1.png"))); // NOI18N
+        leftpanel.add(displayImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, 130));
 
         violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         violation.setForeground(new java.awt.Color(255, 255, 255));
@@ -220,6 +282,7 @@ public class adminDashboard extends javax.swing.JFrame {
         J_user_fname.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         J_user_fname.setForeground(new java.awt.Color(255, 255, 255));
         J_user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        J_user_fname.setText("Fullname");
         leftpanel.add(J_user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 30));
 
         settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -290,7 +353,7 @@ public class adminDashboard extends javax.swing.JFrame {
         user_type3.setText("0");
         stat_panel.add(user_type3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
-        userspanel.add(stat_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, 190, 120));
+        userspanel.add(stat_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 190, 120));
 
         studnum_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -307,7 +370,7 @@ public class adminDashboard extends javax.swing.JFrame {
         user_type13.setText("2024-2025");
         studnum_panel.add(user_type13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 100, 30));
 
-        userspanel.add(studnum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 190, 120));
+        userspanel.add(studnum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 190, 120));
 
         vionum_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -319,12 +382,12 @@ public class adminDashboard extends javax.swing.JFrame {
         dash_icon3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-graduate-48.png"))); // NOI18N
         vionum_panel.add(dash_icon3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, 40));
 
-        user_type9.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        user_type9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_type9.setText("0");
-        vionum_panel.add(user_type9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
+        totalStudents.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        totalStudents.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        totalStudents.setText("0");
+        vionum_panel.add(totalStudents, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
-        userspanel.add(vionum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 190, 120));
+        userspanel.add(vionum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 190, 120));
 
         studnum_panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -338,9 +401,10 @@ public class adminDashboard extends javax.swing.JFrame {
 
         pendingUsers.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         pendingUsers.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pendingUsers.setText("0");
         studnum_panel1.add(pendingUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 70, 40));
 
-        userspanel.add(studnum_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 190, 120));
+        userspanel.add(studnum_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 190, 120));
 
         stat_panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -357,7 +421,7 @@ public class adminDashboard extends javax.swing.JFrame {
         user_type12.setText("0");
         stat_panel1.add(user_type12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
-        userspanel.add(stat_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 190, 120));
+        userspanel.add(stat_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, 190, 120));
 
         vionum_panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -374,7 +438,34 @@ public class adminDashboard extends javax.swing.JFrame {
         user_type11.setText("0");
         vionum_panel1.add(user_type11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
-        userspanel.add(vionum_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 310, 190, 120));
+        userspanel.add(vionum_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 190, 120));
+
+        jScrollPane1.setBackground(new java.awt.Color(204, 0, 0));
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
+
+        user_table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        user_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                user_tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(user_table);
+
+        userspanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 710, 300));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -464,6 +555,14 @@ public class adminDashboard extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_usersMouseClicked
 
+    private void user_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_user_tableMouseClicked
+        
+    }//GEN-LAST:event_user_tableMouseClicked
+
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+
+    }//GEN-LAST:event_jScrollPane1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -509,7 +608,8 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel dash_icon5;
     private javax.swing.JLabel dash_icon6;
     private javax.swing.JLabel dashboard;
-    private javax.swing.JLabel icon;
+    private javax.swing.JLabel displayImage;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
@@ -524,6 +624,8 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel student;
     private javax.swing.JPanel studnum_panel;
     private javax.swing.JPanel studnum_panel1;
+    private javax.swing.JLabel totalStudents;
+    private javax.swing.JTable user_table;
     private javax.swing.JLabel user_type1;
     private javax.swing.JLabel user_type11;
     private javax.swing.JLabel user_type12;
@@ -535,7 +637,6 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel user_type6;
     private javax.swing.JLabel user_type7;
     private javax.swing.JLabel user_type8;
-    private javax.swing.JLabel user_type9;
     private javax.swing.JLabel users;
     private javax.swing.JLabel users_icon;
     private javax.swing.JPanel userspanel;

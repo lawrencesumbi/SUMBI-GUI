@@ -2,12 +2,14 @@
 import javax.swing.*;
 import java.sql.*;
 import config.dbConnector;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 import java.awt.Image;
 import java.io.*;
+import javax.swing.border.Border;
 import javax.swing.table.TableModel;
 
 public class adminUsers extends javax.swing.JFrame {
@@ -18,25 +20,23 @@ public class adminUsers extends javax.swing.JFrame {
      */
     public adminUsers() {
         initComponents();
-
         displayData();
     }
     
     public adminUsers(String user_fname) {
         this.user_fname = user_fname;
         initComponents();
+        displayImage(user_fname);
         J_user_fname.setText(user_fname);
-
         displayData();
     }
     
-    // Display user data in table
+
     public void displayData() {
         try {
             dbConnector dbc = new dbConnector();
             ResultSet rs = dbc.getData("SELECT * FROM user_table");
             
-            // Clear input fields
             fullNameTextField.setText("");  
             contactNumberTextField.setText("");  
             emailTextField.setText("");  
@@ -44,15 +44,13 @@ public class adminUsers extends javax.swing.JFrame {
             userTypeComboBox.setSelectedIndex(-1);
             userStatusComboBox.setSelectedIndex(-1);
 
-            
-            // Populate JTable with data
             user_table.setModel(DbUtils.resultSetToTableModel(rs));   
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
     }
     
-    // Upload image and save to database
+
     public void uploadImage(JLabel uploadImage) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choose Image");
@@ -68,16 +66,15 @@ public class adminUsers extends javax.swing.JFrame {
         try {
                 Connection conn = DriverManager.getConnection(url, user, pass);
                 FileInputStream fis = new FileInputStream(file);
-       
-                // Insert image into database
+
                 String sql = "UPDATE user_table SET user_image = ? WHERE user_email = ?";
                 PreparedStatement pstmt = conn.prepareStatement(sql);
                 pstmt.setBinaryStream(1, fis, (int) file.length());
-                pstmt.setString(2, emailTextField.getText().trim()); // Use the email to update the correct user
+                pstmt.setString(2, emailTextField.getText().trim());
                 int rowsUpdated = pstmt.executeUpdate();
 
                 if (rowsUpdated > 0) {
-                    // Display image in JLabel
+
                     ImageIcon getIcon = new ImageIcon(file.getAbsolutePath());
                     Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
                     uploadImage.setIcon(new ImageIcon(img));
@@ -93,6 +90,41 @@ public class adminUsers extends javax.swing.JFrame {
         }
     }
 
+    private void displayImage(String user_fname) {
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+            String sql = "SELECT user_image FROM user_table WHERE user_fname = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user_fname);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                byte[] imgBytes = rs.getBytes("user_image");
+
+                if (imgBytes != null && imgBytes.length > 0) {
+                    ImageIcon getIcon = new ImageIcon(imgBytes);
+                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+                    displayImage.setIcon(new ImageIcon(img));
+                } else {
+                    displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+                }
+            } else {
+                displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+            }
+
+            Border border = BorderFactory.createLineBorder(Color.WHITE, 2);
+            displayImage.setBorder(border);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error Loading User Image!");
+        }
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -179,7 +211,7 @@ public class adminUsers extends javax.swing.JFrame {
                 displayImageMouseClicked(evt);
             }
         });
-        leftpanel.add(displayImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 130, 130));
+        leftpanel.add(displayImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, 130));
 
         violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         violation.setForeground(new java.awt.Color(255, 255, 255));
@@ -426,7 +458,7 @@ public class adminUsers extends javax.swing.JFrame {
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel.setText("Full Name");
-        userspanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 110, 20));
+        userspanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 110, 20));
 
         fullNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         fullNameTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -434,13 +466,13 @@ public class adminUsers extends javax.swing.JFrame {
                 fullNameTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 180, -1));
+        userspanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 190, -1));
 
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_cnumberlabel.setText("Contact Number");
-        userspanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 110, 20));
+        userspanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 110, 20));
 
         contactNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         contactNumberTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -448,13 +480,13 @@ public class adminUsers extends javax.swing.JFrame {
                 contactNumberTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 180, -1));
+        userspanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 190, -1));
 
         user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_emaillabel.setText("Email");
-        userspanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 70, 20));
+        userspanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 70, 20));
 
         emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         emailTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -462,19 +494,19 @@ public class adminUsers extends javax.swing.JFrame {
                 emailTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 180, -1));
+        userspanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 190, -1));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel.setText("Password");
-        userspanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 80, 20));
+        userspanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 80, 20));
 
         user_typelabel.setBackground(new java.awt.Color(255, 255, 255));
         user_typelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_typelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_typelabel.setText("User Type");
-        userspanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 70, 20));
+        userspanel.add(user_typelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 70, 20));
 
         userTypeComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         userTypeComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "User", "Admin" }));
@@ -483,7 +515,7 @@ public class adminUsers extends javax.swing.JFrame {
                 userTypeComboBoxActionPerformed(evt);
             }
         });
-        userspanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 180, -1));
+        userspanel.add(userTypeComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 190, -1));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -521,13 +553,13 @@ public class adminUsers extends javax.swing.JFrame {
                 uploadImageMouseClicked(evt);
             }
         });
-        userspanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 130, 130));
+        userspanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 150, 150));
 
         user_statuslabel.setBackground(new java.awt.Color(255, 255, 255));
         user_statuslabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_statuslabel.setForeground(new java.awt.Color(255, 255, 255));
         user_statuslabel.setText("User Status");
-        userspanel.add(user_statuslabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 160, 80, 20));
+        userspanel.add(user_statuslabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 160, 80, 20));
 
         userStatusComboBox.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         userStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pending", "Active" }));
@@ -536,7 +568,7 @@ public class adminUsers extends javax.swing.JFrame {
                 userStatusComboBoxActionPerformed(evt);
             }
         });
-        userspanel.add(userStatusComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 180, -1));
+        userspanel.add(userStatusComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 190, -1));
 
         passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -544,7 +576,7 @@ public class adminUsers extends javax.swing.JFrame {
                 passwordFieldActionPerformed(evt);
             }
         });
-        userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, 180, -1));
+        userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 190, -1));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -565,11 +597,11 @@ public class adminUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshMouseClicked
 
     private void refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseEntered
-        refresh.setForeground(new java.awt.Color(204, 0, 0));
+        
     }//GEN-LAST:event_refreshMouseEntered
 
     private void refreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseExited
-        refresh.setForeground(new java.awt.Color(0, 0, 0));
+        
     }//GEN-LAST:event_refreshMouseExited
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
@@ -579,7 +611,7 @@ public class adminUsers extends javax.swing.JFrame {
         String user_password = new String(passwordField.getText());
         String user_type = userTypeComboBox.getSelectedItem().toString();
         String user_status = "Pending";
-        
+
         if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty() || user_password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -608,7 +640,7 @@ public class adminUsers extends javax.swing.JFrame {
                 return;
             }
 
-            String sql = "INSERT INTO user_table (user_fname, user_cnumber, user_email, user_password, user_type, user_status) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO user_table (user_fname, user_cnumber, user_email, user_password, user_type, user_status, user_image) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, user_fname);
@@ -617,6 +649,8 @@ public class adminUsers extends javax.swing.JFrame {
             pstmt.setString(4, user_password);
             pstmt.setString(5, user_type);
             pstmt.setString(6, user_status);
+
+            pstmt.setNull(7, java.sql.Types.BLOB);
 
             int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted > 0) {
@@ -911,22 +945,19 @@ public class adminUsers extends javax.swing.JFrame {
         String status = model.getValueAt(i, 6).toString();
         userStatusComboBox.setSelectedItem(status);
 
-        // Get user_image from the table model
-        Object imageData = model.getValueAt(i, 7); // Assuming column 7 stores the image
+        Object imageData = model.getValueAt(i, 7);
 
         if (imageData != null && imageData instanceof byte[]) {
         byte[] imgBytes = (byte[]) imageData;
 
-        if (imgBytes.length > 0) { // Check if the byte array is not empty
+        if (imgBytes.length > 0) {
             ImageIcon getIcon = new ImageIcon(imgBytes);
             Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-            uploadImage.setIcon(new ImageIcon(img)); // Set the image in JLabel
+            uploadImage.setIcon(new ImageIcon(img));
         } else {
-            // If byte array is empty, set default image
             uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
         }
         } else {
-            // If imageData is null or not a byte array, set default image
             uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
         }
     }//GEN-LAST:event_user_tableMouseClicked

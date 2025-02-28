@@ -242,7 +242,7 @@ public class loginform extends javax.swing.JFrame {
                 adminDashboard admin = new adminDashboard(user_fname);
                 admin.setVisible(true);
             } else {
-                userStudent user = new userStudent(user_fname);
+                userDashboard user = new userDashboard(user_fname);
                 user.setVisible(true);
             }
 
@@ -299,7 +299,7 @@ public class loginform extends javax.swing.JFrame {
                     adminDashboard admin = new adminDashboard(user_fname);
                     admin.setVisible(true);
                 } else {
-                    userStudent user = new userStudent(user_fname);
+                    userDashboard user = new userDashboard(user_fname);
                     user.setVisible(true);
                 }
 

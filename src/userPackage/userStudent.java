@@ -4,26 +4,137 @@
  * and open the template in the editor.
  */
 import config.dbConnector;
+import java.awt.Color;
+import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.border.Border;
+import javax.swing.table.TableModel;
 import net.proteanit.sql.DbUtils;
+
 /**
  *
  * @author Admin
  */
 public class userStudent extends javax.swing.JFrame {
-
+    private String user_fname;
     /**
      * 
      */
     public userStudent() {
-        initComponents();        
+        initComponents(); 
+        displayData();
     }
     
     public userStudent(String user_fname) {
+        this.user_fname = user_fname;
         initComponents();
-        J_user_fname.setText(user_fname);        
+        displayImage(user_fname);
+        J_user_fname.setText(user_fname); 
+        displayData();
+    }
+    
+    public void displayData() {
+        try {
+            dbConnector dbc = new dbConnector();
+            ResultSet rs = dbc.getData("SELECT * FROM stud_table");
+            
+            studFirstName.setText("");  
+            studLastName.setText("");  
+            studProgram.setText("");  
+            studSection.setText("");  
+            studAddress.setText("");  
+            studCNumber.setText(""); 
+
+
+            stud_table.setModel(DbUtils.resultSetToTableModel(rs));   
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+    
+    public void uploadImage(JLabel uploadImage) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choose Image");
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Images", "jpg", "png", "jpeg"));
+
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+                Connection conn = DriverManager.getConnection(url, user, pass);
+                FileInputStream fis = new FileInputStream(file);
+       
+                String sql = "UPDATE stud_table SET stud_image = ? WHERE stud_fname = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setBinaryStream(1, fis, (int) file.length());
+                pstmt.setString(2, studFirstName.getText().trim());
+                int rowsUpdated = pstmt.executeUpdate();
+
+                if (rowsUpdated > 0) {
+
+                    ImageIcon getIcon = new ImageIcon(file.getAbsolutePath());
+                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+                    uploadImage.setIcon(new ImageIcon(img));
+
+                    JOptionPane.showMessageDialog(null, "Image Uploaded Successfully!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "User Not Found! Please check the email.");
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error Uploading Image!");
+            }
+        }
+    }
+    
+    private void displayImage(String user_fname) {
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+            String sql = "SELECT user_image FROM user_table WHERE user_fname = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, user_fname);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                byte[] imgBytes = rs.getBytes("user_image");
+
+                if (imgBytes != null && imgBytes.length > 0) {
+                    ImageIcon getIcon = new ImageIcon(imgBytes);
+                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+                    displayImage.setIcon(new ImageIcon(img));
+                } else {
+                    displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+                }
+            } else {
+                displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+            }
+
+            Border border = BorderFactory.createLineBorder(Color.WHITE, 2); // Black border with 2px thickness
+            displayImage.setBorder(border);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error Loading User Image!");
+        }
     }
     
     /**
@@ -36,7 +147,7 @@ public class userStudent extends javax.swing.JFrame {
     private void initComponents() {
 
         leftpanel = new javax.swing.JPanel();
-        icon = new javax.swing.JLabel();
+        displayImage = new javax.swing.JLabel();
         user_type = new javax.swing.JLabel();
         J_user_fname = new javax.swing.JLabel();
         dash_icon = new javax.swing.JLabel();
@@ -51,7 +162,7 @@ public class userStudent extends javax.swing.JFrame {
         logout = new javax.swing.JLabel();
         studentpanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        student_table = new javax.swing.JTable();
+        stud_table = new javax.swing.JTable();
         add = new javax.swing.JLabel();
         edit = new javax.swing.JLabel();
         delete = new javax.swing.JLabel();
@@ -59,18 +170,18 @@ public class userStudent extends javax.swing.JFrame {
         searchfield = new javax.swing.JTextField();
         search = new javax.swing.JLabel();
         user_fnamelabel = new javax.swing.JLabel();
-        fullNameTextField = new javax.swing.JTextField();
+        studFirstName = new javax.swing.JTextField();
         user_cnumberlabel = new javax.swing.JLabel();
-        contactNumberTextField = new javax.swing.JTextField();
+        studLastName = new javax.swing.JTextField();
         user_emaillabel = new javax.swing.JLabel();
-        emailTextField = new javax.swing.JTextField();
+        studProgram = new javax.swing.JTextField();
         user_passwordlabel = new javax.swing.JLabel();
-        passwordField = new javax.swing.JPasswordField();
         user_passwordlabel1 = new javax.swing.JLabel();
-        passwordField1 = new javax.swing.JPasswordField();
         user_passwordlabel2 = new javax.swing.JLabel();
-        passwordField2 = new javax.swing.JPasswordField();
-        addprofile = new javax.swing.JLabel();
+        uploadImage = new javax.swing.JLabel();
+        studSection = new javax.swing.JTextField();
+        studAddress = new javax.swing.JTextField();
+        studCNumber = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -78,11 +189,11 @@ public class userStudent extends javax.swing.JFrame {
         leftpanel.setBackground(new java.awt.Color(0, 0, 0));
         leftpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        icon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        icon.setForeground(new java.awt.Color(255, 255, 255));
-        icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview1.png"))); // NOI18N
-        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 130, 130));
+        displayImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        displayImage.setForeground(new java.awt.Color(255, 255, 255));
+        displayImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview1.png"))); // NOI18N
+        leftpanel.add(displayImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, 130));
 
         user_type.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         user_type.setForeground(new java.awt.Color(255, 255, 255));
@@ -121,6 +232,9 @@ public class userStudent extends javax.swing.JFrame {
         dashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dashboard.setText("DASHBOARD");
         dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dashboardMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dashboardMouseEntered(evt);
             }
@@ -198,8 +312,13 @@ public class userStudent extends javax.swing.JFrame {
         studentpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jScrollPane1.setBackground(new java.awt.Color(204, 0, 0));
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
 
-        student_table.setModel(new javax.swing.table.DefaultTableModel(
+        stud_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -210,7 +329,12 @@ public class userStudent extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(student_table);
+        stud_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                stud_tableMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(stud_table);
 
         studentpanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 710, 300));
 
@@ -320,92 +444,97 @@ public class userStudent extends javax.swing.JFrame {
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_fnamelabel.setText("Student Program");
-        studentpanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 120, 20));
+        user_fnamelabel.setText("Student First Name");
+        studentpanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 130, 20));
 
-        fullNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        fullNameTextField.addActionListener(new java.awt.event.ActionListener() {
+        studFirstName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        studFirstName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fullNameTextFieldActionPerformed(evt);
+                studFirstNameActionPerformed(evt);
             }
         });
-        studentpanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 180, -1));
+        studentpanel.add(studFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 190, -1));
 
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_cnumberlabel.setText("Student Section");
+        user_cnumberlabel.setText("Student Last Name");
         studentpanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 130, 20));
 
-        contactNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        contactNumberTextField.addActionListener(new java.awt.event.ActionListener() {
+        studLastName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        studLastName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                contactNumberTextFieldActionPerformed(evt);
+                studLastNameActionPerformed(evt);
             }
         });
-        studentpanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 50, 180, -1));
+        studentpanel.add(studLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 50, 190, -1));
 
         user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_emaillabel.setText("Student First Name");
-        studentpanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 140, 20));
+        user_emaillabel.setText("Student Program");
+        studentpanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 150, 20));
 
-        emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        emailTextField.addActionListener(new java.awt.event.ActionListener() {
+        studProgram.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        studProgram.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailTextFieldActionPerformed(evt);
+                studProgramActionPerformed(evt);
             }
         });
-        studentpanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 180, -1));
+        studentpanel.add(studProgram, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 190, -1));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_passwordlabel.setText("Student Last Name");
+        user_passwordlabel.setText("Student Section");
         studentpanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 150, 20));
-
-        passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
-        studentpanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 120, 180, -1));
 
         user_passwordlabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel1.setText("Student Address");
-        studentpanel.add(user_passwordlabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 120, 20));
-
-        passwordField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        passwordField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordField1ActionPerformed(evt);
-            }
-        });
-        studentpanel.add(passwordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 180, -1));
+        studentpanel.add(user_passwordlabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 130, 20));
 
         user_passwordlabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel2.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel2.setText("Student Contact Number");
-        studentpanel.add(user_passwordlabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 160, 180, 20));
+        studentpanel.add(user_passwordlabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 190, 20));
 
-        passwordField2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        passwordField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordField2ActionPerformed(evt);
+        uploadImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        uploadImage.setForeground(new java.awt.Color(255, 255, 255));
+        uploadImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
+        uploadImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                uploadImageMouseClicked(evt);
             }
         });
-        studentpanel.add(passwordField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 180, -1));
+        studentpanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 150, 150));
 
-        addprofile.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        addprofile.setForeground(new java.awt.Color(255, 255, 255));
-        addprofile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        addprofile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
-        studentpanel.add(addprofile, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 130, 130));
+        studSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        studSection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studSectionActionPerformed(evt);
+            }
+        });
+        studentpanel.add(studSection, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 190, -1));
+
+        studAddress.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        studAddress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studAddressActionPerformed(evt);
+            }
+        });
+        studentpanel.add(studAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 190, -1));
+
+        studCNumber.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        studCNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studCNumberActionPerformed(evt);
+            }
+        });
+        studentpanel.add(studCNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 190, -1));
 
         getContentPane().add(studentpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -471,7 +600,40 @@ public class userStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutMouseExited
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-        // TODO add your handling code here:
+        String stud_fname = studFirstName.getText();
+        String stud_lname = studLastName.getText();
+        String stud_program = studProgram.getText();
+        String stud_section = studSection.getText();
+        String stud_address = studAddress.getText();
+        String stud_cnumber = studCNumber.getText();
+
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            String sql = "INSERT INTO stud_table (stud_fname, stud_lname, stud_program, stud_section, stud_address, stud_cnumber) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, stud_fname);
+            pstmt.setString(2, stud_lname);
+            pstmt.setString(3, stud_program);
+            pstmt.setString(4, stud_section);
+            pstmt.setString(5, stud_address);
+            pstmt.setString(6, stud_cnumber);
+
+            int rowsInserted = pstmt.executeUpdate();
+            if (rowsInserted > 0) {
+                JOptionPane.showMessageDialog(this, "Student Added Successfully!");
+            }
+
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_addMouseClicked
 
     private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
@@ -507,15 +669,22 @@ public class userStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteMouseExited
 
     private void refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseClicked
-
+        displayData();
+        studFirstName.setText("");  
+        studLastName.setText("");  
+        studProgram.setText("");  
+        studSection.setText("");  
+        studAddress.setText("");  
+        studCNumber.setText(""); 
+        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));   
     }//GEN-LAST:event_refreshMouseClicked
 
     private void refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseEntered
-        refresh.setForeground(new java.awt.Color(255, 102, 102));
+        
     }//GEN-LAST:event_refreshMouseEntered
 
     private void refreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseExited
-        refresh.setForeground(new java.awt.Color(0, 0, 0));
+       
     }//GEN-LAST:event_refreshMouseExited
 
     private void searchfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchfieldActionPerformed
@@ -534,29 +703,74 @@ public class userStudent extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_searchMouseExited
 
-    private void fullNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fullNameTextFieldActionPerformed
+    private void studFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studFirstNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fullNameTextFieldActionPerformed
+    }//GEN-LAST:event_studFirstNameActionPerformed
 
-    private void contactNumberTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactNumberTextFieldActionPerformed
+    private void studLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studLastNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_contactNumberTextFieldActionPerformed
+    }//GEN-LAST:event_studLastNameActionPerformed
 
-    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
+    private void studProgramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studProgramActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_emailTextFieldActionPerformed
+    }//GEN-LAST:event_studProgramActionPerformed
 
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
+    }//GEN-LAST:event_jScrollPane1MouseClicked
 
-    private void passwordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordField1ActionPerformed
+    private void stud_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stud_tableMouseClicked
+        int i = stud_table.getSelectedRow();
+        TableModel model = stud_table.getModel();
 
-    private void passwordField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordField2ActionPerformed
+        String stud_fname = model.getValueAt(i, 1).toString();
+        studFirstName.setText(stud_fname);
+        studLastName.setText(model.getValueAt(i, 2).toString());
+        studProgram.setText(model.getValueAt(i, 3).toString());
+        studSection.setText(model.getValueAt(i, 4).toString());
+        studAddress.setText(model.getValueAt(i, 5).toString());
+        studCNumber.setText(model.getValueAt(i, 6).toString());
+
+        // Get user_image from the table model
+        Object imageData = model.getValueAt(i, 7); // Assuming column 7 stores the image
+
+        if (imageData != null && imageData instanceof byte[]) {
+        byte[] imgBytes = (byte[]) imageData;
+
+        if (imgBytes.length > 0) { // Check if the byte array is not empty
+            ImageIcon getIcon = new ImageIcon(imgBytes);
+            Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+            uploadImage.setIcon(new ImageIcon(img)); // Set the image in JLabel
+        } else {
+            // If byte array is empty, set default image
+            uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+        }
+        } else {
+            // If imageData is null or not a byte array, set default image
+            uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+        }
+    }//GEN-LAST:event_stud_tableMouseClicked
+
+    private void studSectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studSectionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_passwordField2ActionPerformed
+    }//GEN-LAST:event_studSectionActionPerformed
+
+    private void studAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studAddressActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studAddressActionPerformed
+
+    private void studCNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studCNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studCNumberActionPerformed
+
+    private void uploadImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadImageMouseClicked
+        uploadImage(uploadImage);
+    }//GEN-LAST:event_uploadImageMouseClicked
+
+    private void dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseClicked
+        new userDashboard(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_dashboardMouseClicked
 
     /**
      * @param args the command line arguments
@@ -596,31 +810,31 @@ public class userStudent extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel J_user_fname;
     private javax.swing.JLabel add;
-    private javax.swing.JLabel addprofile;
-    private javax.swing.JTextField contactNumberTextField;
     private javax.swing.JLabel dash_icon;
     private javax.swing.JLabel dashboard;
     private javax.swing.JLabel delete;
+    private javax.swing.JLabel displayImage;
     private javax.swing.JLabel edit;
-    private javax.swing.JTextField emailTextField;
-    private javax.swing.JTextField fullNameTextField;
-    private javax.swing.JLabel icon;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
-    private javax.swing.JPasswordField passwordField;
-    private javax.swing.JPasswordField passwordField1;
-    private javax.swing.JPasswordField passwordField2;
     private javax.swing.JLabel refresh;
     private javax.swing.JLabel search;
     private javax.swing.JTextField searchfield;
     private javax.swing.JLabel sett_icon;
     private javax.swing.JLabel settings;
+    private javax.swing.JTextField studAddress;
+    private javax.swing.JTextField studCNumber;
+    private javax.swing.JTextField studFirstName;
+    private javax.swing.JTextField studLastName;
+    private javax.swing.JTextField studProgram;
+    private javax.swing.JTextField studSection;
     private javax.swing.JLabel stud_icon;
+    private javax.swing.JTable stud_table;
     private javax.swing.JLabel student;
-    private javax.swing.JTable student_table;
     private javax.swing.JPanel studentpanel;
+    private javax.swing.JLabel uploadImage;
     private javax.swing.JLabel user_cnumberlabel;
     private javax.swing.JLabel user_emaillabel;
     private javax.swing.JLabel user_fnamelabel;
