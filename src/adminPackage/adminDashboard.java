@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import javax.swing.JLabel;
 /**
  *
  * @author Admin
@@ -22,13 +23,37 @@ public class adminDashboard extends javax.swing.JFrame {
      * Creates new form
      */
     public adminDashboard() {
-        initComponents();
+        initComponents(); 
+        displayDashboard();
     }
 
     public adminDashboard(String user_fname){
         this.user_fname = user_fname;
         initComponents();
         J_user_fname.setText(user_fname);
+        displayDashboard();
+    }
+    
+    public void displayDashboard(){
+        try {
+        dbConnector dbc = new dbConnector();
+
+        // Query to get the count of pending users
+        String sql = "SELECT COUNT(*) AS pending_count FROM user_table WHERE user_status = 'Pending'";
+        ResultSet pendingResultSet = dbc.getData(sql);
+
+        int pendingCount = 0;
+        if (pendingResultSet.next()) {
+            pendingCount = pendingResultSet.getInt("pending_count");
+        }
+
+        // Update the JLabel with the pending users count
+        pendingUsers.setText("" + pendingCount);
+
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+        pendingUsers.setText("Error fetching data");
+    }
     }
     
     /**
@@ -74,7 +99,7 @@ public class adminDashboard extends javax.swing.JFrame {
         studnum_panel1 = new javax.swing.JPanel();
         user_type6 = new javax.swing.JLabel();
         dash_icon5 = new javax.swing.JLabel();
-        user_type10 = new javax.swing.JLabel();
+        pendingUsers = new javax.swing.JLabel();
         stat_panel1 = new javax.swing.JPanel();
         user_type7 = new javax.swing.JLabel();
         dash_icon2 = new javax.swing.JLabel();
@@ -311,10 +336,9 @@ public class adminDashboard extends javax.swing.JFrame {
         dash_icon5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-select-users-40.png"))); // NOI18N
         studnum_panel1.add(dash_icon5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, 50));
 
-        user_type10.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        user_type10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_type10.setText("0");
-        studnum_panel1.add(user_type10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
+        pendingUsers.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        pendingUsers.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        studnum_panel1.add(pendingUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 70, 40));
 
         userspanel.add(studnum_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 190, 120));
 
@@ -489,6 +513,7 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
+    private javax.swing.JLabel pendingUsers;
     private javax.swing.JLabel rec_icon;
     private javax.swing.JLabel record;
     private javax.swing.JLabel sett_icon;
@@ -500,7 +525,6 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel studnum_panel;
     private javax.swing.JPanel studnum_panel1;
     private javax.swing.JLabel user_type1;
-    private javax.swing.JLabel user_type10;
     private javax.swing.JLabel user_type11;
     private javax.swing.JLabel user_type12;
     private javax.swing.JLabel user_type13;

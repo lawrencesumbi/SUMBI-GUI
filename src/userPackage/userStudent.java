@@ -82,17 +82,18 @@ public class userStudent extends javax.swing.JFrame {
         icon.setForeground(new java.awt.Color(255, 255, 255));
         icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview1.png"))); // NOI18N
-        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 110, 110));
+        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 130, 130));
 
         user_type.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         user_type.setForeground(new java.awt.Color(255, 255, 255));
         user_type.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_type.setText("User");
-        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 60, -1));
+        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 50, -1));
 
         J_user_fname.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         J_user_fname.setForeground(new java.awt.Color(255, 255, 255));
         J_user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        J_user_fname.setText("Fullname");
         leftpanel.add(J_user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 30));
 
         dash_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-dashboard-layout-24.png"))); // NOI18N
@@ -404,7 +405,7 @@ public class userStudent extends javax.swing.JFrame {
         addprofile.setForeground(new java.awt.Color(255, 255, 255));
         addprofile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         addprofile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
-        studentpanel.add(addprofile, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 140, 130));
+        studentpanel.add(addprofile, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 130, 130));
 
         getContentPane().add(studentpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 

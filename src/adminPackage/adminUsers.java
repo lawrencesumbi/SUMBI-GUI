@@ -6,47 +6,94 @@ import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.awt.Image;
+import java.io.*;
 import javax.swing.table.TableModel;
-/**
- *
- * @author Admin
- */
+
 public class adminUsers extends javax.swing.JFrame {
     private String user_fname;
+
     /**
-     * Creates new form
+     * Creates new form adminUsers
      */
     public adminUsers() {
         initComponents();
+
         displayData();
     }
     
-    public adminUsers(String user_fname){
+    public adminUsers(String user_fname) {
         this.user_fname = user_fname;
         initComponents();
         J_user_fname.setText(user_fname);
+
         displayData();
     }
     
-    public void displayData(){
+    // Display user data in table
+    public void displayData() {
         try {
             dbConnector dbc = new dbConnector();
             ResultSet rs = dbc.getData("SELECT * FROM user_table");
+            
+            // Clear input fields
             fullNameTextField.setText("");  
             contactNumberTextField.setText("");  
             emailTextField.setText("");  
             passwordField.setText("");  
             userTypeComboBox.setSelectedIndex(-1);
             userStatusComboBox.setSelectedIndex(-1);
+
+            
+            // Populate JTable with data
             user_table.setModel(DbUtils.resultSetToTableModel(rs));   
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
     }
     
+    // Upload image and save to database
+    public void uploadImage(JLabel uploadImage) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choose Image");
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Images", "jpg", "png", "jpeg"));
 
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+                Connection conn = DriverManager.getConnection(url, user, pass);
+                FileInputStream fis = new FileInputStream(file);
+       
+                // Insert image into database
+                String sql = "UPDATE user_table SET user_image = ? WHERE user_email = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setBinaryStream(1, fis, (int) file.length());
+                pstmt.setString(2, emailTextField.getText().trim()); // Use the email to update the correct user
+                int rowsUpdated = pstmt.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    // Display image in JLabel
+                    ImageIcon getIcon = new ImageIcon(file.getAbsolutePath());
+                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+                    uploadImage.setIcon(new ImageIcon(img));
+
+                    JOptionPane.showMessageDialog(null, "Image Uploaded Successfully!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "User Not Found! Please check the email.");
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error Uploading Image!");
+            }
+        }
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,7 +106,7 @@ public class adminUsers extends javax.swing.JFrame {
         jCheckBox1 = new javax.swing.JCheckBox();
         leftpanel = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
-        icon = new javax.swing.JLabel();
+        displayImage = new javax.swing.JLabel();
         violation = new javax.swing.JLabel();
         users = new javax.swing.JLabel();
         student = new javax.swing.JLabel();
@@ -93,7 +140,7 @@ public class adminUsers extends javax.swing.JFrame {
         userTypeComboBox = new javax.swing.JComboBox<>();
         search = new javax.swing.JLabel();
         searchfield = new javax.swing.JTextField();
-        addprofile = new javax.swing.JLabel();
+        uploadImage = new javax.swing.JLabel();
         user_statuslabel = new javax.swing.JLabel();
         userStatusComboBox = new javax.swing.JComboBox<>();
         passwordField = new javax.swing.JTextField();
@@ -123,11 +170,16 @@ public class adminUsers extends javax.swing.JFrame {
         });
         leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, 90, 50));
 
-        icon.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        icon.setForeground(new java.awt.Color(255, 255, 255));
-        icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview1.png"))); // NOI18N
-        leftpanel.add(icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 110, 110));
+        displayImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        displayImage.setForeground(new java.awt.Color(255, 255, 255));
+        displayImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview1.png"))); // NOI18N
+        displayImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                displayImageMouseClicked(evt);
+            }
+        });
+        leftpanel.add(displayImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 130, 130));
 
         violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         violation.setForeground(new java.awt.Color(255, 255, 255));
@@ -211,6 +263,7 @@ public class adminUsers extends javax.swing.JFrame {
         J_user_fname.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         J_user_fname.setForeground(new java.awt.Color(255, 255, 255));
         J_user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        J_user_fname.setText("Fullname");
         leftpanel.add(J_user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 30));
 
         settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -459,11 +512,16 @@ public class adminUsers extends javax.swing.JFrame {
         });
         userspanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 160, 30));
 
-        addprofile.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        addprofile.setForeground(new java.awt.Color(255, 255, 255));
-        addprofile.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        addprofile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
-        userspanel.add(addprofile, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 140, 130));
+        uploadImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        uploadImage.setForeground(new java.awt.Color(255, 255, 255));
+        uploadImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
+        uploadImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                uploadImageMouseClicked(evt);
+            }
+        });
+        userspanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, 130, 130));
 
         user_statuslabel.setBackground(new java.awt.Color(255, 255, 255));
         user_statuslabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -502,6 +560,8 @@ public class adminUsers extends javax.swing.JFrame {
         passwordField.setText("");  
         userTypeComboBox.setSelectedIndex(-1);
         userStatusComboBox.setSelectedIndex(-1);
+        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+        
     }//GEN-LAST:event_refreshMouseClicked
 
     private void refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseEntered
@@ -839,14 +899,36 @@ public class adminUsers extends javax.swing.JFrame {
     private void user_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_user_tableMouseClicked
         int i = user_table.getSelectedRow();
         TableModel model = user_table.getModel();
-        fullNameTextField.setText(model.getValueAt(i,1).toString());
-        contactNumberTextField.setText(model.getValueAt(i,2).toString());
-        emailTextField.setText(model.getValueAt(i,3).toString());
-        passwordField.setText(model.getValueAt(i,4).toString());
+
+        String userFname = model.getValueAt(i, 1).toString();
+        fullNameTextField.setText(userFname);
+        contactNumberTextField.setText(model.getValueAt(i, 2).toString());
+        emailTextField.setText(model.getValueAt(i, 3).toString());
+        passwordField.setText(model.getValueAt(i, 4).toString());
+
         String type = model.getValueAt(i, 5).toString();
         userTypeComboBox.setSelectedItem(type);
         String status = model.getValueAt(i, 6).toString();
         userStatusComboBox.setSelectedItem(status);
+
+        // Get user_image from the table model
+        Object imageData = model.getValueAt(i, 7); // Assuming column 7 stores the image
+
+        if (imageData != null && imageData instanceof byte[]) {
+        byte[] imgBytes = (byte[]) imageData;
+
+        if (imgBytes.length > 0) { // Check if the byte array is not empty
+            ImageIcon getIcon = new ImageIcon(imgBytes);
+            Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+            uploadImage.setIcon(new ImageIcon(img)); // Set the image in JLabel
+        } else {
+            // If byte array is empty, set default image
+            uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+        }
+        } else {
+            // If imageData is null or not a byte array, set default image
+            uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+        }
     }//GEN-LAST:event_user_tableMouseClicked
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
@@ -856,6 +938,14 @@ public class adminUsers extends javax.swing.JFrame {
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void uploadImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadImageMouseClicked
+        uploadImage(uploadImage);
+    }//GEN-LAST:event_uploadImageMouseClicked
+
+    private void displayImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayImageMouseClicked
+        
+    }//GEN-LAST:event_displayImageMouseClicked
 
     /**
      * @param args the command line arguments
@@ -895,15 +985,14 @@ public class adminUsers extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel J_user_fname;
     private javax.swing.JLabel add;
-    private javax.swing.JLabel addprofile;
     private javax.swing.JTextField contactNumberTextField;
     private javax.swing.JLabel dash_icon;
     private javax.swing.JLabel dashboard;
     private javax.swing.JLabel delete;
+    private javax.swing.JLabel displayImage;
     private javax.swing.JLabel edit;
     private javax.swing.JTextField emailTextField;
     private javax.swing.JTextField fullNameTextField;
-    private javax.swing.JLabel icon;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
@@ -919,6 +1008,7 @@ public class adminUsers extends javax.swing.JFrame {
     private javax.swing.JLabel settings;
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
+    private javax.swing.JLabel uploadImage;
     private javax.swing.JComboBox<String> userStatusComboBox;
     private javax.swing.JComboBox<String> userTypeComboBox;
     private javax.swing.JLabel user_cnumberlabel;
