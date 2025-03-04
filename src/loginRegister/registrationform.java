@@ -288,6 +288,11 @@ public class registrationform extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        
+        if (!user_email.toLowerCase().endsWith("@gmail.com")) {
+            JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
         String user = "root";

@@ -6,6 +6,7 @@
 import config.dbConnector;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.sql.Connection;
@@ -60,6 +61,39 @@ public class userStudent extends javax.swing.JFrame {
             stud_table.setModel(DbUtils.resultSetToTableModel(rs));   
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
+        }
+    }
+    
+    private void highlightRow() {
+        String searchText = searchfield.getText().trim().toLowerCase();
+
+        if (searchText.isEmpty()) {
+            return;
+        }
+
+        stud_table.clearSelection();
+
+        boolean matchFound = false;
+
+        for (int i = 0; i < stud_table.getRowCount(); i++) {
+            for (int j = 1; j <= 6; j++) {
+                Object cellValue = stud_table.getValueAt(i, j);
+
+                if (cellValue != null) {
+                    String cellText = cellValue.toString().trim().toLowerCase();
+
+                    if (cellText.contains(searchText)) { 
+                        stud_table.addRowSelectionInterval(i, i);
+                        stud_table.scrollRectToVisible(stud_table.getCellRect(i, 0, true));
+                        matchFound = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!matchFound) {
+            JOptionPane.showMessageDialog(null, "No matching record found!", "Search", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
@@ -420,6 +454,11 @@ public class userStudent extends javax.swing.JFrame {
                 searchfieldActionPerformed(evt);
             }
         });
+        searchfield.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchfieldKeyPressed(evt);
+            }
+        });
         studentpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 160, 30));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
@@ -692,7 +731,7 @@ public class userStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_searchfieldActionPerformed
 
     private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
-        // TODO add your handling code here:
+        highlightRow();
     }//GEN-LAST:event_searchMouseClicked
 
     private void searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseEntered
@@ -771,6 +810,12 @@ public class userStudent extends javax.swing.JFrame {
         new userDashboard(user_fname).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_dashboardMouseClicked
+
+    private void searchfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchfieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { 
+            highlightRow();
+        }
+    }//GEN-LAST:event_searchfieldKeyPressed
 
     /**
      * @param args the command line arguments

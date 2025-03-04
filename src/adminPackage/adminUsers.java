@@ -8,12 +8,14 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import javax.swing.border.Border;
 import javax.swing.table.TableModel;
 
 public class adminUsers extends javax.swing.JFrame {
     private String user_fname;
+
 
     /**
      * Creates new form adminUsers
@@ -47,6 +49,39 @@ public class adminUsers extends javax.swing.JFrame {
             user_table.setModel(DbUtils.resultSetToTableModel(rs));   
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
+        }
+    }
+    
+    private void highlightRow() {
+        String searchText = searchfield.getText().trim().toLowerCase();
+
+        if (searchText.isEmpty()) {
+            return;
+        }
+
+        user_table.clearSelection();
+
+        boolean matchFound = false;
+
+        for (int i = 0; i < user_table.getRowCount(); i++) {
+            for (int j = 1; j <= 6; j++) {
+                Object cellValue = user_table.getValueAt(i, j);
+
+                if (cellValue != null) {
+                    String cellText = cellValue.toString().trim().toLowerCase();
+
+                    if (cellText.contains(searchText)) { 
+                        user_table.addRowSelectionInterval(i, i);
+                        user_table.scrollRectToVisible(user_table.getCellRect(i, 0, true));
+                        matchFound = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!matchFound) {
+            JOptionPane.showMessageDialog(null, "No matching record found!", "Search", JOptionPane.INFORMATION_MESSAGE);
         }
     }
     
@@ -542,6 +577,11 @@ public class adminUsers extends javax.swing.JFrame {
                 searchfieldActionPerformed(evt);
             }
         });
+        searchfield.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchfieldKeyPressed(evt);
+            }
+        });
         userspanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 160, 30));
 
         uploadImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -624,6 +664,11 @@ public class adminUsers extends javax.swing.JFrame {
 
         if (user_password.length() < 8) {
             JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (!user_email.toLowerCase().endsWith("@gmail.com")) {
+            JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -711,6 +756,11 @@ public class adminUsers extends javax.swing.JFrame {
 
         if (user_password.length() < 8) {
             JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (!user_email.toLowerCase().endsWith("@gmail.com")) {
+            JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -829,7 +879,7 @@ public class adminUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_userTypeComboBoxActionPerformed
 
     private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
-        // TODO add your handling code here:
+        highlightRow();
     }//GEN-LAST:event_searchMouseClicked
 
     private void searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseEntered
@@ -977,6 +1027,12 @@ public class adminUsers extends javax.swing.JFrame {
     private void displayImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayImageMouseClicked
         
     }//GEN-LAST:event_displayImageMouseClicked
+
+    private void searchfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchfieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { 
+            highlightRow();
+        }
+    }//GEN-LAST:event_searchfieldKeyPressed
 
     /**
      * @param args the command line arguments

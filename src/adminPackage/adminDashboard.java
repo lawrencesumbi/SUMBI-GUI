@@ -36,7 +36,8 @@ public class adminDashboard extends javax.swing.JFrame {
         J_user_fname.setText(user_fname);
         displayDashboard();
         displayImage(user_fname);
-        displayData();
+        displayPendingUsers();
+        displayTotalStudents();
     }
     
     public void displayDashboard() {
@@ -68,11 +69,24 @@ public class adminDashboard extends javax.swing.JFrame {
         }
     }
     
-    public void displayData() {
+    public void displayPendingUsers() {
         try {
             dbConnector dbc = new dbConnector();
 
             String sql = "SELECT * FROM user_table WHERE user_status = 'Pending'";
+            ResultSet rs = dbc.getData(sql);
+
+            user_table.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+    }
+    
+    public void displayTotalStudents() {
+        try {
+            dbConnector dbc = new dbConnector();
+
+            String sql = "SELECT * FROM stud_table";
             ResultSet rs = dbc.getData(sql);
 
             user_table.setModel(DbUtils.resultSetToTableModel(rs));
@@ -152,11 +166,11 @@ public class adminDashboard extends javax.swing.JFrame {
         dash_icon4 = new javax.swing.JLabel();
         user_type8 = new javax.swing.JLabel();
         user_type13 = new javax.swing.JLabel();
-        vionum_panel = new javax.swing.JPanel();
+        totalstudents = new javax.swing.JPanel();
         user_type5 = new javax.swing.JLabel();
         dash_icon3 = new javax.swing.JLabel();
         totalStudents = new javax.swing.JLabel();
-        studnum_panel1 = new javax.swing.JPanel();
+        pendingusers = new javax.swing.JPanel();
         user_type6 = new javax.swing.JLabel();
         dash_icon5 = new javax.swing.JLabel();
         pendingUsers = new javax.swing.JLabel();
@@ -372,39 +386,49 @@ public class adminDashboard extends javax.swing.JFrame {
 
         userspanel.add(studnum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 190, 120));
 
-        vionum_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        totalstudents.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                totalstudentsMouseClicked(evt);
+            }
+        });
+        totalstudents.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         user_type5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         user_type5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_type5.setText("Total Students");
-        vionum_panel.add(user_type5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, -1));
+        totalstudents.add(user_type5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, -1));
 
         dash_icon3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-graduate-48.png"))); // NOI18N
-        vionum_panel.add(dash_icon3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, 40));
+        totalstudents.add(dash_icon3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, 40));
 
         totalStudents.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         totalStudents.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         totalStudents.setText("0");
-        vionum_panel.add(totalStudents, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
+        totalstudents.add(totalStudents, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
-        userspanel.add(vionum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 190, 120));
+        userspanel.add(totalstudents, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 190, 120));
 
-        studnum_panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        pendingusers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pendingusersMouseClicked(evt);
+            }
+        });
+        pendingusers.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         user_type6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         user_type6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_type6.setText("Pending Users");
-        studnum_panel1.add(user_type6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, -1));
+        pendingusers.add(user_type6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 150, -1));
 
         dash_icon5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-select-users-40.png"))); // NOI18N
-        studnum_panel1.add(dash_icon5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, 50));
+        pendingusers.add(dash_icon5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, 50));
 
         pendingUsers.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         pendingUsers.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         pendingUsers.setText("0");
-        studnum_panel1.add(pendingUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 70, 40));
+        pendingusers.add(pendingUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 70, 40));
 
-        userspanel.add(studnum_panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 190, 120));
+        userspanel.add(pendingusers, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 190, 120));
 
         stat_panel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -563,6 +587,14 @@ public class adminDashboard extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
+    private void pendingusersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pendingusersMouseClicked
+        displayPendingUsers();
+    }//GEN-LAST:event_pendingusersMouseClicked
+
+    private void totalstudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_totalstudentsMouseClicked
+        displayTotalStudents();
+    }//GEN-LAST:event_totalstudentsMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -614,6 +646,7 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
     private javax.swing.JLabel pendingUsers;
+    private javax.swing.JPanel pendingusers;
     private javax.swing.JLabel rec_icon;
     private javax.swing.JLabel record;
     private javax.swing.JLabel sett_icon;
@@ -623,8 +656,8 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
     private javax.swing.JPanel studnum_panel;
-    private javax.swing.JPanel studnum_panel1;
     private javax.swing.JLabel totalStudents;
+    private javax.swing.JPanel totalstudents;
     private javax.swing.JTable user_table;
     private javax.swing.JLabel user_type1;
     private javax.swing.JLabel user_type11;
@@ -642,7 +675,6 @@ public class adminDashboard extends javax.swing.JFrame {
     private javax.swing.JPanel userspanel;
     private javax.swing.JLabel vio_icon;
     private javax.swing.JLabel violation;
-    private javax.swing.JPanel vionum_panel;
     private javax.swing.JPanel vionum_panel1;
     // End of variables declaration//GEN-END:variables
 }
