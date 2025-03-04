@@ -56,7 +56,7 @@ public class userStudent extends javax.swing.JFrame {
             studSection.setText("");  
             studAddress.setText("");  
             studCNumber.setText(""); 
-
+            searchfield.setText(""); 
 
             stud_table.setModel(DbUtils.resultSetToTableModel(rs));   
         } catch (SQLException ex) {
@@ -715,7 +715,8 @@ public class userStudent extends javax.swing.JFrame {
         studSection.setText("");  
         studAddress.setText("");  
         studCNumber.setText(""); 
-        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));   
+        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));  
+        searchfield.setText(""); 
     }//GEN-LAST:event_refreshMouseClicked
 
     private void refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseEntered

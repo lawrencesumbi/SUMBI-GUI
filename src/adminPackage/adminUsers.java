@@ -45,6 +45,7 @@ public class adminUsers extends javax.swing.JFrame {
             passwordField.setText("");  
             userTypeComboBox.setSelectedIndex(-1);
             userStatusComboBox.setSelectedIndex(-1);
+            searchfield.setText(""); 
 
             user_table.setModel(DbUtils.resultSetToTableModel(rs));   
         } catch (SQLException ex) {
@@ -633,6 +634,7 @@ public class adminUsers extends javax.swing.JFrame {
         userTypeComboBox.setSelectedIndex(-1);
         userStatusComboBox.setSelectedIndex(-1);
         uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+        searchfield.setText(""); 
         
     }//GEN-LAST:event_refreshMouseClicked
 
