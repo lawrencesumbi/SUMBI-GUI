@@ -285,6 +285,9 @@ public class adminUsers extends javax.swing.JFrame {
         student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         student.setText("STUDENT");
         student.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                studentMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 studentMouseEntered(evt);
             }
@@ -1035,6 +1038,11 @@ public class adminUsers extends javax.swing.JFrame {
             highlightRow();
         }
     }//GEN-LAST:event_searchfieldKeyPressed
+
+    private void studentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseClicked
+        new adminStudent(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_studentMouseClicked
 
     /**
      * @param args the command line arguments

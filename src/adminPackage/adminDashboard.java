@@ -253,6 +253,9 @@ public class adminDashboard extends javax.swing.JFrame {
         student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         student.setText("STUDENT");
         student.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                studentMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 studentMouseEntered(evt);
             }
@@ -594,6 +597,11 @@ public class adminDashboard extends javax.swing.JFrame {
     private void totalstudentsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_totalstudentsMouseClicked
         displayTotalStudents();
     }//GEN-LAST:event_totalstudentsMouseClicked
+
+    private void studentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseClicked
+        new adminStudent(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_studentMouseClicked
 
     /**
      * @param args the command line arguments
