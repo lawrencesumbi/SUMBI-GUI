@@ -39,6 +39,7 @@ public class adminUsers extends javax.swing.JFrame {
             dbConnector dbc = new dbConnector();
             ResultSet rs = dbc.getData("SELECT * FROM user_table");
             
+            userIDtextfield.setText("");
             fullNameTextField.setText("");  
             contactNumberTextField.setText("");  
             emailTextField.setText("");  
@@ -212,6 +213,8 @@ public class adminUsers extends javax.swing.JFrame {
         user_statuslabel = new javax.swing.JLabel();
         userStatusComboBox = new javax.swing.JComboBox<>();
         passwordField = new javax.swing.JTextField();
+        user_fnamelabel1 = new javax.swing.JLabel();
+        userIDtextfield = new javax.swing.JTextField();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -597,7 +600,7 @@ public class adminUsers extends javax.swing.JFrame {
                 uploadImageMouseClicked(evt);
             }
         });
-        userspanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 150, 150));
+        userspanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 150, 150));
 
         user_statuslabel.setBackground(new java.awt.Color(255, 255, 255));
         user_statuslabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -622,6 +625,22 @@ public class adminUsers extends javax.swing.JFrame {
         });
         userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 190, -1));
 
+        user_fnamelabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
+        user_fnamelabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_fnamelabel1.setText("User ID");
+        userspanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 60, 30));
+
+        userIDtextfield.setEditable(false);
+        userIDtextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        userIDtextfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        userIDtextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userIDtextfieldActionPerformed(evt);
+            }
+        });
+        userspanel.add(userIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 190, 40, -1));
+
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
         pack();
@@ -630,6 +649,7 @@ public class adminUsers extends javax.swing.JFrame {
 
     private void refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseClicked
         displayData();
+        userIDtextfield.setText("");
         fullNameTextField.setText("");  
         contactNumberTextField.setText("");  
         emailTextField.setText("");  
@@ -650,30 +670,34 @@ public class adminUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshMouseExited
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-        String user_fname = fullNameTextField.getText();
+        String user_fname = fullNameTextField.getText(); 
         String user_cnumber = contactNumberTextField.getText();
         String user_email = emailTextField.getText();
         String user_password = new String(passwordField.getText());
         String user_type = userTypeComboBox.getSelectedItem().toString();
-        String user_status = "Pending";
+        String user_status = userStatusComboBox.getSelectedItem().toString();
 
+        // Validation for empty fields
         if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty() || user_password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        // Ensure contact number is numeric
         if (!user_cnumber.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
+        // Ensure password is at least 8 characters
         if (user_password.length() < 8) {
-            JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-        if (!user_email.toLowerCase().endsWith("@gmail.com")) {
-            JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
+
+        // Ensure email format is valid
+        if (!user_email.toLowerCase().endsWith(".com")) {
+            JOptionPane.showMessageDialog(null, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -681,36 +705,33 @@ public class adminUsers extends javax.swing.JFrame {
         String user = "root";
         String pass = "";
 
-        try {
-            Connection conn = DriverManager.getConnection(url, user, pass);
+        try (Connection conn = DriverManager.getConnection(url, user, pass)) {
 
+            // Check if email already exists
             if (isEmailDuplicate(conn, user_email)) {
-                JOptionPane.showMessageDialog(this, "Email already exists. Please use a different email.", "Error", JOptionPane.ERROR_MESSAGE);
-                conn.close();
+                JOptionPane.showMessageDialog(null, "Email already exists. Please use a different email.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
+            // Insert user data with user_id
             String sql = "INSERT INTO user_table (user_fname, user_cnumber, user_email, user_password, user_type, user_status, user_image) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, user_fname);
+                pstmt.setString(2, user_cnumber);
+                pstmt.setString(3, user_email);
+                pstmt.setString(4, user_password);
+                pstmt.setString(5, user_type);
+                pstmt.setString(6, user_status);
+                pstmt.setNull(7, java.sql.Types.BLOB);
 
-            pstmt.setString(1, user_fname);
-            pstmt.setString(2, user_cnumber);
-            pstmt.setString(3, user_email);
-            pstmt.setString(4, user_password);
-            pstmt.setString(5, user_type);
-            pstmt.setString(6, user_status);
-
-            pstmt.setNull(7, java.sql.Types.BLOB);
-
-            int rowsInserted = pstmt.executeUpdate();
-            if (rowsInserted > 0) {
-                JOptionPane.showMessageDialog(this, "Registration successful!");
+                int rowsInserted = pstmt.executeUpdate();
+                if (rowsInserted > 0) {
+                    JOptionPane.showMessageDialog(null, "Registration successful!");
+                }
             }
 
-            pstmt.close();
-            conn.close();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
               
     }//GEN-LAST:event_addMouseClicked
@@ -988,6 +1009,8 @@ public class adminUsers extends javax.swing.JFrame {
     private void user_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_user_tableMouseClicked
         int i = user_table.getSelectedRow();
         TableModel model = user_table.getModel();
+        
+        userIDtextfield.setText(model.getValueAt(i, 0).toString());
 
         String userFname = model.getValueAt(i, 1).toString();
         fullNameTextField.setText(userFname);
@@ -1015,6 +1038,7 @@ public class adminUsers extends javax.swing.JFrame {
         } else {
             uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
         }
+        
     }//GEN-LAST:event_user_tableMouseClicked
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
@@ -1043,6 +1067,10 @@ public class adminUsers extends javax.swing.JFrame {
         new adminStudent(user_fname).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_studentMouseClicked
+
+    private void userIDtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDtextfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userIDtextfieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1106,11 +1134,13 @@ public class adminUsers extends javax.swing.JFrame {
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
     private javax.swing.JLabel uploadImage;
+    private javax.swing.JTextField userIDtextfield;
     private javax.swing.JComboBox<String> userStatusComboBox;
     private javax.swing.JComboBox<String> userTypeComboBox;
     private javax.swing.JLabel user_cnumberlabel;
     private javax.swing.JLabel user_emaillabel;
     private javax.swing.JLabel user_fnamelabel;
+    private javax.swing.JLabel user_fnamelabel1;
     private javax.swing.JLabel user_passwordlabel;
     private javax.swing.JLabel user_statuslabel;
     private javax.swing.JTable user_table;

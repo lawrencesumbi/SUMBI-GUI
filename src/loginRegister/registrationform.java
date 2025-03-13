@@ -289,7 +289,7 @@ public class registrationform extends javax.swing.JFrame {
             return;
         }
         
-        if (!user_email.toLowerCase().endsWith("@gmail.com")) {
+        if (!user_email.toLowerCase().endsWith(".com")) {
             JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }

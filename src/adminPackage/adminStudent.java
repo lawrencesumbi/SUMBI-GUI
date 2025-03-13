@@ -221,6 +221,8 @@ public class adminStudent extends javax.swing.JFrame {
         studSection = new javax.swing.JTextField();
         studAddress = new javax.swing.JTextField();
         studCNumber = new javax.swing.JTextField();
+        user_fnamelabel1 = new javax.swing.JLabel();
+        studIDtextfield = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -601,7 +603,7 @@ public class adminStudent extends javax.swing.JFrame {
                 uploadImageMouseClicked(evt);
             }
         });
-        studentpanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 150, 150));
+        studentpanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 150, 150));
 
         studSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         studSection.addActionListener(new java.awt.event.ActionListener() {
@@ -627,6 +629,22 @@ public class adminStudent extends javax.swing.JFrame {
         });
         studentpanel.add(studCNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 190, -1));
 
+        user_fnamelabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
+        user_fnamelabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_fnamelabel1.setText("Student ID");
+        studentpanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 70, 30));
+
+        studIDtextfield.setEditable(false);
+        studIDtextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        studIDtextfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        studIDtextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studIDtextfieldActionPerformed(evt);
+            }
+        });
+        studentpanel.add(studIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 190, 40, -1));
+
         getContentPane().add(studentpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
         pack();
@@ -637,6 +655,8 @@ public class adminStudent extends javax.swing.JFrame {
         int i = stud_table.getSelectedRow();
         TableModel model = stud_table.getModel();
 
+        studIDtextfield.setText(model.getValueAt(i, 0).toString());
+        
         String stud_fname = model.getValueAt(i, 1).toString();
         studFirstName.setText(stud_fname);
         studLastName.setText(model.getValueAt(i, 2).toString());
@@ -899,6 +919,10 @@ public class adminStudent extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_usersMouseClicked
 
+    private void studIDtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studIDtextfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studIDtextfieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -956,6 +980,7 @@ public class adminStudent extends javax.swing.JFrame {
     private javax.swing.JTextField studAddress;
     private javax.swing.JTextField studCNumber;
     private javax.swing.JTextField studFirstName;
+    private javax.swing.JTextField studIDtextfield;
     private javax.swing.JTextField studLastName;
     private javax.swing.JTextField studProgram;
     private javax.swing.JTextField studSection;
@@ -967,6 +992,7 @@ public class adminStudent extends javax.swing.JFrame {
     private javax.swing.JLabel user_cnumberlabel;
     private javax.swing.JLabel user_emaillabel;
     private javax.swing.JLabel user_fnamelabel;
+    private javax.swing.JLabel user_fnamelabel1;
     private javax.swing.JLabel user_passwordlabel;
     private javax.swing.JLabel user_passwordlabel1;
     private javax.swing.JLabel user_passwordlabel2;
