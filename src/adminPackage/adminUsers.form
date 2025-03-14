@@ -408,7 +408,7 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="REFRESH"/>
+            <Property name="text" type="java.lang.String" value="REFRESH/CLEAR"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
                 <BevelBorder/>
@@ -423,7 +423,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="250" y="250" width="70" height="30"/>
+              <AbsoluteConstraints x="250" y="250" width="120" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -707,7 +707,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="440" y="250" width="160" height="30"/>
+              <AbsoluteConstraints x="450" y="250" width="150" height="30"/>
             </Constraint>
           </Constraints>
         </Component>

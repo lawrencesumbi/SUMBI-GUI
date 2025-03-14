@@ -423,7 +423,7 @@ public class adminUsers extends javax.swing.JFrame {
         refresh.setBackground(new java.awt.Color(255, 255, 255));
         refresh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         refresh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        refresh.setText("REFRESH");
+        refresh.setText("REFRESH/CLEAR");
         refresh.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         refresh.setOpaque(true);
         refresh.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -437,7 +437,7 @@ public class adminUsers extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        userspanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 70, 30));
+        userspanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 120, 30));
 
         add.setBackground(new java.awt.Color(255, 255, 255));
         add.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -589,7 +589,7 @@ public class adminUsers extends javax.swing.JFrame {
                 searchfieldKeyPressed(evt);
             }
         });
-        userspanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 160, 30));
+        userspanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 150, 30));
 
         uploadImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         uploadImage.setForeground(new java.awt.Color(255, 255, 255));

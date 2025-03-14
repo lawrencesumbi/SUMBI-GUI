@@ -486,7 +486,7 @@ public class adminStudent extends javax.swing.JFrame {
         refresh.setBackground(new java.awt.Color(255, 255, 255));
         refresh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         refresh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        refresh.setText("REFRESH");
+        refresh.setText("REFRESH/CLEAR");
         refresh.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         refresh.setOpaque(true);
         refresh.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -500,7 +500,7 @@ public class adminStudent extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        studentpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 70, 30));
+        studentpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 120, 30));
 
         searchfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         searchfield.addActionListener(new java.awt.event.ActionListener() {
@@ -513,7 +513,7 @@ public class adminStudent extends javax.swing.JFrame {
                 searchfieldKeyPressed(evt);
             }
         });
-        studentpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 160, 30));
+        studentpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 150, 30));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -768,6 +768,7 @@ public class adminStudent extends javax.swing.JFrame {
         studCNumber.setText("");
         uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
         searchfield.setText("");
+        studIDtextfield.setText("");
     }//GEN-LAST:event_refreshMouseClicked
 
     private void refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseEntered
