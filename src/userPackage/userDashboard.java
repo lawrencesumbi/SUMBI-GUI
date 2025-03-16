@@ -137,7 +137,7 @@ public class userDashboard extends javax.swing.JFrame {
         dashboard = new javax.swing.JLabel();
         student = new javax.swing.JLabel();
         violation = new javax.swing.JLabel();
-        settings = new javax.swing.JLabel();
+        account = new javax.swing.JLabel();
         logout = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -318,19 +318,22 @@ public class userDashboard extends javax.swing.JFrame {
         });
         leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 110, 50));
 
-        settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        settings.setForeground(new java.awt.Color(255, 255, 255));
-        settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        settings.setText("SETTINGS");
-        settings.addMouseListener(new java.awt.event.MouseAdapter() {
+        account.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        account.setForeground(new java.awt.Color(255, 255, 255));
+        account.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        account.setText("ACCOUNT");
+        account.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                accountMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                settingsMouseEntered(evt);
+                accountMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                settingsMouseExited(evt);
+                accountMouseExited(evt);
             }
         });
-        leftpanel.add(settings, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 100, 50));
+        leftpanel.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 100, 50));
 
         logout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         logout.setForeground(new java.awt.Color(255, 255, 255));
@@ -395,13 +398,13 @@ public class userDashboard extends javax.swing.JFrame {
         violation.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_violationMouseExited
 
-    private void settingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseEntered
-        settings.setForeground(new java.awt.Color(255, 255, 0));
-    }//GEN-LAST:event_settingsMouseEntered
+    private void accountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountMouseEntered
+        account.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_accountMouseEntered
 
-    private void settingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseExited
-        settings.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_settingsMouseExited
+    private void accountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountMouseExited
+        account.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_accountMouseExited
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
         int response = JOptionPane.showConfirmDialog(this,
@@ -428,6 +431,13 @@ public class userDashboard extends javax.swing.JFrame {
         new userStudent(user_fname).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_studentMouseClicked
+
+    private void accountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_accountMouseClicked
+        new userAccount(user_fname).setVisible(true);
+        this.dispose();
+        
+        
+    }//GEN-LAST:event_accountMouseClicked
 
     /**
      * @param args the command line arguments
@@ -466,6 +476,7 @@ public class userDashboard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel J_user_fname;
+    private javax.swing.JLabel account;
     private javax.swing.JLabel dash_icon;
     private javax.swing.JLabel dash_icon1;
     private javax.swing.JLabel dash_icon3;
@@ -477,7 +488,6 @@ public class userDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
     private javax.swing.JLabel sett_icon;
-    private javax.swing.JLabel settings;
     private javax.swing.JPanel stat_panel;
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
