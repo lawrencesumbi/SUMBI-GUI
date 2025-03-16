@@ -46,16 +46,22 @@ public class userAccount extends javax.swing.JFrame {
     public void displayData() {
         try {
             dbConnector dbc = new dbConnector();
-            ResultSet rs = dbc.getData("SELECT * FROM user_table");
+            Connection conn = dbc.getConnection(); // Ensure you have a method to get Connection
 
-            if (rs.next()) { // Move to the first row of results
-                String userFname = rs.getString("user_fname"); // Adjust column names as needed
-                fullNameTextField.setText(userFname);
+            String query = "SELECT * FROM user_table WHERE user_fname = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, user_fname); // Set the parameter
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                fullNameTextField.setText(rs.getString("user_fname"));
                 contactNumberTextField.setText(rs.getString("user_cnumber"));
                 emailTextField.setText(rs.getString("user_email"));
                 passwordField.setText(rs.getString("user_password"));
+                userIDtextfield.setText(rs.getString("user_id"));
 
-                byte[] imgBytes = rs.getBytes("user_image"); // Adjust column name
+                byte[] imgBytes = rs.getBytes("user_image");
 
                 if (imgBytes != null && imgBytes.length > 0) {
                     ImageIcon getIcon = new ImageIcon(imgBytes);
@@ -148,6 +154,24 @@ public class userAccount extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error Loading User Image!");
         }
     }
+    
+    private boolean isEmailDuplicate(Connection conn, String email) {
+        boolean exists = false;
+        String query = "SELECT COUNT(*) FROM user_table WHERE user_email = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                exists = rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return exists;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -184,6 +208,8 @@ public class userAccount extends javax.swing.JFrame {
         settings1 = new javax.swing.JLabel();
         cancel = new javax.swing.JLabel();
         save = new javax.swing.JLabel();
+        user_fnamelabel1 = new javax.swing.JLabel();
+        userIDtextfield = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -316,7 +342,7 @@ public class userAccount extends javax.swing.JFrame {
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_fnamelabel.setText("Full Name");
+        user_fnamelabel.setText("Full Name:");
         userspanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 90, 20));
 
         fullNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -330,7 +356,7 @@ public class userAccount extends javax.swing.JFrame {
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_cnumberlabel.setText("Contact Number");
+        user_cnumberlabel.setText("Contact Number:");
         userspanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 160, 20));
 
         contactNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -344,8 +370,8 @@ public class userAccount extends javax.swing.JFrame {
         user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_emaillabel.setText("Email");
-        userspanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 50, 20));
+        user_emaillabel.setText("Email:");
+        userspanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 70, 20));
 
         emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         emailTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -358,7 +384,7 @@ public class userAccount extends javax.swing.JFrame {
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_passwordlabel.setText("Password");
+        user_passwordlabel.setText("Password:");
         userspanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 340, 100, 20));
 
         uploadImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -370,7 +396,7 @@ public class userAccount extends javax.swing.JFrame {
                 uploadImageMouseClicked(evt);
             }
         });
-        userspanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 150, 150));
+        userspanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 190, 150, 150));
 
         passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -431,6 +457,22 @@ public class userAccount extends javax.swing.JFrame {
             }
         });
         userspanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 400, 80, 40));
+
+        user_fnamelabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
+        user_fnamelabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_fnamelabel1.setText("User ID");
+        userspanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 350, 60, 30));
+
+        userIDtextfield.setEditable(false);
+        userIDtextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        userIDtextfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        userIDtextfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userIDtextfieldActionPerformed(evt);
+            }
+        });
+        userspanel.add(userIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 350, 40, -1));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -529,7 +571,40 @@ public class userAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_settings1MouseExited
 
     private void cancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelMouseClicked
-        
+        try {
+            dbConnector dbc = new dbConnector();
+            Connection conn = dbc.getConnection(); // Ensure you have a method to get Connection
+
+            String query = "SELECT * FROM user_table WHERE user_fname = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, user_fname); // Set the parameter
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                fullNameTextField.setText(rs.getString("user_fname"));
+                contactNumberTextField.setText(rs.getString("user_cnumber"));
+                emailTextField.setText(rs.getString("user_email"));
+                passwordField.setText(rs.getString("user_password"));
+
+                byte[] imgBytes = rs.getBytes("user_image");
+
+                if (imgBytes != null && imgBytes.length > 0) {
+                    ImageIcon getIcon = new ImageIcon(imgBytes);
+                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+                    uploadImage.setIcon(new ImageIcon(img));
+                } else {
+                    uploadImage.setIcon(new ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+                }
+            } else {
+                System.out.println("No user data found.");
+            }
+
+            rs.close(); // Close ResultSet
+
+        } catch (SQLException ex) {
+            ex.printStackTrace(); // More detailed error logging
+        }
     }//GEN-LAST:event_cancelMouseClicked
 
     private void cancelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelMouseEntered
@@ -541,7 +616,55 @@ public class userAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelMouseExited
 
     private void saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseClicked
-        // TODO add your handling code here:
+        String user_fname = fullNameTextField.getText();
+        String user_cnumber = contactNumberTextField.getText();
+        String user_email = emailTextField.getText();
+        String user_password = new String(passwordField.getText());    
+        
+        if (!user_cnumber.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (user_password.length() < 8) {
+            JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        if (!user_email.toLowerCase().endsWith(".com")) {
+            JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+           
+
+            String sql = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, user_password = ? WHERE user_email = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, user_fname);
+            pstmt.setString(2, user_cnumber);
+            pstmt.setString(3, user_password);
+            pstmt.setString(4, user_email);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Account information updated successfully!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_saveMouseClicked
 
     private void saveMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseEntered
@@ -551,6 +674,10 @@ public class userAccount extends javax.swing.JFrame {
     private void saveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_saveMouseExited
+
+    private void userIDtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDtextfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userIDtextfieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -607,9 +734,11 @@ public class userAccount extends javax.swing.JFrame {
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
     private javax.swing.JLabel uploadImage;
+    private javax.swing.JTextField userIDtextfield;
     private javax.swing.JLabel user_cnumberlabel;
     private javax.swing.JLabel user_emaillabel;
     private javax.swing.JLabel user_fnamelabel;
+    private javax.swing.JLabel user_fnamelabel1;
     private javax.swing.JLabel user_passwordlabel;
     private javax.swing.JLabel user_type;
     private javax.swing.JPanel userspanel;

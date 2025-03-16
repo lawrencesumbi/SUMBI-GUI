@@ -785,7 +785,7 @@ public class adminUsers extends javax.swing.JFrame {
             return;
         }
         
-        if (!user_email.toLowerCase().endsWith("@gmail.com")) {
+        if (!user_email.toLowerCase().endsWith(".com")) {
             JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -814,6 +814,7 @@ public class adminUsers extends javax.swing.JFrame {
             pstmt.setString(6, user_email);
 
             int rowsUpdated = pstmt.executeUpdate();
+            
             if (rowsUpdated > 0) {
                 JOptionPane.showMessageDialog(this, "User information updated successfully!");
             } else {

@@ -1,5 +1,6 @@
 
 
+import java.security.MessageDigest;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -25,7 +26,23 @@ public class registrationform extends javax.swing.JFrame {
         initComponents();
     }
     
-    
+    public static String passwordHash(String user_password){
+        try{
+            
+            MessageDigest md = MessageDigest.getInstance("SHA");
+            md.update(user_password.getBytes());
+            byte[] rbt = md.digest();
+            StringBuilder sb = new StringBuilder();
+            
+            for(byte b: rbt){
+                sb.append(String.format("%02x", b));
+            }          
+            return sb.toString();
+        }catch(Exception e){
+            
+        }
+        return null;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -270,7 +287,7 @@ public class registrationform extends javax.swing.JFrame {
         String user_fname = fullNameTextField.getText();
         String user_cnumber = contactNumberTextField.getText();
         String user_email = emailTextField.getText();
-        String user_password = new String(passwordField.getText());
+        String user_password = passwordHash(passwordField.getText());
         String user_type = userTypeComboBox.getSelectedItem().toString();
         String user_status = "Pending";
 
