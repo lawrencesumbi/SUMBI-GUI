@@ -364,6 +364,9 @@ public class adminStudent extends javax.swing.JFrame {
         settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settings.setText("ACCOUNT");
         settings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                settingsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 settingsMouseEntered(evt);
             }
@@ -665,28 +668,57 @@ public class adminStudent extends javax.swing.JFrame {
         studAddress.setText(model.getValueAt(i, 5).toString());
         studCNumber.setText(model.getValueAt(i, 6).toString());
 
-        // Get user_image from the table model
-        Object imageData = model.getValueAt(i, 7); // Assuming column 7 stores the image
+
+        Object imageData = model.getValueAt(i, 7);
 
         if (imageData != null && imageData instanceof byte[]) {
             byte[] imgBytes = (byte[]) imageData;
 
-            if (imgBytes.length > 0) { // Check if the byte array is not empty
+            if (imgBytes.length > 0) {
                 ImageIcon getIcon = new ImageIcon(imgBytes);
                 Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-                uploadImage.setIcon(new ImageIcon(img)); // Set the image in JLabel
+                uploadImage.setIcon(new ImageIcon(img));
             } else {
-                // If byte array is empty, set default image
+
                 uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
             }
         } else {
-            // If imageData is null or not a byte array, set default image
+
             uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
         }
     }//GEN-LAST:event_stud_tableMouseClicked
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
-        // TODO add your handling code here:
+        int i = stud_table.getSelectedRow();
+        TableModel model = stud_table.getModel();
+
+        studIDtextfield.setText(model.getValueAt(i, 0).toString());
+        
+        String stud_fname = model.getValueAt(i, 1).toString();
+        studFirstName.setText(stud_fname);
+        studLastName.setText(model.getValueAt(i, 2).toString());
+        studProgram.setText(model.getValueAt(i, 3).toString());
+        studSection.setText(model.getValueAt(i, 4).toString());
+        studAddress.setText(model.getValueAt(i, 5).toString());
+        studCNumber.setText(model.getValueAt(i, 6).toString());
+
+        Object imageData = model.getValueAt(i, 7);
+
+        if (imageData != null && imageData instanceof byte[]) {
+            byte[] imgBytes = (byte[]) imageData;
+
+            if (imgBytes.length > 0) {
+                ImageIcon getIcon = new ImageIcon(imgBytes);
+                Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+                uploadImage.setIcon(new ImageIcon(img));
+            } else {
+
+                uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+            }
+        } else {
+
+            uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+        }
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
@@ -855,7 +887,8 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_studentMouseExited
 
     private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
-        // TODO add your handling code here:
+        new adminViolation(user_fname).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_violationMouseClicked
 
     private void violationMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseEntered
@@ -923,6 +956,11 @@ public class adminStudent extends javax.swing.JFrame {
     private void studIDtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studIDtextfieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_studIDtextfieldActionPerformed
+
+    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
+        new adminAccount(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_settingsMouseClicked
 
     /**
      * @param args the command line arguments

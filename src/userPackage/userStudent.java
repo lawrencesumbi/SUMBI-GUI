@@ -316,6 +316,9 @@ public class userStudent extends javax.swing.JFrame {
         settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settings.setText("ACCOUNT");
         settings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                settingsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 settingsMouseEntered(evt);
             }
@@ -906,6 +909,11 @@ public class userStudent extends javax.swing.JFrame {
     private void studIDtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studIDtextfieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_studIDtextfieldActionPerformed
+
+    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
+        new userAccount(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_settingsMouseClicked
 
     /**
      * @param args the command line arguments

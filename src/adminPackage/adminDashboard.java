@@ -307,6 +307,9 @@ public class adminDashboard extends javax.swing.JFrame {
         settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settings.setText("ACCOUNT");
         settings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                settingsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 settingsMouseEntered(evt);
             }
@@ -517,7 +520,8 @@ public class adminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_studentMouseExited
 
     private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
-        // TODO add your handling code here:
+        new adminViolation(user_fname).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_violationMouseClicked
 
     private void violationMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseEntered
@@ -602,6 +606,11 @@ public class adminDashboard extends javax.swing.JFrame {
         new adminStudent(user_fname).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_studentMouseClicked
+
+    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
+        new adminAccount(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_settingsMouseClicked
 
     /**
      * @param args the command line arguments

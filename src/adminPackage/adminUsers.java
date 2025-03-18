@@ -10,8 +10,11 @@ import net.proteanit.sql.DbUtils;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.io.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import javax.swing.border.Border;
 import javax.swing.table.TableModel;
+
 
 public class adminUsers extends javax.swing.JFrame {
     private String user_fname;
@@ -162,6 +165,23 @@ public class adminUsers extends javax.swing.JFrame {
         }
     }
     
+    public static String passwordHash(String user_password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA");
+            md.update(user_password.getBytes());
+            byte[] rbt = md.digest();
+            StringBuilder sb = new StringBuilder();
+
+            for (byte b : rbt) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -212,9 +232,9 @@ public class adminUsers extends javax.swing.JFrame {
         uploadImage = new javax.swing.JLabel();
         user_statuslabel = new javax.swing.JLabel();
         userStatusComboBox = new javax.swing.JComboBox<>();
-        passwordField = new javax.swing.JTextField();
         user_fnamelabel1 = new javax.swing.JLabel();
         userIDtextfield = new javax.swing.JTextField();
+        passwordField = new javax.swing.JPasswordField();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -345,6 +365,9 @@ public class adminUsers extends javax.swing.JFrame {
         settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settings.setText("ACCOUNT");
         settings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                settingsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 settingsMouseEntered(evt);
             }
@@ -414,6 +437,9 @@ public class adminUsers extends javax.swing.JFrame {
         user_table.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 user_tableMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                user_tableMouseEntered(evt);
             }
         });
         jScrollPane1.setViewportView(user_table);
@@ -617,14 +643,6 @@ public class adminUsers extends javax.swing.JFrame {
         });
         userspanel.add(userStatusComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, 190, -1));
 
-        passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
-        userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 190, -1));
-
         user_fnamelabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -640,6 +658,19 @@ public class adminUsers extends javax.swing.JFrame {
             }
         });
         userspanel.add(userIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 190, 40, -1));
+
+        passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
+        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyPressed(evt);
+            }
+        });
+        userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 190, -1));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -673,7 +704,7 @@ public class adminUsers extends javax.swing.JFrame {
         String user_fname = fullNameTextField.getText(); 
         String user_cnumber = contactNumberTextField.getText();
         String user_email = emailTextField.getText();
-        String user_password = new String(passwordField.getText());
+        String user_password = passwordHash(passwordField.getText());
         String user_type = userTypeComboBox.getSelectedItem().toString();
         String user_status = userStatusComboBox.getSelectedItem().toString();
 
@@ -766,7 +797,7 @@ public class adminUsers extends javax.swing.JFrame {
         String user_fname = fullNameTextField.getText();
         String user_cnumber = contactNumberTextField.getText();
         String user_email = emailTextField.getText();
-        String user_password = new String(passwordField.getText());
+        String user_password = passwordHash(passwordField.getText());
         String user_type = userTypeComboBox.getSelectedItem().toString();
         String user_status = userStatusComboBox.getSelectedItem().toString();
 
@@ -938,7 +969,8 @@ public class adminUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_studentMouseExited
 
     private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
-        // TODO add your handling code here:
+        new adminViolation(user_fname).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_violationMouseClicked
 
     private void violationMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseEntered
@@ -1010,13 +1042,14 @@ public class adminUsers extends javax.swing.JFrame {
     private void user_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_user_tableMouseClicked
         int i = user_table.getSelectedRow();
         TableModel model = user_table.getModel();
-        
+
         userIDtextfield.setText(model.getValueAt(i, 0).toString());
 
         String userFname = model.getValueAt(i, 1).toString();
         fullNameTextField.setText(userFname);
         contactNumberTextField.setText(model.getValueAt(i, 2).toString());
         emailTextField.setText(model.getValueAt(i, 3).toString());
+
         passwordField.setText(model.getValueAt(i, 4).toString());
 
         String type = model.getValueAt(i, 5).toString();
@@ -1027,15 +1060,15 @@ public class adminUsers extends javax.swing.JFrame {
         Object imageData = model.getValueAt(i, 7);
 
         if (imageData != null && imageData instanceof byte[]) {
-        byte[] imgBytes = (byte[]) imageData;
+            byte[] imgBytes = (byte[]) imageData;
 
-        if (imgBytes.length > 0) {
-            ImageIcon getIcon = new ImageIcon(imgBytes);
-            Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-            uploadImage.setIcon(new ImageIcon(img));
-        } else {
-            uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
-        }
+            if (imgBytes.length > 0) {
+                ImageIcon getIcon = new ImageIcon(imgBytes);
+                Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+                uploadImage.setIcon(new ImageIcon(img));
+            } else {
+                uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+            }
         } else {
             uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
         }
@@ -1043,12 +1076,39 @@ public class adminUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_user_tableMouseClicked
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+        int i = user_table.getSelectedRow();
+        TableModel model = user_table.getModel();
 
+        userIDtextfield.setText(model.getValueAt(i, 0).toString());
+
+        String userFname = model.getValueAt(i, 1).toString();
+        fullNameTextField.setText(userFname);
+        contactNumberTextField.setText(model.getValueAt(i, 2).toString());
+        emailTextField.setText(model.getValueAt(i, 3).toString());
+        
+        passwordField.setText(model.getValueAt(i, 4).toString());
+
+        String type = model.getValueAt(i, 4).toString();
+        userTypeComboBox.setSelectedItem(type);
+        String status = model.getValueAt(i, 5).toString();
+        userStatusComboBox.setSelectedItem(status);
+
+        Object imageData = model.getValueAt(i, 6);
+
+        if (imageData != null && imageData instanceof byte[]) {
+            byte[] imgBytes = (byte[]) imageData;
+
+            if (imgBytes.length > 0) {
+                ImageIcon getIcon = new ImageIcon(imgBytes);
+                Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+                uploadImage.setIcon(new ImageIcon(img));
+            } else {
+                uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+            }
+        } else {
+            uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+        }
     }//GEN-LAST:event_jScrollPane1MouseClicked
-
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void uploadImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadImageMouseClicked
         uploadImage(uploadImage);
@@ -1072,6 +1132,23 @@ public class adminUsers extends javax.swing.JFrame {
     private void userIDtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userIDtextfieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userIDtextfieldActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
+        
+    }//GEN-LAST:event_passwordFieldKeyPressed
+
+    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
+        new adminAccount(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_settingsMouseClicked
+
+    private void user_tableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_user_tableMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_user_tableMouseEntered
 
     /**
      * @param args the command line arguments
@@ -1124,7 +1201,7 @@ public class adminUsers extends javax.swing.JFrame {
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
-    private javax.swing.JTextField passwordField;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel rec_icon;
     private javax.swing.JLabel record;
     private javax.swing.JLabel refresh;

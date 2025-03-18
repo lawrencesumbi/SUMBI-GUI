@@ -7,6 +7,13 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.*;
 import java.awt.event.*;
+import java.security.MessageDigest;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.*;
+import javax.swing.JOptionPane;
+
+
 
 
 /*
@@ -28,6 +35,23 @@ public class loginform extends javax.swing.JFrame {
         initComponents();
     }
 
+    public static String passwordHash(String user_password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA");
+            md.update(user_password.getBytes());
+            byte[] rbt = md.digest();
+            StringBuilder sb = new StringBuilder();
+
+            for (byte b : rbt) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -206,63 +230,7 @@ public class loginform extends javax.swing.JFrame {
     }//GEN-LAST:event_loginbuttonMouseExited
 
     private void loginbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginbuttonMouseClicked
-    String user_email = usertextfield.getText();
-    String user_password = new String(passtextfield.getPassword());
-
-    if (user_email.isEmpty() || user_password.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter both email and password.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    String sql = "SELECT * FROM user_table WHERE user_email = ? AND user_password = ?";
-
-    dbConnector db = new dbConnector();
-
-    try (Connection conn = db.getConnection();
-         PreparedStatement pst = conn.prepareStatement(sql)) {
-
-        pst.setString(1, user_email);
-        pst.setString(2, user_password);
-        ResultSet rs = pst.executeQuery();
-
-        if (rs.next()) {
-            String user_status = rs.getString("user_status");
-
-            if (user_status.equalsIgnoreCase("Pending")) {
-                JOptionPane.showMessageDialog(this, "Account Pending. Please contact the Admin.", "Access Denied", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
-            String user_type = rs.getString("user_type");
-            String user_fname = rs.getString("user_fname");
-
-            if (user_type.equalsIgnoreCase("Admin")) {
-                adminDashboard admin = new adminDashboard(user_fname);
-                admin.setVisible(true);
-            } else {
-                userDashboard user = new userDashboard(user_fname);
-                user.setVisible(true);
-            }
-
-            this.dispose();
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Incorrect username or password.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
-    }//GEN-LAST:event_loginbuttonMouseClicked
-
-    private void loginbuttonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginbuttonKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loginbuttonKeyPressed
-
-    private void passtextfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passtextfieldKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { 
+    
         String user_email = usertextfield.getText();
         String user_password = new String(passtextfield.getPassword());
 
@@ -270,6 +238,8 @@ public class loginform extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please enter both email and password.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+
+        String hashedPassword = passwordHash(user_password);
 
         String sql = "SELECT * FROM user_table WHERE user_email = ? AND user_password = ?";
 
@@ -279,7 +249,70 @@ public class loginform extends javax.swing.JFrame {
              PreparedStatement pst = conn.prepareStatement(sql)) {
 
             pst.setString(1, user_email);
-            pst.setString(2, user_password);
+            pst.setString(2, hashedPassword);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                String user_status = rs.getString("user_status");
+
+                if (user_status.equalsIgnoreCase("Pending")) {
+                    JOptionPane.showMessageDialog(this, "Account Pending. Please contact the Admin.", "Access Denied", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                String user_type = rs.getString("user_type");
+                String user_fname = rs.getString("user_fname");
+
+                if (user_type.equalsIgnoreCase("Admin")) {
+                    adminDashboard admin = new adminDashboard(user_fname);
+                    admin.setVisible(true);
+                } else {
+                    userDashboard user = new userDashboard(user_fname);
+                    user.setVisible(true);
+                }
+
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Incorrect username or password.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    
+    }//GEN-LAST:event_loginbuttonMouseClicked
+
+    
+    
+    private void loginbuttonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_loginbuttonKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loginbuttonKeyPressed
+
+    private void passtextfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passtextfieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            
+        String user_email = usertextfield.getText();
+        String user_password = new String(passtextfield.getPassword());
+
+        if (user_email.isEmpty() || user_password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter both email and password.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String hashedPassword = passwordHash(user_password);
+
+        String sql = "SELECT * FROM user_table WHERE user_email = ? AND user_password = ?";
+
+        dbConnector db = new dbConnector();
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+
+            pst.setString(1, user_email);
+            pst.setString(2, hashedPassword);
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {

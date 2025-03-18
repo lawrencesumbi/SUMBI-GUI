@@ -288,6 +288,9 @@ public class adminViolation extends javax.swing.JFrame {
         student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         student.setText("STUDENT");
         student.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                studentMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 studentMouseEntered(evt);
             }
@@ -369,6 +372,9 @@ public class adminViolation extends javax.swing.JFrame {
         settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settings.setText("ACCOUNT");
         settings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                settingsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 settingsMouseEntered(evt);
             }
@@ -1029,6 +1035,16 @@ public class adminViolation extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
         } 
     }//GEN-LAST:event_studIDKeyReleased
+
+    private void studentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseClicked
+        new adminStudent(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_studentMouseClicked
+
+    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
+        new adminAccount(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_settingsMouseClicked
 
     /**
      * @param args the command line arguments

@@ -1,12 +1,16 @@
 
 
+import config.passwordHasher;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,22 +30,21 @@ public class registrationform extends javax.swing.JFrame {
         initComponents();
     }
     
-    public static String passwordHash(String user_password){
-        try{
-            
-            MessageDigest md = MessageDigest.getInstance("SHA");
+    public static String passwordHash(String user_password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA"); // Use SHA-256
             md.update(user_password.getBytes());
             byte[] rbt = md.digest();
             StringBuilder sb = new StringBuilder();
-            
-            for(byte b: rbt){
+
+            for (byte b : rbt) {
                 sb.append(String.format("%02x", b));
-            }          
+            }
             return sb.toString();
-        }catch(Exception e){
-            
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace(); // Log the error properly
+            return null;
         }
-        return null;
     }
 
     /**
@@ -287,24 +290,17 @@ public class registrationform extends javax.swing.JFrame {
         String user_fname = fullNameTextField.getText();
         String user_cnumber = contactNumberTextField.getText();
         String user_email = emailTextField.getText();
-        String user_password = passwordHash(passwordField.getText());
         String user_type = userTypeComboBox.getSelectedItem().toString();
         String user_status = "Pending";
 
-        if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty() || user_password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        
 
         if (!user_cnumber.matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (user_password.length() < 8) {
-            JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        
         
         if (!user_email.toLowerCase().endsWith(".com")) {
             JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -317,10 +313,22 @@ public class registrationform extends javax.swing.JFrame {
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pass);
-
+            
             if (isEmailDuplicate(conn, user_email)) {
                 JOptionPane.showMessageDialog(this, "Email already exists. Please use a different email.", "Error", JOptionPane.ERROR_MESSAGE);
                 conn.close();
+                return;
+            }
+            
+            String user_password = passwordHasher.hashPassword(passwordField.getText());
+            
+            if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty() || user_password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (user_password.length() < 8) {
+                JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -345,6 +353,8 @@ public class registrationform extends javax.swing.JFrame {
             conn.close();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(registrationform.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_registerbuttonMouseClicked
