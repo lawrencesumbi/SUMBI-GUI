@@ -1133,14 +1133,6 @@ public class adminUsers extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_userIDtextfieldActionPerformed
 
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
-    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
-        
-    }//GEN-LAST:event_passwordFieldKeyPressed
-
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
         new adminAccount(user_fname).setVisible(true);
         this.dispose();
@@ -1149,6 +1141,14 @@ public class adminUsers extends javax.swing.JFrame {
     private void user_tableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_user_tableMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_user_tableMouseEntered
+
+    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
+
+    }//GEN-LAST:event_passwordFieldKeyPressed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
     /**
      * @param args the command line arguments

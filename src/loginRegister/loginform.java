@@ -52,6 +52,11 @@ public class loginform extends javax.swing.JFrame {
         }
     }
     
+    public String getUserPassword() {
+        return new String(passtextfield.getPassword());
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -210,7 +215,7 @@ public class loginform extends javax.swing.JFrame {
     private void donthaveaccMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_donthaveaccMouseClicked
         registrationform rf = new registrationform();
         rf.setVisible(true);
-        this.dispose();
+        this.dispose(); 
     }//GEN-LAST:event_donthaveaccMouseClicked
 
     private void donthaveaccMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_donthaveaccMouseEntered
@@ -232,7 +237,7 @@ public class loginform extends javax.swing.JFrame {
     private void loginbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginbuttonMouseClicked
     
         String user_email = usertextfield.getText();
-        String user_password = new String(passtextfield.getPassword());
+        String user_password = getUserPassword();
 
         if (user_email.isEmpty() || user_password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter both email and password.", "Error", JOptionPane.ERROR_MESSAGE);
