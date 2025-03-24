@@ -725,7 +725,7 @@ public class adminAccount extends javax.swing.JFrame {
 
                 int rowsUpdated = updatePstmt.executeUpdate();
                 if (rowsUpdated > 0) {
-                    JOptionPane.showMessageDialog(this, "Account information updated successfully!");
+                    JOptionPane.showMessageDialog(this, "Password changed successfully!");
                 } else {
                     JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                 }

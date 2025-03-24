@@ -1050,7 +1050,7 @@ public class adminUsers extends javax.swing.JFrame {
         contactNumberTextField.setText(model.getValueAt(i, 2).toString());
         emailTextField.setText(model.getValueAt(i, 3).toString());
 
-        passwordField.setText(model.getValueAt(i, 4).toString());
+        passwordField.setText("");
 
         String type = model.getValueAt(i, 5).toString();
         userTypeComboBox.setSelectedItem(type);
@@ -1076,38 +1076,7 @@ public class adminUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_user_tableMouseClicked
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
-        int i = user_table.getSelectedRow();
-        TableModel model = user_table.getModel();
-
-        userIDtextfield.setText(model.getValueAt(i, 0).toString());
-
-        String userFname = model.getValueAt(i, 1).toString();
-        fullNameTextField.setText(userFname);
-        contactNumberTextField.setText(model.getValueAt(i, 2).toString());
-        emailTextField.setText(model.getValueAt(i, 3).toString());
         
-        passwordField.setText(model.getValueAt(i, 4).toString());
-
-        String type = model.getValueAt(i, 4).toString();
-        userTypeComboBox.setSelectedItem(type);
-        String status = model.getValueAt(i, 5).toString();
-        userStatusComboBox.setSelectedItem(status);
-
-        Object imageData = model.getValueAt(i, 6);
-
-        if (imageData != null && imageData instanceof byte[]) {
-            byte[] imgBytes = (byte[]) imageData;
-
-            if (imgBytes.length > 0) {
-                ImageIcon getIcon = new ImageIcon(imgBytes);
-                Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-                uploadImage.setIcon(new ImageIcon(img));
-            } else {
-                uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
-            }
-        } else {
-            uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
-        }
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void uploadImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadImageMouseClicked

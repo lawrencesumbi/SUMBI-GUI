@@ -80,6 +80,7 @@ public class loginform extends javax.swing.JFrame {
         donthaveacc = new javax.swing.JLabel();
         password = new javax.swing.JLabel();
         loginlabel = new javax.swing.JLabel();
+        forgotPassword = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -172,7 +173,7 @@ public class loginform extends javax.swing.JFrame {
         donthaveacc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         donthaveacc.setForeground(new java.awt.Color(255, 255, 255));
         donthaveacc.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        donthaveacc.setText("Dont have an account? Register");
+        donthaveacc.setText("Dont have account?");
         donthaveacc.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 donthaveaccMouseClicked(evt);
@@ -184,7 +185,7 @@ public class loginform extends javax.swing.JFrame {
                 donthaveaccMouseExited(evt);
             }
         });
-        RightPanel.add(donthaveacc, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 220, 30));
+        RightPanel.add(donthaveacc, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 160, 120, 30));
 
         password.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         password.setForeground(new java.awt.Color(255, 255, 255));
@@ -197,6 +198,23 @@ public class loginform extends javax.swing.JFrame {
         loginlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         loginlabel.setText("LOG IN");
         RightPanel.add(loginlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 110, 30));
+
+        forgotPassword.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        forgotPassword.setForeground(new java.awt.Color(255, 255, 255));
+        forgotPassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        forgotPassword.setText("Forgot Password?");
+        forgotPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                forgotPasswordMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                forgotPasswordMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                forgotPasswordMouseExited(evt);
+            }
+        });
+        RightPanel.add(forgotPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 100, 30));
 
         getContentPane().add(RightPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, 250, 200));
 
@@ -353,6 +371,19 @@ public class loginform extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_passtextfieldKeyPressed
 
+    private void forgotPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordMouseClicked
+        new forgotpassword().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_forgotPasswordMouseClicked
+
+    private void forgotPasswordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_forgotPasswordMouseEntered
+
+    private void forgotPasswordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_forgotPasswordMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -394,6 +425,7 @@ public class loginform extends javax.swing.JFrame {
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JPanel RightPanel;
     private javax.swing.JLabel donthaveacc;
+    private javax.swing.JLabel forgotPassword;
     private javax.swing.JLabel loginbutton;
     private javax.swing.JLabel loginlabel;
     private javax.swing.JPasswordField passtextfield;

@@ -153,7 +153,7 @@ public class registrationform extends javax.swing.JFrame {
         registerlabel.setForeground(new java.awt.Color(255, 255, 255));
         registerlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         registerlabel.setText("REGISTER");
-        RightPanel.add(registerlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, 110, 40));
+        RightPanel.add(registerlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 110, 30));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
