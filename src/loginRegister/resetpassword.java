@@ -35,6 +35,7 @@ public class resetpassword extends javax.swing.JFrame {
     public resetpassword(String email) {
         this.user_email = email;  
         initComponents();
+        emailTextField.setText(user_email);
     }
     
     public static String passwordHash(String user_password) {
@@ -87,11 +88,11 @@ public class resetpassword extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         back = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        oldpass = new javax.swing.JPasswordField();
         newpass = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         resetPassword = new javax.swing.JLabel();
+        emailTextField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,7 +103,7 @@ public class resetpassword extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resetpassword.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 400, 250));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 400, 250));
 
         back.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         back.setForeground(new java.awt.Color(255, 255, 255));
@@ -122,9 +123,8 @@ public class resetpassword extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("New Password:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 130, 30));
-        jPanel1.add(oldpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 360, 40));
+        jLabel5.setText("Enter New Password:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 180, 30));
 
         newpass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,7 +140,7 @@ public class resetpassword extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Old Password:");
+        jLabel8.setText("Email Account:");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 130, 30));
 
         resetPassword.setBackground(new java.awt.Color(255, 255, 255));
@@ -167,11 +167,20 @@ public class resetpassword extends javax.swing.JFrame {
         });
         jPanel1.add(resetPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 480, 160, 40));
 
+        emailTextField.setEditable(false);
+        emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        emailTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailTextFieldActionPerformed(evt);
+            }
+        });
+        jPanel1.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 360, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +209,6 @@ public class resetpassword extends javax.swing.JFrame {
     }//GEN-LAST:event_newpassActionPerformed
 
     private void resetPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetPasswordMouseClicked
-        String oldPassword = new String(oldpass.getPassword());
         String newPassword = new String(newpass.getPassword());
 
         if (newPassword.length() < 8) {
@@ -209,7 +217,6 @@ public class resetpassword extends javax.swing.JFrame {
         }        
 
         String hashedNewPassword = passwordHash(newPassword);
-        String oldPasswordHash = passwordHash(oldPassword);
 
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
         String user = "root";
@@ -217,38 +224,21 @@ public class resetpassword extends javax.swing.JFrame {
 
         try (Connection conn = DriverManager.getConnection(url, user, pass)) {
 
-            String selectQuery = "SELECT user_password FROM user_table WHERE user_email = ?";
-            try (PreparedStatement selectPstmt = conn.prepareStatement(selectQuery)) {
-                selectPstmt.setString(1, user_email);
-                ResultSet rs = selectPstmt.executeQuery();
+            String updateQuery = "UPDATE user_table SET user_password = ? WHERE user_email = ?";
+            try (PreparedStatement updatePstmt = conn.prepareStatement(updateQuery)) {
+                updatePstmt.setString(1, hashedNewPassword);
+                updatePstmt.setString(2, user_email);
 
-                if (rs.next()) {
-                    String storedPassword = rs.getString("user_password");
+                int rowsUpdated = updatePstmt.executeUpdate();
+                if (rowsUpdated > 0) {
+                    JOptionPane.showMessageDialog(this, "Password changed successfully!");
 
-                    if (!storedPassword.equals(oldPasswordHash)) {
-                        JOptionPane.showMessageDialog(this, "Old password is incorrect.", "Error", JOptionPane.ERROR_MESSAGE);
-                        return;
-                    }
 
-                    String updateQuery = "UPDATE user_table SET user_password = ? WHERE user_email = ?";
-                    try (PreparedStatement updatePstmt = conn.prepareStatement(updateQuery)) {
-                        updatePstmt.setString(1, hashedNewPassword);
-                        updatePstmt.setString(2, user_email);
-
-                        int rowsUpdated = updatePstmt.executeUpdate();
-                        if (rowsUpdated > 0) {
-                            JOptionPane.showMessageDialog(this, "Password changed successfully!");
-                            new loginform().setVisible(true);
-                            this.dispose();
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    }
+                    new loginform().setVisible(true);
+                    this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "User not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
-                rs.close();
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -266,6 +256,10 @@ public class resetpassword extends javax.swing.JFrame {
     private void resetPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_resetPasswordKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_resetPasswordKeyPressed
+
+    private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,13 +298,13 @@ public class resetpassword extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel back;
+    private javax.swing.JTextField emailTextField;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField newpass;
-    private javax.swing.JPasswordField oldpass;
     private javax.swing.JLabel resetPassword;
     // End of variables declaration//GEN-END:variables
 }
