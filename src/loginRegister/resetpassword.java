@@ -3,17 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import config.dbConnector;
+import static config.passwordHasher.hashPassword;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+
 /**
  *
  * @author Admin
  */
 public class resetpassword extends javax.swing.JFrame {
-
+    private String user_email;
     /**
      * Creates new form resetpassword
      */
@@ -21,10 +32,34 @@ public class resetpassword extends javax.swing.JFrame {
         initComponents();
     }
     
+    public resetpassword(String email) {
+        this.user_email = email;  
+        initComponents();
+    }
+    
+    public static String passwordHash(String user_password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA");
+            md.update(user_password.getBytes());
+            byte[] rbt = md.digest();
+            StringBuilder sb = new StringBuilder();
+
+            for (byte b : rbt) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+   
     Color hover = new Color(0, 153, 153);
     Color defbutton = new Color(204,255,204);
 
     Border empty = BorderFactory.createEmptyBorder();
+
+  
 
     void buttonBorderAnimation(JPanel panel) {
         panel.setBackground(hover);
@@ -52,23 +87,22 @@ public class resetpassword extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         back = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        send = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
         oldpass = new javax.swing.JPasswordField();
         newpass = new javax.swing.JPasswordField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        resetPassword = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel1.setBackground(new java.awt.Color(204, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resetpassword.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 400, 250));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 400, 250));
 
         back.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         back.setForeground(new java.awt.Color(255, 255, 255));
@@ -89,69 +123,63 @@ public class resetpassword extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("New Password:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 130, 30));
-
-        send.setBackground(new java.awt.Color(204, 255, 204));
-        send.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        send.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sendMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                sendMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                sendMouseExited(evt);
-            }
-        });
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Reset password");
-
-        javax.swing.GroupLayout sendLayout = new javax.swing.GroupLayout(send);
-        send.setLayout(sendLayout);
-        sendLayout.setHorizontalGroup(
-            sendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
-        );
-        sendLayout.setVerticalGroup(
-            sendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(send, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 510, 120, 40));
-        jPanel1.add(oldpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 360, 40));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 130, 30));
+        jPanel1.add(oldpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 360, 40));
 
         newpass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 newpassActionPerformed(evt);
             }
         });
-        jPanel1.add(newpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 450, 360, 40));
+        jPanel1.add(newpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 360, 40));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Reset your Password");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 40, 170, 30));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 170, 30));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Old Password:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 130, 30));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 290, 130, 30));
+
+        resetPassword.setBackground(new java.awt.Color(255, 255, 255));
+        resetPassword.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        resetPassword.setForeground(new java.awt.Color(255, 255, 255));
+        resetPassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        resetPassword.setText("Reset Password");
+        resetPassword.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        resetPassword.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resetPasswordMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                resetPasswordMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                resetPasswordMouseExited(evt);
+            }
+        });
+        resetPassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                resetPasswordKeyPressed(evt);
+            }
+        });
+        jPanel1.add(resetPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 480, 160, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
@@ -167,21 +195,77 @@ public class resetpassword extends javax.swing.JFrame {
 
     }//GEN-LAST:event_backMouseExited
 
-    private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked
-
-    }//GEN-LAST:event_sendMouseClicked
-
-    private void sendMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseEntered
-        buttonBorderAnimation(send);
-    }//GEN-LAST:event_sendMouseEntered
-
-    private void sendMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseExited
-        buttonDefaultColor(send);
-    }//GEN-LAST:event_sendMouseExited
-
     private void newpassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newpassActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newpassActionPerformed
+
+    private void resetPasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetPasswordMouseClicked
+        String oldPassword = new String(oldpass.getPassword());
+        String newPassword = new String(newpass.getPassword());
+
+        if (newPassword.length() < 8) {
+            JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }        
+
+        String hashedNewPassword = passwordHash(newPassword);
+        String oldPasswordHash = passwordHash(oldPassword);
+
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try (Connection conn = DriverManager.getConnection(url, user, pass)) {
+
+            String selectQuery = "SELECT user_password FROM user_table WHERE user_email = ?";
+            try (PreparedStatement selectPstmt = conn.prepareStatement(selectQuery)) {
+                selectPstmt.setString(1, user_email);
+                ResultSet rs = selectPstmt.executeQuery();
+
+                if (rs.next()) {
+                    String storedPassword = rs.getString("user_password");
+
+                    if (!storedPassword.equals(oldPasswordHash)) {
+                        JOptionPane.showMessageDialog(this, "Old password is incorrect.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+
+                    String updateQuery = "UPDATE user_table SET user_password = ? WHERE user_email = ?";
+                    try (PreparedStatement updatePstmt = conn.prepareStatement(updateQuery)) {
+                        updatePstmt.setString(1, hashedNewPassword);
+                        updatePstmt.setString(2, user_email);
+
+                        int rowsUpdated = updatePstmt.executeUpdate();
+                        if (rowsUpdated > 0) {
+                            JOptionPane.showMessageDialog(this, "Password changed successfully!");
+                            new loginform().setVisible(true);
+                            this.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "User not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+
+                rs.close();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_resetPasswordMouseClicked
+
+    private void resetPasswordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetPasswordMouseEntered
+        resetPassword.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_resetPasswordMouseEntered
+
+    private void resetPasswordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetPasswordMouseExited
+        resetPassword.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_resetPasswordMouseExited
+
+    private void resetPasswordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_resetPasswordKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_resetPasswordKeyPressed
 
     /**
      * @param args the command line arguments
@@ -220,7 +304,6 @@ public class resetpassword extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel back;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
@@ -228,6 +311,6 @@ public class resetpassword extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField newpass;
     private javax.swing.JPasswordField oldpass;
-    private javax.swing.JPanel send;
+    private javax.swing.JLabel resetPassword;
     // End of variables declaration//GEN-END:variables
 }

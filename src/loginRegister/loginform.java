@@ -377,11 +377,11 @@ public class loginform extends javax.swing.JFrame {
     }//GEN-LAST:event_forgotPasswordMouseClicked
 
     private void forgotPasswordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordMouseEntered
-        // TODO add your handling code here:
+        forgotPassword.setForeground(new java.awt.Color(255, 255, 0));
     }//GEN-LAST:event_forgotPasswordMouseEntered
 
     private void forgotPasswordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgotPasswordMouseExited
-        // TODO add your handling code here:
+        forgotPassword.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_forgotPasswordMouseExited
 
     /**

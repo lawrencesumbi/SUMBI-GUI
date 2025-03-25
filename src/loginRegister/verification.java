@@ -3,12 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import config.dbConnector;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+
 
 /**
  *
@@ -16,6 +22,8 @@ import javax.swing.border.Border;
  */
 public class verification extends javax.swing.JFrame {
     private int correctPin;
+    private String user_email;
+    private static int generatedPin;
     /**
      * Creates new form verification
      */
@@ -23,18 +31,24 @@ public class verification extends javax.swing.JFrame {
         initComponents();
     }
     
-    public verification(int generatedPin) {
-        this.correctPin = generatedPin; 
-        initComponents(); 
+    public verification(String email, int generatedPin) {
+        this.user_email = email;
+        this.correctPin = generatedPin;
+        initComponents();
     }
+    
+    public void setCorrectPin(int newPin) {
+        this.correctPin = newPin;
+    }
+
     
     private void verifyPin() {
         try {
             int enteredPin = Integer.parseInt(enterpin.getText());
             if (enteredPin == correctPin) {
-                JOptionPane.showMessageDialog(this, "PIN Verified. You may reset your password.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "PIN Verified.", "Success", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
-                new resetpassword().setVisible(true);
+                new resetpassword(user_email).setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(this, "Incorrect PIN. Try again.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -42,23 +56,8 @@ public class verification extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please enter a valid PIN.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    Color hover = new Color(0, 153, 153);
-    Color defbutton = new Color(204,255,204);
-     
-    Border empty = BorderFactory.createEmptyBorder();
-     
-    void buttonBorderAnimation(JPanel panel){
-    panel.setBackground(hover);
-    panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    panel.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0f)));
-    }
-    
-    void buttonDefaultColor(JPanel panel){
-    panel.setBackground(defbutton);
-    panel.setBorder(empty);
-    }
 
+     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,40 +75,50 @@ public class verification extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         enterpin = new javax.swing.JTextField();
         back = new javax.swing.JLabel();
-        send = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
+        verifybutton = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel4.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel4.setBackground(new java.awt.Color(204, 0, 0));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image_forest_green.png"))); // NOI18N
-        jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 320, 210));
+        jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 320, 210));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Verification");
-        jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 190, 20));
+        jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 190, 20));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Enter the verification code we just sent you");
-        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 350, 30));
+        jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 350, 30));
 
         resend.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         resend.setForeground(new java.awt.Color(255, 255, 255));
         resend.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         resend.setText("Didn't received code? Resend");
-        jPanel4.add(resend, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 350, 20));
+        resend.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resendMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                resendMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                resendMouseExited(evt);
+            }
+        });
+        jPanel4.add(resend, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 350, 20));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setText("on your email address.");
-        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 340, 190, 20));
+        jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 190, 20));
 
         enterpin.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         enterpin.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -121,7 +130,7 @@ public class verification extends javax.swing.JFrame {
                 enterpinActionPerformed(evt);
             }
         });
-        jPanel4.add(enterpin, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 360, 40));
+        jPanel4.add(enterpin, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 360, 40));
 
         back.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         back.setForeground(new java.awt.Color(255, 255, 255));
@@ -139,51 +148,43 @@ public class verification extends javax.swing.JFrame {
         });
         jPanel4.add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 50));
 
-        send.setBackground(new java.awt.Color(204, 255, 204));
-        send.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        send.addMouseListener(new java.awt.event.MouseAdapter() {
+        verifybutton.setBackground(new java.awt.Color(255, 255, 255));
+        verifybutton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        verifybutton.setForeground(new java.awt.Color(255, 255, 255));
+        verifybutton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        verifybutton.setText("Verify");
+        verifybutton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        verifybutton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sendMouseClicked(evt);
+                verifybuttonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                sendMouseEntered(evt);
+                verifybuttonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                sendMouseExited(evt);
+                verifybuttonMouseExited(evt);
             }
         });
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Verify");
-
-        javax.swing.GroupLayout sendLayout = new javax.swing.GroupLayout(send);
-        send.setLayout(sendLayout);
-        sendLayout.setHorizontalGroup(
-            sendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sendLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        sendLayout.setVerticalGroup(
-            sendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-        );
-
-        jPanel4.add(send, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 450, 100, 40));
+        verifybutton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                verifybuttonKeyPressed(evt);
+            }
+        });
+        jPanel4.add(verifybutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, 110, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void enterpinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enterpinActionPerformed
@@ -203,17 +204,58 @@ public class verification extends javax.swing.JFrame {
 
     }//GEN-LAST:event_backMouseExited
 
-    private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked
+    private void resendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendMouseClicked
+        dbConnector dbc = new dbConnector();
+        Connection con = dbc.getConnection();
+        
+        try {
+            String query = "SELECT user_email FROM user_table WHERE user_email = ?";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, user_email);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                generatedPin = 100000 + new Random().nextInt(900000);
+                System.out.println("NOTIFICATION: Reset PIN for " + user_email + " is " + generatedPin);
+
+                JOptionPane.showMessageDialog(this, "A PIN has been sent to your email. Please check your inbox.", 
+                                              "PIN Sent", JOptionPane.INFORMATION_MESSAGE);
+
+                this.setVisible(false);
+               new verification(user_email, generatedPin).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Email not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_resendMouseClicked
+
+    private void verifybuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verifybuttonMouseClicked
         verifyPin();
-    }//GEN-LAST:event_sendMouseClicked
+    }//GEN-LAST:event_verifybuttonMouseClicked
 
-    private void sendMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseEntered
-        buttonBorderAnimation(send);
-    }//GEN-LAST:event_sendMouseEntered
+    private void verifybuttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verifybuttonMouseEntered
+        verifybutton.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_verifybuttonMouseEntered
 
-    private void sendMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseExited
-        buttonDefaultColor(send);
-    }//GEN-LAST:event_sendMouseExited
+    private void verifybuttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verifybuttonMouseExited
+        verifybutton.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_verifybuttonMouseExited
+
+    private void verifybuttonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_verifybuttonKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_verifybuttonKeyPressed
+
+    private void resendMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendMouseEntered
+       resend.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_resendMouseEntered
+
+    private void resendMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendMouseExited
+       resend.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_resendMouseExited
 
     /**
      * @param args the command line arguments
@@ -253,13 +295,12 @@ public class verification extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel back;
     private javax.swing.JTextField enterpin;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel resend;
-    private javax.swing.JPanel send;
+    private javax.swing.JLabel verifybutton;
     // End of variables declaration//GEN-END:variables
 }

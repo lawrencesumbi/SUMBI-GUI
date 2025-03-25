@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import config.dbConnector;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
@@ -24,38 +28,50 @@ public class forgotpassword extends javax.swing.JFrame {
     }
     
     private void sendPin() {
-    String email = enteremail.getText();
-    if (email.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please enter your email.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
+        dbConnector dbc = new dbConnector();
+        Connection con = dbc.getConnection();
+
+        String user_input = enteremail.getText().trim();
+        if (user_input.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter your email or contact number.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        boolean isEmail = user_input.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com$"); 
+        boolean isPhone = user_input.matches("^\\d{10,15}$");
+
+        if (!isEmail && !isPhone) {
+            JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid email or contact number.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        try {
+            String query = "SELECT user_email, user_cnumber FROM user_table WHERE user_email = ? OR user_cnumber = ?";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, user_input);
+            pst.setString(2, user_input);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                String foundEmail = rs.getString("user_email"); 
+                generatedPin = 100000 + new Random().nextInt(900000);
+                System.out.println("NOTIFICATION: Reset PIN for " + foundEmail + " is " + generatedPin);
+
+                JOptionPane.showMessageDialog(this, "A PIN has been sent to your email or phone number. Please check your inbox.", 
+                                              "PIN Sent", JOptionPane.INFORMATION_MESSAGE);
+
+                this.setVisible(false);
+                new verification(foundEmail, generatedPin).setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Email or contact number not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
-    generatedPin = 100000 + new Random().nextInt(900000);
-    System.out.println("Admin Notification: Reset PIN for " + email + " is " + generatedPin);
-
-    JOptionPane.showMessageDialog(this, "A PIN has been sent to your email. Please check your inbox.", 
-                                  "PIN Sent", JOptionPane.INFORMATION_MESSAGE);
-
-    this.setVisible(false);
-    new verification(generatedPin).setVisible(true);
-}
-
-    
-    Color hover = new Color(0, 153, 153);
-    Color defbutton = new Color(204,255,204);
-
-    Border empty = BorderFactory.createEmptyBorder();
-
-    void buttonBorderAnimation(JPanel panel) {
-        panel.setBackground(hover);
-        panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        panel.setBorder(BorderFactory.createStrokeBorder(new BasicStroke(2.0f)));
-    }
-
-    void buttonDefaultColor(JPanel panel) {
-        panel.setBackground(defbutton);
-        panel.setBorder(empty);
-    }
+ 
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -73,24 +89,23 @@ public class forgotpassword extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         enteremail = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        send = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
+        sendbutton = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 51, 51));
+        jPanel1.setBackground(new java.awt.Color(204, 0, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/forgotten.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 320, 190));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 320, 190));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("a pin to help you reset your password.");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 340, 310, 30));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 310, 30));
 
         back.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         back.setForeground(new java.awt.Color(255, 255, 255));
@@ -111,7 +126,7 @@ public class forgotpassword extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Forgot Password?");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 140, 30));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 140, 30));
 
         enteremail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         enteremail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -123,58 +138,50 @@ public class forgotpassword extends javax.swing.JFrame {
                 enteremailActionPerformed(evt);
             }
         });
-        jPanel1.add(enteremail, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 360, 40));
+        jPanel1.add(enteremail, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 360, 40));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Enter your email address and we'll send you ");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 360, 30));
+        jLabel6.setText("Enter your email/phone # and we'll send you ");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 370, 30));
 
-        send.setBackground(new java.awt.Color(204, 255, 204));
-        send.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        send.addMouseListener(new java.awt.event.MouseAdapter() {
+        sendbutton.setBackground(new java.awt.Color(255, 255, 255));
+        sendbutton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        sendbutton.setForeground(new java.awt.Color(255, 255, 255));
+        sendbutton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        sendbutton.setText("Send");
+        sendbutton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        sendbutton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sendMouseClicked(evt);
+                sendbuttonMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                sendMouseEntered(evt);
+                sendbuttonMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                sendMouseExited(evt);
+                sendbuttonMouseExited(evt);
             }
         });
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Send");
-
-        javax.swing.GroupLayout sendLayout = new javax.swing.GroupLayout(send);
-        send.setLayout(sendLayout);
-        sendLayout.setHorizontalGroup(
-            sendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, sendLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        sendLayout.setVerticalGroup(
-            sendLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(send, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 430, 100, 40));
+        sendbutton.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                sendbuttonKeyPressed(evt);
+            }
+        });
+        jPanel1.add(sendbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, 110, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
@@ -194,18 +201,21 @@ public class forgotpassword extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_enteremailActionPerformed
 
-    private void sendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseClicked
+    private void sendbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendbuttonMouseClicked
         sendPin();
+    }//GEN-LAST:event_sendbuttonMouseClicked
 
-    }//GEN-LAST:event_sendMouseClicked
+    private void sendbuttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendbuttonMouseEntered
+        sendbutton.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_sendbuttonMouseEntered
 
-    private void sendMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseEntered
-        buttonBorderAnimation(send);
-    }//GEN-LAST:event_sendMouseEntered
+    private void sendbuttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendbuttonMouseExited
+        sendbutton.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_sendbuttonMouseExited
 
-    private void sendMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sendMouseExited
-        buttonDefaultColor(send);
-    }//GEN-LAST:event_sendMouseExited
+    private void sendbuttonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_sendbuttonKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_sendbuttonKeyPressed
 
     /**
      * @param args the command line arguments
@@ -245,12 +255,11 @@ public class forgotpassword extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel back;
     private javax.swing.JTextField enteremail;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel send;
+    private javax.swing.JLabel sendbutton;
     // End of variables declaration//GEN-END:variables
 }
