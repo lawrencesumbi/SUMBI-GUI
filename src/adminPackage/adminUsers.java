@@ -9,9 +9,15 @@ import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import javax.imageio.ImageIO;
 import javax.swing.border.Border;
 import javax.swing.table.TableModel;
 
@@ -91,7 +97,7 @@ public class adminUsers extends javax.swing.JFrame {
     }
     
 
-    public void uploadImage(JLabel uploadImage) {
+    /*public void uploadImage(JLabel uploadImage) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choose Image");
         fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Images", "jpg", "png", "jpeg"));
@@ -126,6 +132,96 @@ public class adminUsers extends javax.swing.JFrame {
             } catch (Exception ex) {
                 ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Error Uploading Image!");
+            }
+        }
+    }*/
+    
+    public class ImageHandler {
+
+        private File selectedFile;
+        private String destination;
+        private String path;
+
+        // Method to open file chooser and set image
+        public void chooseImage(JLabel imageLabel, JButton browse, JButton browse1) {
+            JFileChooser fileChooser = new JFileChooser();
+            int returnValue = fileChooser.showOpenDialog(null);
+
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                try {
+                    selectedFile = fileChooser.getSelectedFile();
+                    destination = "src/images/" + selectedFile.getName();
+                    path = selectedFile.getAbsolutePath();
+
+                    if (fileExists(path)) {
+                        JOptionPane.showMessageDialog(null, "File Already Exists, Rename or Choose Another!");
+                        destination = "";
+                        path = "";
+                    } else {
+                        setImageToLabel(imageLabel, path);
+                        browse.setVisible(true);
+                        browse.setText("REMOVE");
+                        browse1.setVisible(false);
+                    }
+                } catch (Exception ex) {
+                    System.err.println("File Error: " + ex.getMessage());
+                }
+            }
+        }
+
+        // Check if file already exists
+        private boolean fileExists(String path) {
+            File file = new File(path);
+            String fileName = file.getName();
+            Path filePath = Paths.get("src/images", fileName);
+            return Files.exists(filePath);
+        }
+
+        // Resize and set image to JLabel
+        private void setImageToLabel(JLabel label, String imagePath) {
+            ImageIcon icon = new ImageIcon(imagePath);
+            int newHeight = getHeightFromWidth(imagePath, label.getWidth());
+
+            Image img = icon.getImage();
+            Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
+            label.setIcon(new ImageIcon(newImg));
+        }
+
+        // Get height based on the desired width while maintaining aspect ratio
+        private int getHeightFromWidth(String imagePath, int desiredWidth) {
+            try {
+                BufferedImage image = ImageIO.read(new File(imagePath));
+                int originalWidth = image.getWidth();
+                int originalHeight = image.getHeight();
+
+                return (int) ((double) desiredWidth / originalWidth * originalHeight);
+            } catch (IOException ex) {
+                System.err.println("No image found: " + ex.getMessage());
+            }
+            return -1;
+        }
+
+        // Update image by replacing existing one
+        public void updateImage(String existingFilePath, String newFilePath) {
+            File existingFile = new File(existingFilePath);
+            if (existingFile.exists()) {
+                String parentDirectory = existingFile.getParent();
+                File newFile = new File(newFilePath);
+                File updatedFile = new File(parentDirectory, newFile.getName());
+
+                existingFile.delete();
+                try {
+                    Files.copy(newFile.toPath(), updatedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    System.out.println("Image updated successfully.");
+                } catch (IOException e) {
+                    System.err.println("Error updating image: " + e.getMessage());
+                }
+            } else {
+                try {
+                    Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    System.err.println("Error on update: " + e.getMessage());
+                }
             }
         }
     }
