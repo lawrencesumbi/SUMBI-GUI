@@ -20,6 +20,7 @@ import java.security.NoSuchAlgorithmException;
 import javax.imageio.ImageIO;
 import javax.swing.border.Border;
 import javax.swing.table.TableModel;
+import javax.swing.JLabel;
 
 
 public class adminUsers extends javax.swing.JFrame {
@@ -37,7 +38,7 @@ public class adminUsers extends javax.swing.JFrame {
     public adminUsers(String user_fname) {
         this.user_fname = user_fname;
         initComponents();
-        displayImage(user_fname);
+        /*displayImage(user_fname);*/
         J_user_fname.setText(user_fname);
         displayData();
     }
@@ -135,98 +136,9 @@ public class adminUsers extends javax.swing.JFrame {
             }
         }
     }*/
-    
-    public class ImageHandler {
 
-        private File selectedFile;
-        private String destination;
-        private String path;
 
-        // Method to open file chooser and set image
-        public void chooseImage(JLabel imageLabel, JButton browse, JButton browse1) {
-            JFileChooser fileChooser = new JFileChooser();
-            int returnValue = fileChooser.showOpenDialog(null);
-
-            if (returnValue == JFileChooser.APPROVE_OPTION) {
-                try {
-                    selectedFile = fileChooser.getSelectedFile();
-                    destination = "src/images/" + selectedFile.getName();
-                    path = selectedFile.getAbsolutePath();
-
-                    if (fileExists(path)) {
-                        JOptionPane.showMessageDialog(null, "File Already Exists, Rename or Choose Another!");
-                        destination = "";
-                        path = "";
-                    } else {
-                        setImageToLabel(imageLabel, path);
-                        browse.setVisible(true);
-                        browse.setText("REMOVE");
-                        browse1.setVisible(false);
-                    }
-                } catch (Exception ex) {
-                    System.err.println("File Error: " + ex.getMessage());
-                }
-            }
-        }
-
-        // Check if file already exists
-        private boolean fileExists(String path) {
-            File file = new File(path);
-            String fileName = file.getName();
-            Path filePath = Paths.get("src/images", fileName);
-            return Files.exists(filePath);
-        }
-
-        // Resize and set image to JLabel
-        private void setImageToLabel(JLabel label, String imagePath) {
-            ImageIcon icon = new ImageIcon(imagePath);
-            int newHeight = getHeightFromWidth(imagePath, label.getWidth());
-
-            Image img = icon.getImage();
-            Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
-            label.setIcon(new ImageIcon(newImg));
-        }
-
-        // Get height based on the desired width while maintaining aspect ratio
-        private int getHeightFromWidth(String imagePath, int desiredWidth) {
-            try {
-                BufferedImage image = ImageIO.read(new File(imagePath));
-                int originalWidth = image.getWidth();
-                int originalHeight = image.getHeight();
-
-                return (int) ((double) desiredWidth / originalWidth * originalHeight);
-            } catch (IOException ex) {
-                System.err.println("No image found: " + ex.getMessage());
-            }
-            return -1;
-        }
-
-        // Update image by replacing existing one
-        public void updateImage(String existingFilePath, String newFilePath) {
-            File existingFile = new File(existingFilePath);
-            if (existingFile.exists()) {
-                String parentDirectory = existingFile.getParent();
-                File newFile = new File(newFilePath);
-                File updatedFile = new File(parentDirectory, newFile.getName());
-
-                existingFile.delete();
-                try {
-                    Files.copy(newFile.toPath(), updatedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    System.out.println("Image updated successfully.");
-                } catch (IOException e) {
-                    System.err.println("Error updating image: " + e.getMessage());
-                }
-            } else {
-                try {
-                    Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
-                } catch (IOException e) {
-                    System.err.println("Error on update: " + e.getMessage());
-                }
-            }
-        }
-    }
-
-    private void displayImage(String user_fname) {
+    /*private void displayImage(String user_fname) {
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
         String user = "root";
         String pass = "";
@@ -243,7 +155,7 @@ public class adminUsers extends javax.swing.JFrame {
 
                 if (imgBytes != null && imgBytes.length > 0) {
                     ImageIcon getIcon = new ImageIcon(imgBytes);
-                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+                    Image img = getIcon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
                     displayImage.setIcon(new ImageIcon(img));
                 } else {
                     displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
@@ -259,7 +171,7 @@ public class adminUsers extends javax.swing.JFrame {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Error Loading User Image!");
         }
-    }
+    }*/
     
     public static String passwordHash(String user_password) {
         try {
@@ -277,6 +189,9 @@ public class adminUsers extends javax.swing.JFrame {
             return null;
         }
     }
+    
+
+
     
     
     /**
@@ -325,12 +240,15 @@ public class adminUsers extends javax.swing.JFrame {
         userTypeComboBox = new javax.swing.JComboBox<>();
         search = new javax.swing.JLabel();
         searchfield = new javax.swing.JTextField();
-        uploadImage = new javax.swing.JLabel();
+        image = new javax.swing.JLabel();
         user_statuslabel = new javax.swing.JLabel();
         userStatusComboBox = new javax.swing.JComboBox<>();
         user_fnamelabel1 = new javax.swing.JLabel();
         userIDtextfield = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
+        browse = new javax.swing.JButton();
+        browse1 = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -713,16 +631,16 @@ public class adminUsers extends javax.swing.JFrame {
         });
         userspanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 150, 30));
 
-        uploadImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        uploadImage.setForeground(new java.awt.Color(255, 255, 255));
-        uploadImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
-        uploadImage.addMouseListener(new java.awt.event.MouseAdapter() {
+        image.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        image.setForeground(new java.awt.Color(255, 255, 255));
+        image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
+        image.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                uploadImageMouseClicked(evt);
+                imageMouseClicked(evt);
             }
         });
-        userspanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 150, 150));
+        userspanel.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 150, 150));
 
         user_statuslabel.setBackground(new java.awt.Color(255, 255, 255));
         user_statuslabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -743,7 +661,7 @@ public class adminUsers extends javax.swing.JFrame {
         user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel1.setText("User ID");
-        userspanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 60, 30));
+        userspanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 60, 30));
 
         userIDtextfield.setEditable(false);
         userIDtextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -753,7 +671,7 @@ public class adminUsers extends javax.swing.JFrame {
                 userIDtextfieldActionPerformed(evt);
             }
         });
-        userspanel.add(userIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 190, 40, -1));
+        userspanel.add(userIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 210, 40, -1));
 
         passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -767,6 +685,18 @@ public class adminUsers extends javax.swing.JFrame {
             }
         });
         userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 190, -1));
+
+        browse.setText("BROWSE");
+        browse.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                browseMouseClicked(evt);
+            }
+        });
+        userspanel.add(browse, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, -1, -1));
+
+        browse1.setText("BROWSE1");
+        userspanel.add(browse1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, -1, -1));
+        userspanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, -1, -1));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -783,7 +713,7 @@ public class adminUsers extends javax.swing.JFrame {
         passwordField.setText("");  
         userTypeComboBox.setSelectedIndex(-1);
         userStatusComboBox.setSelectedIndex(-1);
-        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
         searchfield.setText(""); 
         
     }//GEN-LAST:event_refreshMouseClicked
@@ -1151,23 +1081,7 @@ public class adminUsers extends javax.swing.JFrame {
         String type = model.getValueAt(i, 5).toString();
         userTypeComboBox.setSelectedItem(type);
         String status = model.getValueAt(i, 6).toString();
-        userStatusComboBox.setSelectedItem(status);
-
-        Object imageData = model.getValueAt(i, 7);
-
-        if (imageData != null && imageData instanceof byte[]) {
-            byte[] imgBytes = (byte[]) imageData;
-
-            if (imgBytes.length > 0) {
-                ImageIcon getIcon = new ImageIcon(imgBytes);
-                Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-                uploadImage.setIcon(new ImageIcon(img));
-            } else {
-                uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
-            }
-        } else {
-            uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
-        }
+        userStatusComboBox.setSelectedItem(status);  
         
     }//GEN-LAST:event_user_tableMouseClicked
 
@@ -1175,9 +1089,9 @@ public class adminUsers extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
-    private void uploadImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadImageMouseClicked
-        uploadImage(uploadImage);
-    }//GEN-LAST:event_uploadImageMouseClicked
+    private void imageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageMouseClicked
+        
+    }//GEN-LAST:event_imageMouseClicked
 
     private void displayImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayImageMouseClicked
         
@@ -1214,6 +1128,10 @@ public class adminUsers extends javax.swing.JFrame {
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void browseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_browseMouseClicked
+        imageHandler.chooseImage(image, browse, browse1);
+    }//GEN-LAST:event_browseMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1253,6 +1171,8 @@ public class adminUsers extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel J_user_fname;
     private javax.swing.JLabel add;
+    private javax.swing.JButton browse;
+    private javax.swing.JButton browse1;
     private javax.swing.JTextField contactNumberTextField;
     private javax.swing.JLabel dash_icon;
     private javax.swing.JLabel dashboard;
@@ -1261,7 +1181,9 @@ public class adminUsers extends javax.swing.JFrame {
     private javax.swing.JLabel edit;
     private javax.swing.JTextField emailTextField;
     private javax.swing.JTextField fullNameTextField;
+    private javax.swing.JLabel image;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;
@@ -1276,7 +1198,6 @@ public class adminUsers extends javax.swing.JFrame {
     private javax.swing.JLabel settings;
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
-    private javax.swing.JLabel uploadImage;
     private javax.swing.JTextField userIDtextfield;
     private javax.swing.JComboBox<String> userStatusComboBox;
     private javax.swing.JComboBox<String> userTypeComboBox;
