@@ -246,8 +246,6 @@ public class adminUsers extends javax.swing.JFrame {
         user_fnamelabel1 = new javax.swing.JLabel();
         userIDtextfield = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
-        browse = new javax.swing.JButton();
-        browse1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
 
         jCheckBox1.setText("jCheckBox1");
@@ -640,7 +638,7 @@ public class adminUsers extends javax.swing.JFrame {
                 imageMouseClicked(evt);
             }
         });
-        userspanel.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 150, 150));
+        userspanel.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 150, 150));
 
         user_statuslabel.setBackground(new java.awt.Color(255, 255, 255));
         user_statuslabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -661,7 +659,7 @@ public class adminUsers extends javax.swing.JFrame {
         user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel1.setText("User ID");
-        userspanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, 60, 30));
+        userspanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 60, 30));
 
         userIDtextfield.setEditable(false);
         userIDtextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -671,7 +669,7 @@ public class adminUsers extends javax.swing.JFrame {
                 userIDtextfieldActionPerformed(evt);
             }
         });
-        userspanel.add(userIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 210, 40, -1));
+        userspanel.add(userIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 190, 40, -1));
 
         passwordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         passwordField.addActionListener(new java.awt.event.ActionListener() {
@@ -685,17 +683,6 @@ public class adminUsers extends javax.swing.JFrame {
             }
         });
         userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 190, -1));
-
-        browse.setText("BROWSE");
-        browse.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                browseMouseClicked(evt);
-            }
-        });
-        userspanel.add(browse, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, -1, -1));
-
-        browse1.setText("BROWSE1");
-        userspanel.add(browse1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, -1, -1));
         userspanel.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 20, -1, -1));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
@@ -1129,10 +1116,6 @@ public class adminUsers extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldActionPerformed
 
-    private void browseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_browseMouseClicked
-        imageHandler.chooseImage(image, browse, browse1);
-    }//GEN-LAST:event_browseMouseClicked
-
     /**
      * @param args the command line arguments
      */
@@ -1171,8 +1154,6 @@ public class adminUsers extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel J_user_fname;
     private javax.swing.JLabel add;
-    private javax.swing.JButton browse;
-    private javax.swing.JButton browse1;
     private javax.swing.JTextField contactNumberTextField;
     private javax.swing.JLabel dash_icon;
     private javax.swing.JLabel dashboard;

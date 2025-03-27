@@ -6,10 +6,13 @@
 
 import config.dbConnector;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -17,7 +20,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -44,6 +49,7 @@ public class userAccount extends javax.swing.JFrame {
         displayImage(user_fname);
         J_user_fname.setText(user_fname);  
         displayData();
+        loadUserData(user_fname);
     }
     
     public void displayData() {
@@ -66,16 +72,7 @@ public class userAccount extends javax.swing.JFrame {
                 oldPasswordField.setText(enteredPassword);
                 
                 userIDtextfield.setText(rs.getString("user_id"));
-
-                byte[] imgBytes = rs.getBytes("user_image");
-
-                if (imgBytes != null && imgBytes.length > 0) {
-                    ImageIcon getIcon = new ImageIcon(imgBytes);
-                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-                    uploadImage.setIcon(new ImageIcon(img));
-                } else {
-                    uploadImage.setIcon(new ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
-                }
+           
             } else {
                 System.out.println("No user data found.");
             }
@@ -84,6 +81,68 @@ public class userAccount extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+    
+    private String saveImageToFolder(String user_email) {
+        try {
+            // Convert JLabel Icon to BufferedImage
+            Icon icon = imageLabel.getIcon();
+            if (icon instanceof ImageIcon) {
+                Image image = ((ImageIcon) icon).getImage();
+                BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+                Graphics2D g2 = bufferedImage.createGraphics();
+                g2.drawImage(image, 0, 0, null);
+                g2.dispose();
+
+                // Define Folder and File Name
+                String folderPath = "src/usersImages";
+                File directory = new File(folderPath);
+                if (!directory.exists()) {
+                    directory.mkdir(); // Create folder if not exists
+                }
+
+                // Save image with unique name
+                String filePath = folderPath + user_email + ".jpg";
+                File outputFile = new File(filePath);
+                ImageIO.write(bufferedImage, "jpg", outputFile);
+
+                return filePath; // Return the saved image path
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error saving image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
+    
+    private void loadUserData(String user_fname) {
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try (Connection conn = DriverManager.getConnection(url, user, pass)) {
+            String query = "SELECT image_path FROM user_table WHERE user_fname = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, user_fname);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+
+                        String imagePath = rs.getString("image_path");
+
+                        // Load image from file
+                        if (imagePath != null && !imagePath.isEmpty()) {
+                            File file = new File(imagePath);
+                            if (file.exists()) {
+                                ImageIcon icon = new ImageIcon(imagePath);
+                                Image img = icon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
+                                imageLabel.setIcon(new ImageIcon(img));
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -143,7 +202,7 @@ public class userAccount extends javax.swing.JFrame {
 
                 if (imgBytes != null && imgBytes.length > 0) {
                     ImageIcon getIcon = new ImageIcon(imgBytes);
-                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+                    Image img = getIcon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
                     displayImage.setIcon(new ImageIcon(img));
                 } else {
                     displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
@@ -230,7 +289,7 @@ public class userAccount extends javax.swing.JFrame {
         user_emaillabel = new javax.swing.JLabel();
         emailTextField = new javax.swing.JTextField();
         user_passwordlabel = new javax.swing.JLabel();
-        uploadImage = new javax.swing.JLabel();
+        imageLabel = new javax.swing.JLabel();
         settings1 = new javax.swing.JLabel();
         cancel = new javax.swing.JLabel();
         updatePassword = new javax.swing.JLabel();
@@ -379,7 +438,7 @@ public class userAccount extends javax.swing.JFrame {
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel.setText("Full Name:");
-        userspanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 90, 20));
+        userspanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 90, 20));
 
         fullNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         fullNameTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -387,13 +446,13 @@ public class userAccount extends javax.swing.JFrame {
                 fullNameTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 200, 30));
+        userspanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 200, 30));
 
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_cnumberlabel.setText("Contact Number:");
-        userspanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 160, 20));
+        userspanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 160, 20));
 
         contactNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         contactNumberTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -401,13 +460,13 @@ public class userAccount extends javax.swing.JFrame {
                 contactNumberTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 200, 30));
+        userspanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 200, 30));
 
         user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_emaillabel.setText("Email:");
-        userspanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 70, 20));
+        userspanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 70, 20));
 
         emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         emailTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -415,24 +474,24 @@ public class userAccount extends javax.swing.JFrame {
                 emailTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 200, 30));
+        userspanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 200, 30));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel.setText("Old Password:");
-        userspanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 350, 130, 20));
+        userspanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 120, 20));
 
-        uploadImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        uploadImage.setForeground(new java.awt.Color(255, 255, 255));
-        uploadImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
-        uploadImage.addMouseListener(new java.awt.event.MouseAdapter() {
+        imageLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        imageLabel.setForeground(new java.awt.Color(255, 255, 255));
+        imageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
+        imageLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                uploadImageMouseClicked(evt);
+                imageLabelMouseClicked(evt);
             }
         });
-        userspanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 150, 150));
+        userspanel.add(imageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, 150, 150));
 
         settings1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         settings1.setForeground(new java.awt.Color(255, 255, 255));
@@ -446,7 +505,7 @@ public class userAccount extends javax.swing.JFrame {
                 settings1MouseExited(evt);
             }
         });
-        userspanel.add(settings1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, 250, 50));
+        userspanel.add(settings1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, 250, 50));
 
         cancel.setBackground(new java.awt.Color(255, 255, 255));
         cancel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -465,12 +524,12 @@ public class userAccount extends javax.swing.JFrame {
                 cancelMouseExited(evt);
             }
         });
-        userspanel.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 80, 40));
+        userspanel.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, 80, 30));
 
         updatePassword.setBackground(new java.awt.Color(255, 255, 255));
         updatePassword.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         updatePassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        updatePassword.setText("Update Password");
+        updatePassword.setText("ChangePass");
         updatePassword.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         updatePassword.setOpaque(true);
         updatePassword.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -484,13 +543,13 @@ public class userAccount extends javax.swing.JFrame {
                 updatePasswordMouseExited(evt);
             }
         });
-        userspanel.add(updatePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 450, 160, 40));
+        userspanel.add(updatePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 470, 110, 30));
 
         user_fnamelabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel1.setText("User ID");
-        userspanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 300, 60, 30));
+        userspanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 330, 60, 30));
 
         userIDtextfield.setEditable(false);
         userIDtextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -500,7 +559,7 @@ public class userAccount extends javax.swing.JFrame {
                 userIDtextfieldActionPerformed(evt);
             }
         });
-        userspanel.add(userIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 300, 40, -1));
+        userspanel.add(userIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 330, 40, -1));
 
         oldPasswordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         oldPasswordField.addActionListener(new java.awt.event.ActionListener() {
@@ -513,13 +572,13 @@ public class userAccount extends javax.swing.JFrame {
                 oldPasswordFieldKeyPressed(evt);
             }
         });
-        userspanel.add(oldPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 350, 200, 30));
+        userspanel.add(oldPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 200, 30));
 
         user_passwordlabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         user_passwordlabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel1.setText("New Password:");
-        userspanel.add(user_passwordlabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 400, 140, 20));
+        userspanel.add(user_passwordlabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 130, 20));
 
         newPasswordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         newPasswordField.addActionListener(new java.awt.event.ActionListener() {
@@ -551,7 +610,7 @@ public class userAccount extends javax.swing.JFrame {
                 saveMouseExited(evt);
             }
         });
-        userspanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 290, 80, 40));
+        userspanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 470, 80, 30));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -639,12 +698,12 @@ public class userAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_contactNumberTextFieldActionPerformed
 
     private void emailTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailTextFieldActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code shere:
     }//GEN-LAST:event_emailTextFieldActionPerformed
 
-    private void uploadImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadImageMouseClicked
-        uploadImage(uploadImage);
-    }//GEN-LAST:event_uploadImageMouseClicked
+    private void imageLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabelMouseClicked
+        imageHandler.chooseImage(imageLabel);
+    }//GEN-LAST:event_imageLabelMouseClicked
 
     private void settings1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings1MouseEntered
         // TODO add your handling code here:
@@ -670,15 +729,9 @@ public class userAccount extends javax.swing.JFrame {
                 contactNumberTextField.setText(rs.getString("user_cnumber"));
                 emailTextField.setText(rs.getString("user_email"));
 
-                byte[] imgBytes = rs.getBytes("user_image");
+                oldPasswordField.setText("");
+                newPasswordField.setText("");
 
-                if (imgBytes != null && imgBytes.length > 0) {
-                    ImageIcon getIcon = new ImageIcon(imgBytes);
-                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-                    uploadImage.setIcon(new ImageIcon(img));
-                } else {
-                    uploadImage.setIcon(new ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
-                }
             } else {
                 System.out.println("No user data found.");
             }
@@ -754,7 +807,7 @@ public class userAccount extends javax.swing.JFrame {
 
                 int rowsUpdated = updatePstmt.executeUpdate();
                 if (rowsUpdated > 0) {
-                    JOptionPane.showMessageDialog(this, "Account information updated successfully!");
+                    JOptionPane.showMessageDialog(this, "Password changed successfully!");
                 } else {
                     JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -820,19 +873,21 @@ public class userAccount extends javax.swing.JFrame {
         String pass = "";
 
         try (Connection conn = DriverManager.getConnection(url, user, pass)) {
-
             String selectQuery = "SELECT user_email FROM user_table WHERE user_email = ?";
             try (PreparedStatement selectPstmt = conn.prepareStatement(selectQuery)) {
                 selectPstmt.setString(1, user_email);
                 try (ResultSet rs = selectPstmt.executeQuery()) {
-
                     if (rs.next()) {
+                        // Save Image
+                        String imagePath = saveImageToFolder(user_email); // Save and get the file path
 
-                        String updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ? WHERE user_email = ?";
+                        // Update user details along with the image path
+                        String updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, image_path = ? WHERE user_email = ?";
                         try (PreparedStatement updatePstmt = conn.prepareStatement(updateQuery)) {
                             updatePstmt.setString(1, user_fname);
                             updatePstmt.setString(2, user_cnumber);
-                            updatePstmt.setString(3, user_email);
+                            updatePstmt.setString(3, imagePath);
+                            updatePstmt.setString(4, user_email);
 
                             int rowsUpdated = updatePstmt.executeUpdate();
                             if (rowsUpdated > 0) {
@@ -842,7 +897,6 @@ public class userAccount extends javax.swing.JFrame {
                             }
                         }
                     } else {
-
                         JOptionPane.showMessageDialog(this, "User not found.", "Error", JOptionPane.ERROR_MESSAGE);
                     }
                 }
@@ -904,6 +958,7 @@ public class userAccount extends javax.swing.JFrame {
     private javax.swing.JLabel displayImage;
     private javax.swing.JTextField emailTextField;
     private javax.swing.JTextField fullNameTextField;
+    private javax.swing.JLabel imageLabel;
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
@@ -916,7 +971,6 @@ public class userAccount extends javax.swing.JFrame {
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
     private javax.swing.JLabel updatePassword;
-    private javax.swing.JLabel uploadImage;
     private javax.swing.JTextField userIDtextfield;
     private javax.swing.JLabel user_cnumberlabel;
     private javax.swing.JLabel user_emaillabel;
