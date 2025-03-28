@@ -77,7 +77,7 @@ public class registrationform extends javax.swing.JFrame {
         userTypeComboBox = new javax.swing.JComboBox<>();
         cn_error = new javax.swing.JLabel();
         pass_error = new javax.swing.JLabel();
-        passwordField = new javax.swing.JTextField();
+        passwordField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -410,12 +410,7 @@ public class registrationform extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
-        String user_password = passwordField.getText();
-        if(user_password.length()<7){
-            pass_error.setText("at least 8 characters!");
-        }else{
-            pass_error.setText(null);
-        }
+
     }//GEN-LAST:event_passwordFieldKeyPressed
 
     /**
@@ -464,7 +459,7 @@ public class registrationform extends javax.swing.JFrame {
     private javax.swing.JTextField fullNameTextField;
     private javax.swing.JLabel header;
     private javax.swing.JLabel pass_error;
-    private javax.swing.JTextField passwordField;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel registerbutton;
     private javax.swing.JLabel registerlabel;
     private javax.swing.JLabel studentlabel;

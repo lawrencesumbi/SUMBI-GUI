@@ -298,6 +298,7 @@ public class userAccount extends javax.swing.JFrame {
         user_passwordlabel1 = new javax.swing.JLabel();
         newPasswordField = new javax.swing.JPasswordField();
         save = new javax.swing.JLabel();
+        imageLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -484,7 +485,6 @@ public class userAccount extends javax.swing.JFrame {
         imageLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel.setForeground(new java.awt.Color(255, 255, 255));
         imageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
         imageLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 imageLabelMouseClicked(evt);
@@ -610,6 +610,17 @@ public class userAccount extends javax.swing.JFrame {
             }
         });
         userspanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 470, 80, 30));
+
+        imageLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        imageLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        imageLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
+        imageLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imageLabel1MouseClicked(evt);
+            }
+        });
+        userspanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, 150, 150));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -855,7 +866,7 @@ public class userAccount extends javax.swing.JFrame {
     private void saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseClicked
         String user_fname = fullNameTextField.getText();
         String user_cnumber = contactNumberTextField.getText();
-        String user_email = emailTextField.getText();
+        String user_email = emailTextField.getText();  
 
         if (!user_cnumber.matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -877,16 +888,27 @@ public class userAccount extends javax.swing.JFrame {
                 selectPstmt.setString(1, user_email);
                 try (ResultSet rs = selectPstmt.executeQuery()) {
                     if (rs.next()) {
-                        // Save Image
-                        String imagePath = saveImageToFolder(user_email); // Save and get the file path
+                        
+                    boolean hasImage = (imageLabel.getIcon() != null);
+                    String updateQuery;
 
-                        // Update user details along with the image path
-                        String updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, image_path = ? WHERE user_email = ?";
-                        try (PreparedStatement updatePstmt = conn.prepareStatement(updateQuery)) {
-                            updatePstmt.setString(1, user_fname);
-                            updatePstmt.setString(2, user_cnumber);
+                    if (hasImage) {
+                        updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, image_path = ? WHERE user_email = ?";
+                    } else {
+                        updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ? WHERE user_email = ?";
+                    }
+
+                    try (PreparedStatement updatePstmt = conn.prepareStatement(updateQuery)) {
+                        updatePstmt.setString(1, user_fname);
+                        updatePstmt.setString(2, user_cnumber);
+
+                        if (hasImage) {
+                            String imagePath = saveImageToFolder(user_email);
                             updatePstmt.setString(3, imagePath);
                             updatePstmt.setString(4, user_email);
+                        } else {
+                            updatePstmt.setString(3, user_email);
+                        }
 
                             int rowsUpdated = updatePstmt.executeUpdate();
                             if (rowsUpdated > 0) {
@@ -912,6 +934,10 @@ public class userAccount extends javax.swing.JFrame {
     private void saveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_saveMouseExited
+
+    private void imageLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_imageLabel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -958,6 +984,7 @@ public class userAccount extends javax.swing.JFrame {
     private javax.swing.JTextField emailTextField;
     private javax.swing.JTextField fullNameTextField;
     private javax.swing.JLabel imageLabel;
+    private javax.swing.JLabel imageLabel1;
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;

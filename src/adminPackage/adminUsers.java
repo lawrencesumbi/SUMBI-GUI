@@ -280,6 +280,7 @@ public class adminUsers extends javax.swing.JFrame {
         user_fnamelabel1 = new javax.swing.JLabel();
         userIDtextfield = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
+        imageLabel1 = new javax.swing.JLabel();
 
         jCheckBox1.setText("jCheckBox1");
 
@@ -665,7 +666,6 @@ public class adminUsers extends javax.swing.JFrame {
         imageLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel.setForeground(new java.awt.Color(255, 255, 255));
         imageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
         imageLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 imageLabelMouseClicked(evt);
@@ -717,6 +717,17 @@ public class adminUsers extends javax.swing.JFrame {
         });
         userspanel.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 190, -1));
 
+        imageLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        imageLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        imageLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
+        imageLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imageLabel1MouseClicked(evt);
+            }
+        });
+        userspanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 150, 150));
+
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
         pack();
@@ -729,10 +740,10 @@ public class adminUsers extends javax.swing.JFrame {
         fullNameTextField.setText("");  
         contactNumberTextField.setText("");  
         emailTextField.setText("");  
-        passwordField.setText("");  
+        passwordField.setText(""); 
+        passwordField.setEditable(true);
         userTypeComboBox.setSelectedIndex(-1);
         userStatusComboBox.setSelectedIndex(-1);
-        imageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
         searchfield.setText(""); 
         
     }//GEN-LAST:event_refreshMouseClicked
@@ -746,17 +757,15 @@ public class adminUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_refreshMouseExited
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-        String user_fname = fullNameTextField.getText(); 
+        String user_fname = fullNameTextField.getText();
         String user_cnumber = contactNumberTextField.getText();
         String user_email = emailTextField.getText();
-        String user_password = passwordHash(passwordField.getText());
-        String user_type = userTypeComboBox.getSelectedItem().toString();
-        String user_status = userStatusComboBox.getSelectedItem().toString();
-        
+        String user_password = passwordHash(new String(passwordField.getPassword()));
+        String user_type = (userTypeComboBox.getSelectedItem() != null) ? userTypeComboBox.getSelectedItem().toString() : "";
+        String user_status = (userStatusComboBox.getSelectedItem() != null) ? userStatusComboBox.getSelectedItem().toString() : "";
 
-        // Validation for empty fields
         if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty() || user_password.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -789,7 +798,13 @@ public class adminUsers extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Email already exists. Please use a different email.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+            
+            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to add this user?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+            if (confirm != JOptionPane.YES_OPTION) {
+                conn.close();
+                return;
+            }
+            
             // Insert user data with user_id
             String sql = "INSERT INTO user_table (user_fname, user_cnumber, user_email, user_password, user_type, user_status) VALUES (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -841,23 +856,17 @@ public class adminUsers extends javax.swing.JFrame {
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
         String user_fname = fullNameTextField.getText();
         String user_cnumber = contactNumberTextField.getText();
-        String user_email = emailTextField.getText();
-        String user_password = passwordHash(passwordField.getText());
-        String user_type = userTypeComboBox.getSelectedItem().toString();
-        String user_status = userStatusComboBox.getSelectedItem().toString();
+        String user_email = emailTextField.getText();   
+        String user_type = (userTypeComboBox.getSelectedItem() != null) ? userTypeComboBox.getSelectedItem().toString() : "";
+        String user_status = (userStatusComboBox.getSelectedItem() != null) ? userStatusComboBox.getSelectedItem().toString() : "";
 
-        if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty() || user_password.isEmpty()) {
+        if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         if (!user_cnumber.matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (user_password.length() < 8) {
-            JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -877,19 +886,35 @@ public class adminUsers extends javax.swing.JFrame {
                 return;
             }
 
-            // Save the image and get the image path
-            String imagePath = saveImageToFolder(user_email);
 
+            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to update this user?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+            if (confirm != JOptionPane.YES_OPTION) {
+                conn.close();
+                return;
+            }
+            
             // Update user details including the image path
-            String sql = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, user_password = ?, user_type = ?, user_status = ?, image_path = ? WHERE user_email = ?";
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, user_fname);
-                pstmt.setString(2, user_cnumber);
-                pstmt.setString(3, user_password);
-                pstmt.setString(4, user_type);
-                pstmt.setString(5, user_status);
-                pstmt.setString(6, imagePath);
-                pstmt.setString(7, user_email);
+        String sql;
+        if (imageLabel.getIcon() == null) {
+            sql = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, user_type = ?, user_status = ? WHERE user_email = ?";
+        } else {
+            sql = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, user_type = ?, user_status = ?, image_path = ? WHERE user_email = ?";
+        }
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, user_fname);
+            pstmt.setString(2, user_cnumber);
+            pstmt.setString(3, user_type);
+            pstmt.setString(4, user_status);
+
+            if (imageLabel.getIcon() != null) {
+                String imagePath = saveImageToFolder(user_email);
+                pstmt.setString(5, imagePath);
+                pstmt.setString(6, user_email);
+            } else {
+                pstmt.setString(5, user_email);
+            }
+
 
                 int rowsUpdated = pstmt.executeUpdate();
 
@@ -1095,7 +1120,8 @@ public class adminUsers extends javax.swing.JFrame {
         contactNumberTextField.setText(model.getValueAt(i, 2).toString());
         emailTextField.setText(model.getValueAt(i, 3).toString());
 
-        passwordField.setText("");
+        passwordField.setText(model.getValueAt(i, 4).toString());
+        passwordField.setEditable(false);
 
         String type = model.getValueAt(i, 5).toString();
         userTypeComboBox.setSelectedItem(type);
@@ -1112,10 +1138,10 @@ public class adminUsers extends javax.swing.JFrame {
                 Image img = icon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
                 imageLabel.setIcon(new ImageIcon(img));
             } else {
-                imageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+                imageLabel.setIcon(null);
             }
         } else {
-            imageLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+            imageLabel.setIcon(null);
         }
     }//GEN-LAST:event_user_tableMouseClicked
 
@@ -1162,6 +1188,10 @@ public class adminUsers extends javax.swing.JFrame {
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void imageLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_imageLabel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1210,6 +1240,7 @@ public class adminUsers extends javax.swing.JFrame {
     private javax.swing.JTextField emailTextField;
     private javax.swing.JTextField fullNameTextField;
     private javax.swing.JLabel imageLabel;
+    private javax.swing.JLabel imageLabel1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
