@@ -169,6 +169,9 @@ public class adminAccount extends javax.swing.JFrame {
                                 ImageIcon icon = new ImageIcon(imagePath);
                                 Image img = icon.getImage().getScaledInstance(displayImage.getWidth(), displayImage.getHeight(), Image.SCALE_SMOOTH);
                                 displayImage.setIcon(new ImageIcon(img));
+                                
+                                Border whiteBorder = BorderFactory.createLineBorder(Color.WHITE, 3);
+                                displayImage.setBorder(whiteBorder);
                             }
                         }
                     }
@@ -551,6 +554,9 @@ public class adminAccount extends javax.swing.JFrame {
         dashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dashboard.setText("DASHBOARD");
         dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dashboardMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 dashboardMouseEntered(evt);
             }
@@ -934,6 +940,11 @@ public class adminAccount extends javax.swing.JFrame {
     private void saveMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_saveMouseExited
+
+    private void dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseClicked
+        new adminDashboard(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_dashboardMouseClicked
 
     /**
      * @param args the command line arguments

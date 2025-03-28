@@ -141,33 +141,32 @@ public class userStudent extends javax.swing.JFrame {
         String user = "root";
         String pass = "";
 
-        try {
-            Connection conn = DriverManager.getConnection(url, user, pass);
-            String sql = "SELECT user_image FROM user_table WHERE user_fname = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, user_fname);
-            ResultSet rs = pstmt.executeQuery();
+        try (Connection conn = DriverManager.getConnection(url, user, pass)) {
+            String query = "SELECT image_path FROM user_table WHERE user_fname = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, user_fname);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
 
-            if (rs.next()) {
-                byte[] imgBytes = rs.getBytes("user_image");
+                        String imagePath = rs.getString("image_path");
 
-                if (imgBytes != null && imgBytes.length > 0) {
-                    ImageIcon getIcon = new ImageIcon(imgBytes);
-                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-                    displayImage.setIcon(new ImageIcon(img));
-                } else {
-                    displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+                        // Load image from file
+                        if (imagePath != null && !imagePath.isEmpty()) {
+                            File file = new File(imagePath);
+                            if (file.exists()) {
+                                ImageIcon icon = new ImageIcon(imagePath);
+                                Image img = icon.getImage().getScaledInstance(displayImage.getWidth(), displayImage.getHeight(), Image.SCALE_SMOOTH);
+                                displayImage.setIcon(new ImageIcon(img));
+                                
+                                Border whiteBorder = BorderFactory.createLineBorder(Color.WHITE, 3);
+                                displayImage.setBorder(whiteBorder);
+                            }
+                        }
+                    }
                 }
-            } else {
-                displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
             }
-
-            Border border = BorderFactory.createLineBorder(Color.WHITE, 2); // Black border with 2px thickness
-            displayImage.setBorder(border);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error Loading User Image!");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
