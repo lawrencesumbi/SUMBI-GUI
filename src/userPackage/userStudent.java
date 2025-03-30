@@ -4,16 +4,23 @@
  * and open the template in the editor.
  */
 import config.dbConnector;
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -147,27 +154,51 @@ public class userStudent extends javax.swing.JFrame {
                 pstmt.setString(1, user_fname);
                 try (ResultSet rs = pstmt.executeQuery()) {
                     if (rs.next()) {
-
                         String imagePath = rs.getString("image_path");
 
-                        // Load image from file
                         if (imagePath != null && !imagePath.isEmpty()) {
                             File file = new File(imagePath);
                             if (file.exists()) {
-                                ImageIcon icon = new ImageIcon(imagePath);
-                                Image img = icon.getImage().getScaledInstance(displayImage.getWidth(), displayImage.getHeight(), Image.SCALE_SMOOTH);
-                                displayImage.setIcon(new ImageIcon(img));
-                                
-                                Border whiteBorder = BorderFactory.createLineBorder(Color.WHITE, 3);
-                                displayImage.setBorder(whiteBorder);
+                                BufferedImage originalImg = ImageIO.read(file);
+                                if (originalImg != null) {
+                                    BufferedImage squaredImg = cropToSquare(originalImg);
+                                    BufferedImage roundedImg = getRoundedImageWithBorder(squaredImg, displayImage.getWidth(), displayImage.getHeight(), 2, Color.WHITE);
+                                    displayImage.setIcon(new ImageIcon(roundedImg));
+                                }
                             }
                         }
                     }
                 }
             }
-        } catch (SQLException ex) {
+        } catch (SQLException | IOException ex) {
             JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private BufferedImage cropToSquare(BufferedImage img) {
+        int size = Math.min(img.getWidth(), img.getHeight());
+        int x = (img.getWidth() - size) / 2;
+        int y = (img.getHeight() - size) / 2;
+        return img.getSubimage(x, y, size, size);
+    }
+
+    private BufferedImage getRoundedImageWithBorder(BufferedImage img, int width, int height, int borderThickness, Color borderColor) {
+        BufferedImage output = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = output.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        Ellipse2D.Float clip = new Ellipse2D.Float(borderThickness / 2f, borderThickness / 2f, width - borderThickness, height - borderThickness);
+        g2.setClip(clip);
+        g2.drawImage(img, borderThickness / 2, borderThickness / 2, width - borderThickness, height - borderThickness, null);
+
+        g2.setClip(null);
+        g2.setStroke(new BasicStroke(borderThickness));
+        g2.setColor(borderColor);
+        g2.draw(new Ellipse2D.Float(borderThickness / 2f, borderThickness / 2f, width - borderThickness, height - borderThickness));
+
+        g2.dispose();
+        return output;
     }
     
     /**
