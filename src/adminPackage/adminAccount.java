@@ -268,7 +268,7 @@ public class adminAccount extends javax.swing.JFrame {
         emailTextField = new javax.swing.JTextField();
         user_passwordlabel = new javax.swing.JLabel();
         imageLabel = new javax.swing.JLabel();
-        settings1 = new javax.swing.JLabel();
+        activityLogs = new javax.swing.JLabel();
         cancel = new javax.swing.JLabel();
         updatePassword = new javax.swing.JLabel();
         user_fnamelabel1 = new javax.swing.JLabel();
@@ -278,6 +278,8 @@ public class adminAccount extends javax.swing.JFrame {
         newPasswordField = new javax.swing.JPasswordField();
         save = new javax.swing.JLabel();
         imageLabel1 = new javax.swing.JLabel();
+        settings2 = new javax.swing.JLabel();
+        settings3 = new javax.swing.JLabel();
         leftpanel = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
         displayImage = new javax.swing.JLabel();
@@ -307,7 +309,7 @@ public class adminAccount extends javax.swing.JFrame {
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel.setText("Full Name:");
-        userspanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, 90, 20));
+        userspanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 90, 20));
 
         fullNameTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         fullNameTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -315,13 +317,13 @@ public class adminAccount extends javax.swing.JFrame {
                 fullNameTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 160, 200, 30));
+        userspanel.add(fullNameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 180, 200, 30));
 
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_cnumberlabel.setText("Contact Number:");
-        userspanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 160, 20));
+        userspanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 160, 20));
 
         contactNumberTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         contactNumberTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -329,13 +331,13 @@ public class adminAccount extends javax.swing.JFrame {
                 contactNumberTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 220, 200, 30));
+        userspanel.add(contactNumberTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 240, 200, 30));
 
         user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_emaillabel.setText("Email:");
-        userspanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 70, 20));
+        userspanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 70, 20));
 
         emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         emailTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -343,13 +345,13 @@ public class adminAccount extends javax.swing.JFrame {
                 emailTextFieldActionPerformed(evt);
             }
         });
-        userspanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 200, 30));
+        userspanel.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, 200, 30));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel.setText("Old Password:");
-        userspanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 120, 20));
+        userspanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 360, 120, 20));
 
         imageLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -359,21 +361,24 @@ public class adminAccount extends javax.swing.JFrame {
                 imageLabelMouseClicked(evt);
             }
         });
-        userspanel.add(imageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, 150, 150));
+        userspanel.add(imageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 150, 150));
 
-        settings1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        settings1.setForeground(new java.awt.Color(255, 255, 255));
-        settings1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        settings1.setText("ACCOUNT SETTINGS");
-        settings1.addMouseListener(new java.awt.event.MouseAdapter() {
+        activityLogs.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        activityLogs.setForeground(new java.awt.Color(255, 255, 255));
+        activityLogs.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activityLogs.setText("Activity Logs");
+        activityLogs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                activityLogsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                settings1MouseEntered(evt);
+                activityLogsMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                settings1MouseExited(evt);
+                activityLogsMouseExited(evt);
             }
         });
-        userspanel.add(settings1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, 250, 50));
+        userspanel.add(activityLogs, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 150, 30));
 
         cancel.setBackground(new java.awt.Color(255, 255, 255));
         cancel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -392,7 +397,7 @@ public class adminAccount extends javax.swing.JFrame {
                 cancelMouseExited(evt);
             }
         });
-        userspanel.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 470, 80, 30));
+        userspanel.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 490, 80, 30));
 
         updatePassword.setBackground(new java.awt.Color(255, 255, 255));
         updatePassword.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -411,13 +416,13 @@ public class adminAccount extends javax.swing.JFrame {
                 updatePasswordMouseExited(evt);
             }
         });
-        userspanel.add(updatePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 470, 110, 30));
+        userspanel.add(updatePassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 490, 110, 30));
 
         user_fnamelabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel1.setText("User ID");
-        userspanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 330, 60, 30));
+        userspanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 350, 60, 30));
 
         userIDtextfield.setEditable(false);
         userIDtextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -427,7 +432,7 @@ public class adminAccount extends javax.swing.JFrame {
                 userIDtextfieldActionPerformed(evt);
             }
         });
-        userspanel.add(userIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 330, 40, -1));
+        userspanel.add(userIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 350, 40, -1));
 
         oldPasswordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         oldPasswordField.addActionListener(new java.awt.event.ActionListener() {
@@ -440,13 +445,13 @@ public class adminAccount extends javax.swing.JFrame {
                 oldPasswordFieldKeyPressed(evt);
             }
         });
-        userspanel.add(oldPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 340, 200, 30));
+        userspanel.add(oldPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 360, 200, 30));
 
         user_passwordlabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         user_passwordlabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel1.setText("New Password:");
-        userspanel.add(user_passwordlabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 400, 130, 20));
+        userspanel.add(user_passwordlabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, 130, 20));
 
         newPasswordField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         newPasswordField.addActionListener(new java.awt.event.ActionListener() {
@@ -459,7 +464,7 @@ public class adminAccount extends javax.swing.JFrame {
                 newPasswordFieldKeyPressed(evt);
             }
         });
-        userspanel.add(newPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 400, 200, 30));
+        userspanel.add(newPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 200, 30));
 
         save.setBackground(new java.awt.Color(255, 255, 255));
         save.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -478,7 +483,7 @@ public class adminAccount extends javax.swing.JFrame {
                 saveMouseExited(evt);
             }
         });
-        userspanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 470, 80, 30));
+        userspanel.add(save, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 490, 80, 30));
 
         imageLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -489,7 +494,35 @@ public class adminAccount extends javax.swing.JFrame {
                 imageLabel1MouseClicked(evt);
             }
         });
-        userspanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, 150, 150));
+        userspanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 150, 150));
+
+        settings2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        settings2.setForeground(new java.awt.Color(255, 255, 255));
+        settings2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        settings2.setText("ACCOUNT SETTINGS");
+        settings2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                settings2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                settings2MouseExited(evt);
+            }
+        });
+        userspanel.add(settings2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 250, 50));
+
+        settings3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        settings3.setForeground(new java.awt.Color(255, 255, 255));
+        settings3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        settings3.setText("Account Settings");
+        settings3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                settings3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                settings3MouseExited(evt);
+            }
+        });
+        userspanel.add(settings3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 150, 30));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -613,7 +646,7 @@ public class adminAccount extends javax.swing.JFrame {
         settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         settings.setForeground(new java.awt.Color(255, 255, 255));
         settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        settings.setText("ACCOUNT");
+        settings.setText("SETTINGS");
         settings.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 settingsMouseEntered(evt);
@@ -680,13 +713,13 @@ public class adminAccount extends javax.swing.JFrame {
         imageHandler.chooseImage(imageLabel);
     }//GEN-LAST:event_imageLabelMouseClicked
 
-    private void settings1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings1MouseEntered
+    private void activityLogsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogsMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_settings1MouseEntered
+    }//GEN-LAST:event_activityLogsMouseEntered
 
-    private void settings1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings1MouseExited
+    private void activityLogsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogsMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_settings1MouseExited
+    }//GEN-LAST:event_activityLogsMouseExited
 
     private void cancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelMouseClicked
         try {
@@ -999,6 +1032,27 @@ public class adminAccount extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_imageLabel1MouseClicked
 
+    private void settings2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settings2MouseEntered
+
+    private void settings2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings2MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settings2MouseExited
+
+    private void settings3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings3MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settings3MouseEntered
+
+    private void settings3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings3MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settings3MouseExited
+
+    private void activityLogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogsMouseClicked
+        new adminLogs().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_activityLogsMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1036,6 +1090,7 @@ public class adminAccount extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel J_user_fname;
+    private javax.swing.JLabel activityLogs;
     private javax.swing.JLabel cancel;
     private javax.swing.JTextField contactNumberTextField;
     private javax.swing.JLabel dash_icon1;
@@ -1055,7 +1110,8 @@ public class adminAccount extends javax.swing.JFrame {
     private javax.swing.JLabel save;
     private javax.swing.JLabel sett_icon;
     private javax.swing.JLabel settings;
-    private javax.swing.JLabel settings1;
+    private javax.swing.JLabel settings2;
+    private javax.swing.JLabel settings3;
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
     private javax.swing.JLabel updatePassword;

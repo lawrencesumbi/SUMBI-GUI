@@ -350,7 +350,7 @@ public class userDashboard extends javax.swing.JFrame {
         account.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         account.setForeground(new java.awt.Color(255, 255, 255));
         account.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        account.setText("ACCOUNT");
+        account.setText("SETTINGS");
         account.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 accountMouseClicked(evt);

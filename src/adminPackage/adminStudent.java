@@ -17,10 +17,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -37,6 +39,7 @@ import net.proteanit.sql.DbUtils;
  */
 public class adminStudent extends javax.swing.JFrame {
     private String user_fname;
+
     /**
      * Creates new form adminStudent
      */
@@ -392,7 +395,7 @@ public class adminStudent extends javax.swing.JFrame {
         settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         settings.setForeground(new java.awt.Color(255, 255, 255));
         settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        settings.setText("ACCOUNT");
+        settings.setText("SETTINGS");
         settings.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 settingsMouseClicked(evt);
@@ -759,6 +762,7 @@ public class adminStudent extends javax.swing.JFrame {
         String stud_address = studAddress.getText();
         String stud_cnumber = studCNumber.getText();
 
+
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
         String user = "root";
         String pass = "";
@@ -779,7 +783,21 @@ public class adminStudent extends javax.swing.JFrame {
             int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted > 0) {
                 JOptionPane.showMessageDialog(this, "Student Added Successfully!");
+                
+                String logSql = "INSERT INTO logs_table (logs_user, logs_action, logs_stamp) VALUES (?, ?, ?)";
+                PreparedStatement logPstmt = conn.prepareStatement(logSql);
+
+                logPstmt.setString(1, this.user_fname);
+                logPstmt.setString(2, "Inserted student");
+
+                SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a MM/dd/yy");
+                String currentTime = formatter.format(new Date());
+                logPstmt.setString(3, currentTime);
+
+                logPstmt.executeUpdate();
+                logPstmt.close();
             }
+            
 
             pstmt.close();
             conn.close();

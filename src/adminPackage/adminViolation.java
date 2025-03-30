@@ -400,7 +400,7 @@ public class adminViolation extends javax.swing.JFrame {
         settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         settings.setForeground(new java.awt.Color(255, 255, 255));
         settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        settings.setText("ACCOUNT");
+        settings.setText("SETTINGS");
         settings.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 settingsMouseClicked(evt);
@@ -625,7 +625,7 @@ public class adminViolation extends javax.swing.JFrame {
                 uploadImageMouseClicked(evt);
             }
         });
-        violationpanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 190, 180));
+        violationpanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 190, 180));
 
         vioDes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         vioDes.addActionListener(new java.awt.event.ActionListener() {

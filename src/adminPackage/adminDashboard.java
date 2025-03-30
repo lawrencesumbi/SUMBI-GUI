@@ -336,7 +336,7 @@ public class adminDashboard extends javax.swing.JFrame {
         settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         settings.setForeground(new java.awt.Color(255, 255, 255));
         settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        settings.setText("ACCOUNT");
+        settings.setText("SETTINGS");
         settings.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 settingsMouseClicked(evt);

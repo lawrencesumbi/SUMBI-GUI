@@ -27,6 +27,7 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class loginform extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form loginform
@@ -34,6 +35,8 @@ public class loginform extends javax.swing.JFrame {
     public loginform() {
         initComponents();
     }
+    
+
 
     public static String passwordHash(String user_password) {
         try {
@@ -276,6 +279,7 @@ public class loginform extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
+
                 String user_status = rs.getString("user_status");
 
                 if (user_status.equalsIgnoreCase("Pending")) {

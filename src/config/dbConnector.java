@@ -23,5 +23,29 @@ public class dbConnector {
     public Connection getConnection() {
         return connect;
     }
+    
+    public void logActivity(int user_id, String logs_action) {
+        String query = "INSERT INTO tbl_logs (user_id, log_action) VALUES (?, ?)";
+        try (PreparedStatement pstmt = connect.prepareStatement(query)) {
+            pstmt.setInt(1, user_id);
+            pstmt.setString(2, logs_action);
+            pstmt.executeUpdate();
+            System.out.println("Activity logged: " + logs_action);
+        } catch (SQLException e) {
+            System.out.println("Error logging activity: " + e.getMessage());
+        }
+    }
+
+    public ResultSet getLogs() throws SQLException {
+        String query = "SELECT l.logs_id AS 'Log ID', " +
+                       "u.user_fname AS 'Username', " +
+                       "l.logs_action AS 'Action', " +
+                       "l.logs_stamp AS 'Timestamp' " +
+                       "FROM logs_table l " +
+                       "JOIN user_table u ON l.user_id = u.u_id " +
+                       "ORDER BY l.log_timestamp DESC";
+
+        return getData(query);
+    }
 
 }
