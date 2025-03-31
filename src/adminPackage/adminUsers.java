@@ -772,6 +772,7 @@ public class adminUsers extends javax.swing.JFrame {
         userTypeComboBox.setSelectedIndex(-1);
         userStatusComboBox.setSelectedIndex(-1);
         searchfield.setText(""); 
+        imageLabel.setIcon(null);
         
     }//GEN-LAST:event_refreshMouseClicked
 
@@ -790,7 +791,13 @@ public class adminUsers extends javax.swing.JFrame {
         String user_password = passwordHash(new String(passwordField.getPassword()));
         String user_type = (userTypeComboBox.getSelectedItem() != null) ? userTypeComboBox.getSelectedItem().toString() : "";
         String user_status = (userStatusComboBox.getSelectedItem() != null) ? userStatusComboBox.getSelectedItem().toString() : "";
-
+        String imagePath = null;
+    
+        if (imageLabel.getIcon() != null) {
+            imagePath = saveImageToFolder(user_email);
+        }
+        
+        
         if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty() || user_password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -832,8 +839,13 @@ public class adminUsers extends javax.swing.JFrame {
                 return;
             }
             
-            // Insert user data with user_id
-            String sql = "INSERT INTO user_table (user_fname, user_cnumber, user_email, user_password, user_type, user_status) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql;
+            if (imagePath != null) {
+                sql = "INSERT INTO user_table (user_fname, user_cnumber, user_email, user_password, user_type, user_status, image_path) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            } else {
+                sql = "INSERT INTO user_table (user_fname, user_cnumber, user_email, user_password, user_type, user_status) VALUES (?, ?, ?, ?, ?, ?)";
+            }
+
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, user_fname);
                 pstmt.setString(2, user_cnumber);
@@ -841,6 +853,10 @@ public class adminUsers extends javax.swing.JFrame {
                 pstmt.setString(4, user_password);
                 pstmt.setString(5, user_type);
                 pstmt.setString(6, user_status);
+
+                if (imagePath != null) {
+                    pstmt.setString(7, imagePath);
+                }
 
                 int rowsInserted = pstmt.executeUpdate();
                 if (rowsInserted > 0) {

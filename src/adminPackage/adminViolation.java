@@ -33,6 +33,7 @@ import net.proteanit.sql.DbUtils;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 
 /**
  *
@@ -75,6 +76,37 @@ public class adminViolation extends javax.swing.JFrame {
         }
     }
     
+    private String saveImageToFolder(String user_email) {
+        try {
+            // Convert JLabel Icon to BufferedImage
+            Icon icon = imageLabel.getIcon();
+            if (icon instanceof ImageIcon) {
+                Image image = ((ImageIcon) icon).getImage();
+                BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+                Graphics2D g2 = bufferedImage.createGraphics();
+                g2.drawImage(image, 0, 0, null);
+                g2.dispose();
+
+                // Define Folder and File Name
+                String folderPath = "src/violationImages";
+                File directory = new File(folderPath);
+                if (!directory.exists()) {
+                    directory.mkdir(); // Create folder if not exists
+                }
+
+                // Save image with unique name
+                String filePath = folderPath + user_email + ".jpg";
+                File outputFile = new File(filePath);
+                ImageIO.write(bufferedImage, "jpg", outputFile);
+
+                return filePath; // Return the saved image path
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error saving image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
+    
     private void highlightRow() {
         String searchText = searchfield.getText().trim().toLowerCase();
 
@@ -108,44 +140,7 @@ public class adminViolation extends javax.swing.JFrame {
         }
     }
     
-    public void uploadImage(JLabel uploadImage) {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Choose Image");
-        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Images", "jpg", "png", "jpeg"));
-
-        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            
-        String url = "jdbc:mysql://localhost:3306/sumbi_db";
-        String user = "root";
-        String pass = "";
-
-        try {
-                Connection conn = DriverManager.getConnection(url, user, pass);
-                FileInputStream fis = new FileInputStream(file);
-       
-                String sql = "UPDATE vio_table SET vio_image = ? WHERE vio_name = ?";
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setBinaryStream(1, fis, (int) file.length());
-                pstmt.setString(2, vioName.getText().trim());
-                int rowsUpdated = pstmt.executeUpdate();
-
-                if (rowsUpdated > 0) {
-
-                    ImageIcon getIcon = new ImageIcon(file.getAbsolutePath());
-                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-                    uploadImage.setIcon(new ImageIcon(img));
-
-                    JOptionPane.showMessageDialog(null, "Image Uploaded Successfully!");
-                } else {
-                    JOptionPane.showMessageDialog(null, "User Not Found! Please check the email.");
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error Uploading Image!");
-            }
-        }
-    }
+    
     
     private void displayImage(String user_fname) {
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
@@ -248,7 +243,7 @@ public class adminViolation extends javax.swing.JFrame {
         user_emaillabel = new javax.swing.JLabel();
         vioName = new javax.swing.JTextField();
         user_passwordlabel = new javax.swing.JLabel();
-        uploadImage = new javax.swing.JLabel();
+        imageLabel = new javax.swing.JLabel();
         vioDes = new javax.swing.JTextField();
         user_fnamelabel1 = new javax.swing.JLabel();
         vioIDtextfield = new javax.swing.JTextField();
@@ -258,6 +253,7 @@ public class adminViolation extends javax.swing.JFrame {
         vioStamp = new javax.swing.JTextField();
         studLastName = new javax.swing.JTextField();
         studID = new javax.swing.JTextField();
+        imageLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -616,16 +612,15 @@ public class adminViolation extends javax.swing.JFrame {
         user_passwordlabel.setText("Violation Description");
         violationpanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 150, 20));
 
-        uploadImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        uploadImage.setForeground(new java.awt.Color(255, 255, 255));
-        uploadImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/9776924.png"))); // NOI18N
-        uploadImage.addMouseListener(new java.awt.event.MouseAdapter() {
+        imageLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        imageLabel.setForeground(new java.awt.Color(255, 255, 255));
+        imageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                uploadImageMouseClicked(evt);
+                imageLabelMouseClicked(evt);
             }
         });
-        violationpanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 190, 180));
+        violationpanel.add(imageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, 190, 190));
 
         vioDes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         vioDes.addActionListener(new java.awt.event.ActionListener() {
@@ -639,7 +634,7 @@ public class adminViolation extends javax.swing.JFrame {
         user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel1.setText("Violation ID");
-        violationpanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 210, 90, 30));
+        violationpanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 210, 90, 30));
 
         vioIDtextfield.setEditable(false);
         vioIDtextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -649,7 +644,7 @@ public class adminViolation extends javax.swing.JFrame {
                 vioIDtextfieldActionPerformed(evt);
             }
         });
-        violationpanel.add(vioIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 210, 40, -1));
+        violationpanel.add(vioIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 210, 40, -1));
 
         user_emaillabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -704,6 +699,17 @@ public class adminViolation extends javax.swing.JFrame {
             }
         });
         violationpanel.add(studID, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 190, -1));
+
+        imageLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        imageLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        imageLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/9776924.png"))); // NOI18N
+        imageLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imageLabel1MouseClicked(evt);
+            }
+        });
+        violationpanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, 190, 190));
 
         getContentPane().add(violationpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -844,22 +850,23 @@ public class adminViolation extends javax.swing.JFrame {
         vioName.setText(model.getValueAt(i, 2).toString()); // vio_name
         vioDes.setText(model.getValueAt(i, 3).toString()); // vio_des
         vioSev.setText(model.getValueAt(i, 4).toString()); // vio_sev
-        vioStamp.setText(model.getValueAt(i, 5).toString()); // vio_stamp
+        vioStamp.setText(model.getValueAt(i, 5).toString()); // vio_stampA
 
         // Handle user image (if available)
-        Object imageData = model.getValueAt(i, 6); // vio_image is column 6
-        if (imageData != null && imageData instanceof byte[]) {
-            byte[] imgBytes = (byte[]) imageData;
+        Object imagePathObj = model.getValueAt(i, 6); 
+        String imagePath = (imagePathObj != null) ? imagePathObj.toString() : ""; // Avoid NullPointerException
 
-            if (imgBytes.length > 0) { 
-                ImageIcon getIcon = new ImageIcon(imgBytes);
-                Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-                uploadImage.setIcon(new ImageIcon(img));
+        if (!imagePath.isEmpty()) {
+            File file = new File(imagePath);
+            if (file.exists()) {
+                ImageIcon icon = new ImageIcon(imagePath);
+                Image img = icon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
+                imageLabel.setIcon(new ImageIcon(img));
             } else {
-                uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/9776924.png")));
+                imageLabel.setIcon(null);
             }
         } else {
-            uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/9776924.png")));
+            imageLabel.setIcon(null);
         }
     }//GEN-LAST:event_vio_tableMouseClicked
 
@@ -868,11 +875,15 @@ public class adminViolation extends javax.swing.JFrame {
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-        String stud_id = studID.getText();
-        
+        String stud_id = studID.getText(); 
         String vio_name = vioName.getText();
         String vio_des = vioDes.getText();
         String vio_sev = vioSev.getText();
+        String imagePath = null;
+    
+        if (imageLabel.getIcon() != null) {
+            imagePath = saveImageToFolder(stud_id);
+        }
         
         LocalDateTime currDateTime = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm a");
@@ -890,15 +901,23 @@ public class adminViolation extends javax.swing.JFrame {
         try {
             Connection conn = DriverManager.getConnection(url, user, pass);
 
-            // Fixed SQL Query
-            String sql = "INSERT INTO vio_table (stud_id, vio_name, vio_des, vio_sev, vio_stamp) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            String sql;
+            if (imagePath != null) {
+                sql = "INSERT INTO vio_table (stud_id, vio_name, vio_des, vio_sev, vio_stamp, image_path) VALUES (?, ?, ?, ?, ?, ?)";
+            } else {
+                sql = "INSERT INTO vio_table (stud_id, vio_name, vio_des, vio_sev, vio_stamp) VALUES (?, ?, ?, ?, ?)";
+            }
 
+            PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, stud_id);
             pstmt.setString(2, vio_name);
             pstmt.setString(3, vio_des);
             pstmt.setString(4, vio_sev);
             pstmt.setString(5, vio_stamp);
+
+            if (imagePath != null) {
+                pstmt.setString(6, imagePath);
+            }
 
             int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted > 0) {
@@ -921,7 +940,7 @@ public class adminViolation extends javax.swing.JFrame {
     }//GEN-LAST:event_addMouseExited
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_editMouseClicked
 
     private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
@@ -933,7 +952,44 @@ public class adminViolation extends javax.swing.JFrame {
     }//GEN-LAST:event_editMouseExited
 
     private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
-        // TODO add your handling code here:
+        String vio_id = vioIDtextfield.getText(); // Assuming there's a text field for user_id
+
+        if (vio_id.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter a User ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            
+
+            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+            if (confirm != JOptionPane.YES_OPTION) {
+                conn.close();
+                return;
+            }
+
+            String sql = "DELETE FROM vio_table WHERE vio_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vio_id);
+
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(this, "User deleted successfully!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Deletion failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_deleteMouseClicked
 
     private void deleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
@@ -952,7 +1008,7 @@ public class adminViolation extends javax.swing.JFrame {
         vioDes.setText("");
         vioSev.setText("");
         vioStamp.setText("");
-        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/9776924.png")));
+        imageLabel.setIcon(null);
         searchfield.setText("");
         vioIDtextfield.setText(""); 
         studID.setText("");
@@ -996,9 +1052,9 @@ public class adminViolation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_vioNameActionPerformed
 
-    private void uploadImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadImageMouseClicked
-        uploadImage(uploadImage);
-    }//GEN-LAST:event_uploadImageMouseClicked
+    private void imageLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabelMouseClicked
+        imageHandler.chooseVioImage(imageLabel);
+    }//GEN-LAST:event_imageLabelMouseClicked
 
     private void vioDesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vioDesActionPerformed
         // TODO add your handling code here:
@@ -1076,6 +1132,10 @@ public class adminViolation extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_settingsMouseClicked
 
+    private void imageLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_imageLabel1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1119,6 +1179,8 @@ public class adminViolation extends javax.swing.JFrame {
     private javax.swing.JLabel delete;
     private javax.swing.JLabel displayImage;
     private javax.swing.JLabel edit;
+    private javax.swing.JLabel imageLabel;
+    private javax.swing.JLabel imageLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;
@@ -1135,7 +1197,6 @@ public class adminViolation extends javax.swing.JFrame {
     private javax.swing.JTextField studLastName;
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
-    private javax.swing.JLabel uploadImage;
     private javax.swing.JLabel user_cnumberlabel;
     private javax.swing.JLabel user_emaillabel;
     private javax.swing.JLabel user_emaillabel1;

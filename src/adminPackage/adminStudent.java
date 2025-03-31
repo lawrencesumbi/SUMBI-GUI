@@ -790,7 +790,7 @@ public class adminStudent extends javax.swing.JFrame {
                 logPstmt.setString(1, this.user_fname);
                 logPstmt.setString(2, "Inserted student");
 
-                SimpleDateFormat formatter = new SimpleDateFormat("hh:mm a MM/dd/yy");
+                SimpleDateFormat formatter = new SimpleDateFormat("yy/MM/dd hh:mm a");
                 String currentTime = formatter.format(new Date());
                 logPstmt.setString(3, currentTime);
 

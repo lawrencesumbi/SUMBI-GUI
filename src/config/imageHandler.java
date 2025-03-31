@@ -33,20 +33,29 @@ public class imageHandler {
                 File selectedFile = fileChooser.getSelectedFile();
                 String destination = "src/usersImages/" + selectedFile.getName();
                 
-                if (fileExists(destination)) {
-                    JOptionPane.showMessageDialog(null, "File already exists! Rename or choose another.");
-                } else {
-                    Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
-                    imageLabel.setIcon(resizeImage(destination, imageLabel));
-                }
+                Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                imageLabel.setIcon(resizeImage(destination, imageLabel));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
         }
     }
+    
+    public static void chooseVioImage(JLabel imageLabel) {
+        JFileChooser fileChooser = new JFileChooser();
+        int returnValue = fileChooser.showOpenDialog(null);
 
-    public static boolean fileExists(String path) {
-        return Files.exists(Paths.get(path));
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            try {
+                File selectedFile = fileChooser.getSelectedFile();
+                String destination = "src/violationImages/" + selectedFile.getName();
+                
+                Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                imageLabel.setIcon(resizeImage(destination, imageLabel));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     public static ImageIcon resizeImage(String imagePath, JLabel label) {
