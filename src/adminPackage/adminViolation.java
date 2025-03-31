@@ -880,15 +880,16 @@ public class adminViolation extends javax.swing.JFrame {
         String vio_des = vioDes.getText();
         String vio_sev = vioSev.getText();
         String imagePath = null;
-    
+        String vio_status = "Pending";
+
         if (imageLabel.getIcon() != null) {
             imagePath = saveImageToFolder(stud_id);
         }
-        
+
         LocalDateTime currDateTime = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm a");
         String vio_stamp = currDateTime.format(format);
-        
+
         if (stud_id.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Student ID doesn't exist!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -900,23 +901,28 @@ public class adminViolation extends javax.swing.JFrame {
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pass);
-
             String sql;
-            if (imagePath != null) {
-                sql = "INSERT INTO vio_table (stud_id, vio_name, vio_des, vio_sev, vio_stamp, image_path) VALUES (?, ?, ?, ?, ?, ?)";
-            } else {
-                sql = "INSERT INTO vio_table (stud_id, vio_name, vio_des, vio_sev, vio_stamp) VALUES (?, ?, ?, ?, ?)";
-            }
-
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, stud_id);
-            pstmt.setString(2, vio_name);
-            pstmt.setString(3, vio_des);
-            pstmt.setString(4, vio_sev);
-            pstmt.setString(5, vio_stamp);
+            PreparedStatement pstmt;
 
             if (imagePath != null) {
+                sql = "INSERT INTO vio_table (stud_id, vio_name, vio_des, vio_sev, vio_stamp, image_path, vio_status) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, stud_id);
+                pstmt.setString(2, vio_name);
+                pstmt.setString(3, vio_des);
+                pstmt.setString(4, vio_sev);
+                pstmt.setString(5, vio_stamp);
                 pstmt.setString(6, imagePath);
+                pstmt.setString(7, vio_status);
+            } else {
+                sql = "INSERT INTO vio_table (stud_id, vio_name, vio_des, vio_sev, vio_stamp, vio_status) VALUES (?, ?, ?, ?, ?, ?)";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, stud_id);
+                pstmt.setString(2, vio_name);
+                pstmt.setString(3, vio_des);
+                pstmt.setString(4, vio_sev);
+                pstmt.setString(5, vio_stamp);
+                pstmt.setString(6, vio_status);
             }
 
             int rowsInserted = pstmt.executeUpdate();
@@ -1037,7 +1043,7 @@ public class adminViolation extends javax.swing.JFrame {
 
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
-                JOptionPane.showMessageDialog(this, "User deleted successfully!");
+                JOptionPane.showMessageDialog(this, "Violation deleted successfully!");
             } else {
                 JOptionPane.showMessageDialog(this, "Deletion failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
             }
