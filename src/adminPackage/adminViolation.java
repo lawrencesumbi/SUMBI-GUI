@@ -574,8 +574,8 @@ public class adminViolation extends javax.swing.JFrame {
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_fnamelabel.setText("Student ID");
-        violationpanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 80, 20));
+        user_fnamelabel.setText("Enter Student ID:");
+        violationpanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 140, 20));
 
         studFirstName.setEditable(false);
         studFirstName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -584,7 +584,7 @@ public class adminViolation extends javax.swing.JFrame {
                 studFirstNameActionPerformed(evt);
             }
         });
-        violationpanel.add(studFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 90, -1));
+        violationpanel.add(studFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 110, -1));
 
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -604,7 +604,7 @@ public class adminViolation extends javax.swing.JFrame {
                 vioNameActionPerformed(evt);
             }
         });
-        violationpanel.add(vioName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 190, -1));
+        violationpanel.add(vioName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 200, -1));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -628,7 +628,7 @@ public class adminViolation extends javax.swing.JFrame {
                 vioDesActionPerformed(evt);
             }
         });
-        violationpanel.add(vioDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 190, -1));
+        violationpanel.add(vioDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 200, -1));
 
         user_fnamelabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -664,7 +664,7 @@ public class adminViolation extends javax.swing.JFrame {
                 vioSevActionPerformed(evt);
             }
         });
-        violationpanel.add(vioSev, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 190, -1));
+        violationpanel.add(vioSev, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 200, -1));
 
         vioStamp.setEditable(false);
         vioStamp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -673,7 +673,7 @@ public class adminViolation extends javax.swing.JFrame {
                 vioStampActionPerformed(evt);
             }
         });
-        violationpanel.add(vioStamp, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 190, -1));
+        violationpanel.add(vioStamp, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 200, -1));
 
         studLastName.setEditable(false);
         studLastName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -682,7 +682,7 @@ public class adminViolation extends javax.swing.JFrame {
                 studLastNameActionPerformed(evt);
             }
         });
-        violationpanel.add(studLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 100, -1));
+        violationpanel.add(studLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 90, -1));
 
         studID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         studID.addActionListener(new java.awt.event.ActionListener() {
@@ -698,7 +698,7 @@ public class adminViolation extends javax.swing.JFrame {
                 studIDKeyTyped(evt);
             }
         });
-        violationpanel.add(studID, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 190, -1));
+        violationpanel.add(studID, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 200, -1));
 
         imageLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel1.setForeground(new java.awt.Color(255, 255, 255));

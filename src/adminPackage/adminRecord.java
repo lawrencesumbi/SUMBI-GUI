@@ -543,8 +543,8 @@ public class adminRecord extends javax.swing.JFrame {
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_fnamelabel.setText("Violation ID");
-        violationpanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 80, 20));
+        user_fnamelabel.setText("Enter Violation ID:");
+        violationpanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 140, 20));
 
         studFirstName.setEditable(false);
         studFirstName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -553,7 +553,7 @@ public class adminRecord extends javax.swing.JFrame {
                 studFirstNameActionPerformed(evt);
             }
         });
-        violationpanel.add(studFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 90, -1));
+        violationpanel.add(studFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 110, -1));
 
         user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -573,7 +573,7 @@ public class adminRecord extends javax.swing.JFrame {
                 vioNameActionPerformed(evt);
             }
         });
-        violationpanel.add(vioName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 190, -1));
+        violationpanel.add(vioName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 200, -1));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -597,7 +597,7 @@ public class adminRecord extends javax.swing.JFrame {
                 recSanctionActionPerformed(evt);
             }
         });
-        violationpanel.add(recSanction, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 190, -1));
+        violationpanel.add(recSanction, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 200, -1));
 
         user_fnamelabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -618,7 +618,7 @@ public class adminRecord extends javax.swing.JFrame {
         user_emaillabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_emaillabel1.setText("Comment / Suggestion");
+        user_emaillabel1.setText("Reaction / Suggestion");
         violationpanel.add(user_emaillabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 180, 20));
 
         user_emaillabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -633,7 +633,7 @@ public class adminRecord extends javax.swing.JFrame {
                 recCommentActionPerformed(evt);
             }
         });
-        violationpanel.add(recComment, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 190, -1));
+        violationpanel.add(recComment, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 200, -1));
 
         recStamp.setEditable(false);
         recStamp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -642,7 +642,7 @@ public class adminRecord extends javax.swing.JFrame {
                 recStampActionPerformed(evt);
             }
         });
-        violationpanel.add(recStamp, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 190, -1));
+        violationpanel.add(recStamp, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 200, -1));
 
         studLastName.setEditable(false);
         studLastName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -651,7 +651,7 @@ public class adminRecord extends javax.swing.JFrame {
                 studLastNameActionPerformed(evt);
             }
         });
-        violationpanel.add(studLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 100, -1));
+        violationpanel.add(studLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 90, -1));
 
         vioID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         vioID.addActionListener(new java.awt.event.ActionListener() {
@@ -667,7 +667,7 @@ public class adminRecord extends javax.swing.JFrame {
                 vioIDKeyTyped(evt);
             }
         });
-        violationpanel.add(vioID, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 190, -1));
+        violationpanel.add(vioID, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 200, -1));
 
         imageLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -1069,7 +1069,7 @@ public class adminRecord extends javax.swing.JFrame {
     }//GEN-LAST:event_vioNameActionPerformed
 
     private void imageLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabelMouseClicked
-        imageHandler.chooseVioImage(imageLabel);
+        
     }//GEN-LAST:event_imageLabelMouseClicked
 
     private void recSanctionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recSanctionActionPerformed
