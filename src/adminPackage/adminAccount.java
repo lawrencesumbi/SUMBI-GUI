@@ -268,7 +268,6 @@ public class adminAccount extends javax.swing.JFrame {
         emailTextField = new javax.swing.JTextField();
         user_passwordlabel = new javax.swing.JLabel();
         imageLabel = new javax.swing.JLabel();
-        activityLogs = new javax.swing.JLabel();
         cancel = new javax.swing.JLabel();
         updatePassword = new javax.swing.JLabel();
         user_fnamelabel1 = new javax.swing.JLabel();
@@ -280,6 +279,9 @@ public class adminAccount extends javax.swing.JFrame {
         imageLabel1 = new javax.swing.JLabel();
         settings2 = new javax.swing.JLabel();
         settings3 = new javax.swing.JLabel();
+        activityLogs = new javax.swing.JLabel();
+        activityLogs3 = new javax.swing.JLabel();
+        activityLogs2 = new javax.swing.JLabel();
         leftpanel = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
         displayImage = new javax.swing.JLabel();
@@ -362,23 +364,6 @@ public class adminAccount extends javax.swing.JFrame {
             }
         });
         userspanel.add(imageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 150, 150));
-
-        activityLogs.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        activityLogs.setForeground(new java.awt.Color(255, 255, 255));
-        activityLogs.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        activityLogs.setText("Activity Logs");
-        activityLogs.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                activityLogsMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                activityLogsMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                activityLogsMouseExited(evt);
-            }
-        });
-        userspanel.add(activityLogs, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 150, 30));
 
         cancel.setBackground(new java.awt.Color(255, 255, 255));
         cancel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -522,7 +507,49 @@ public class adminAccount extends javax.swing.JFrame {
                 settings3MouseExited(evt);
             }
         });
-        userspanel.add(settings3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 150, 30));
+        userspanel.add(settings3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 150, 30));
+
+        activityLogs.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        activityLogs.setForeground(new java.awt.Color(255, 255, 255));
+        activityLogs.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activityLogs.setText("Activity Logs");
+        activityLogs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                activityLogsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                activityLogsMouseExited(evt);
+            }
+        });
+        userspanel.add(activityLogs, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 150, 30));
+
+        activityLogs3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        activityLogs3.setForeground(new java.awt.Color(255, 255, 255));
+        activityLogs3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activityLogs3.setText("Appearance");
+        activityLogs3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                activityLogs3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                activityLogs3MouseExited(evt);
+            }
+        });
+        userspanel.add(activityLogs3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, 150, 30));
+
+        activityLogs2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        activityLogs2.setForeground(new java.awt.Color(255, 255, 255));
+        activityLogs2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        activityLogs2.setText("About System");
+        activityLogs2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                activityLogs2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                activityLogs2MouseExited(evt);
+            }
+        });
+        userspanel.add(activityLogs2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, 150, 30));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -712,14 +739,6 @@ public class adminAccount extends javax.swing.JFrame {
     private void imageLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabelMouseClicked
         imageHandler.chooseImage(imageLabel);
     }//GEN-LAST:event_imageLabelMouseClicked
-
-    private void activityLogsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogsMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_activityLogsMouseEntered
-
-    private void activityLogsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogsMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_activityLogsMouseExited
 
     private void cancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelMouseClicked
         try {
@@ -1048,10 +1067,29 @@ public class adminAccount extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_settings3MouseExited
 
-    private void activityLogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogsMouseClicked
-        new adminLogs().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_activityLogsMouseClicked
+    private void activityLogsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogsMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_activityLogsMouseEntered
+
+    private void activityLogsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogsMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_activityLogsMouseExited
+
+    private void activityLogs3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs3MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_activityLogs3MouseEntered
+
+    private void activityLogs3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs3MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_activityLogs3MouseExited
+
+    private void activityLogs2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_activityLogs2MouseEntered
+
+    private void activityLogs2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs2MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_activityLogs2MouseExited
 
     /**
      * @param args the command line arguments
@@ -1091,6 +1129,8 @@ public class adminAccount extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel J_user_fname;
     private javax.swing.JLabel activityLogs;
+    private javax.swing.JLabel activityLogs2;
+    private javax.swing.JLabel activityLogs3;
     private javax.swing.JLabel cancel;
     private javax.swing.JTextField contactNumberTextField;
     private javax.swing.JLabel dash_icon1;
