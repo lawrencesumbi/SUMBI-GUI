@@ -58,6 +58,20 @@ public class loginform extends javax.swing.JFrame {
     public String getUserPassword() {
         return new String(passtextfield.getPassword());
     }
+    
+    private void logActivity(int user_id, String action) {
+        String sql = "INSERT INTO logs_table (user_id, logs_action, logs_stamp) VALUES (?, ?, NOW())";
+        dbConnector db = new dbConnector();
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, user_id);
+            pst.setString(2, action);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error logging activity: " + e.getMessage());
+        }
+    }
 
     
     /**
@@ -279,7 +293,7 @@ public class loginform extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
-
+                int user_id = rs.getInt("user_id");
                 String user_status = rs.getString("user_status");
 
                 if (user_status.equalsIgnoreCase("Pending")) {
@@ -289,6 +303,8 @@ public class loginform extends javax.swing.JFrame {
 
                 JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
+                logActivity(user_id, "Logged in");
+                
                 String user_type = rs.getString("user_type");
                 String user_fname = rs.getString("user_fname");
 
@@ -343,6 +359,7 @@ public class loginform extends javax.swing.JFrame {
             ResultSet rs = pst.executeQuery();
 
             if (rs.next()) {
+                int user_id = rs.getInt("user_id");
                 String user_status = rs.getString("user_status");
 
                 if (user_status.equalsIgnoreCase("Pending")) {
@@ -351,6 +368,8 @@ public class loginform extends javax.swing.JFrame {
                 }
 
                 JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                
+                logActivity(user_id, "Logged in");
 
                 String user_type = rs.getString("user_type");
                 String user_fname = rs.getString("user_fname");

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2025 at 07:39 PM
+-- Generation Time: Apr 01, 2025 at 03:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `logs_table` (
   `logs_id` int(11) NOT NULL,
-  `logs_user` varchar(50) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `logs_action` varchar(50) NOT NULL,
   `logs_stamp` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -38,9 +38,8 @@ CREATE TABLE `logs_table` (
 -- Dumping data for table `logs_table`
 --
 
-INSERT INTO `logs_table` (`logs_id`, `logs_user`, `logs_action`, `logs_stamp`) VALUES
-(3, 'Lawrence Sumbi', 'Inserted student', '01:12 AM 03/31/25'),
-(4, 'Mike Bustamante', 'Inserted student', '01:14 AM 03/31/25');
+INSERT INTO `logs_table` (`logs_id`, `user_id`, `logs_action`, `logs_stamp`) VALUES
+(7, 1, 'User logged in', '2025-04-01 21:46:53');
 
 -- --------------------------------------------------------
 
@@ -98,7 +97,8 @@ INSERT INTO `stud_table` (`stud_id`, `stud_fname`, `stud_lname`, `stud_program`,
 (8, 'John Reyl', 'Saragosa', 'BSIT', '2A', 'Naga', '09123456789', NULL),
 (9, 'Ronald', 'Rosales', 'BSIT', '1A', 'Toledo', '09123456789', NULL),
 (10, 'Benish Reyna', 'Parba', 'BSED', '1A', 'Minglanilla', '09123456789', NULL),
-(11, 'Michael', 'Bustamante', 'BSIT', '4A', 'Minglanilla', '09123456789', NULL);
+(11, 'Michael', 'Bustamante', 'BSIT', '4A', 'Minglanilla', '09123456789', NULL),
+(48, 'Dray', 'Misa', 'BSIT', '2A', 'Naga', '09123456789', NULL);
 
 -- --------------------------------------------------------
 
@@ -188,7 +188,8 @@ INSERT INTO `vio_table` (`vio_id`, `stud_id`, `vio_name`, `vio_des`, `vio_sev`, 
 -- Indexes for table `logs_table`
 --
 ALTER TABLE `logs_table`
-  ADD PRIMARY KEY (`logs_id`);
+  ADD PRIMARY KEY (`logs_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `rec_table`
@@ -224,7 +225,7 @@ ALTER TABLE `vio_table`
 -- AUTO_INCREMENT for table `logs_table`
 --
 ALTER TABLE `logs_table`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `rec_table`
@@ -236,7 +237,7 @@ ALTER TABLE `rec_table`
 -- AUTO_INCREMENT for table `stud_table`
 --
 ALTER TABLE `stud_table`
-  MODIFY `stud_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `stud_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `user_table`
@@ -253,6 +254,12 @@ ALTER TABLE `vio_table`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `logs_table`
+--
+ALTER TABLE `logs_table`
+  ADD CONSTRAINT `logs_table_user_id_fr` FOREIGN KEY (`user_id`) REFERENCES `user_table` (`user_id`);
 
 --
 -- Constraints for table `rec_table`
