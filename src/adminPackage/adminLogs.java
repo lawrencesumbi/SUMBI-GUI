@@ -23,13 +23,14 @@ public class adminLogs extends javax.swing.JFrame {
      */
     public adminLogs() {
         initComponents();
+        displayLogs();
     }
     
     
     public void displayLogs(){
         try{
             dbConnector db = new dbConnector();
-            ResultSet rs = db.getLogs();
+            ResultSet rs = db.getData("SELECT * FROM logs_table ORDER BY logs_id DESC");
             logs_table.setModel(DbUtils.resultSetToTableModel(rs));
             rs.close();
         }catch(SQLException e){

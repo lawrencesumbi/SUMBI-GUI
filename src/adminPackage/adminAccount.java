@@ -89,6 +89,22 @@ public class adminAccount extends javax.swing.JFrame {
         }
     }
     
+    private void logActivity(int user_id, String action) {
+        String sql = "INSERT INTO logs_table (user_id, logs_action, logs_stamp) VALUES (?, ?, NOW())";
+        dbConnector db = new dbConnector();
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, user_id);
+            pst.setString(2, action);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error logging activity: " + e.getMessage());
+        }
+    }
+    
+    
+    
     private String saveImageToFolder(String user_email) {
         try {
             // Convert JLabel Icon to BufferedImage
@@ -875,15 +891,34 @@ public class adminAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_oldPasswordFieldKeyPressed
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        int response = JOptionPane.showConfirmDialog(this,
-            "Confirm Log Out?",
-            "Logout Confirmation",
-            JOptionPane.YES_NO_OPTION);
 
-        if (response == JOptionPane.YES_OPTION) {
-            new loginform().setVisible(true);
-            this.dispose();
-        } else {
+        String sql = "SELECT user_id FROM user_table WHERE user_fname = ?"; 
+    
+        dbConnector db = new dbConnector();
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+
+            pst.setString(1, this.user_fname); // Set the logged-in user's first name
+
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                int user_id = rs.getInt("user_id");
+                int response = JOptionPane.showConfirmDialog(this,
+                    "Confirm Log Out?",
+                    "Logout Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+
+                if (response == JOptionPane.YES_OPTION) {
+                    logActivity(user_id, "Logged out");
+                    new loginform().setVisible(true);
+                    this.dispose();
+                }
+            }        
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_logoutMouseClicked
 
