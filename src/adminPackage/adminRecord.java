@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import adminPackage.adminPrintPreview;
+import config.Session;
 import config.dbConnector;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -167,6 +169,20 @@ public class adminRecord extends javax.swing.JFrame {
 
         g2.dispose();
         return output;
+    }
+    
+     private void logActivity(int user_id, String action) {
+        String sql = "INSERT INTO logs_table (user_id, logs_action, logs_stamp) VALUES (?, ?, NOW())";
+        dbConnector db = new dbConnector();
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, user_id);
+            pst.setString(2, action);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error logging activity: " + e.getMessage());
+        }
     }
 
     /**
@@ -786,16 +802,19 @@ public class adminRecord extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsMouseExited
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        int response = JOptionPane.showConfirmDialog(this,
-            "Confirm Log Out?",
-            "Logout Confirmation",
-            JOptionPane.YES_NO_OPTION);
+        int response = JOptionPane.showConfirmDialog(this, 
+        "Confirm Log Out?", 
+        "Logout Confirmation", 
+        JOptionPane.YES_NO_OPTION);
 
-        if (response == JOptionPane.YES_OPTION) {
-            new loginform().setVisible(true);
-            this.dispose();
-        } else {
-        }
+    if (response == JOptionPane.YES_OPTION) {
+        int uid = Session.getInstance().getUid(); 
+        logActivity(uid, "Logged out");           
+        Session.getInstance().clearSession();    
+        
+        new loginform().setVisible(true);
+        this.dispose();
+    } 
     }//GEN-LAST:event_logoutMouseClicked
 
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
@@ -940,6 +959,10 @@ public class adminRecord extends javax.swing.JFrame {
                 updatePstmt.close();
 
                 JOptionPane.showMessageDialog(this, "Student Violation Successfully Recorded!");
+               
+                int uid = Session.getInstance().getUid(); 
+                logActivity(uid, "Added New Record");
+
             }
 
             conn.close();
@@ -997,6 +1020,9 @@ public class adminRecord extends javax.swing.JFrame {
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
                 JOptionPane.showMessageDialog(this, "Record deleted successfully!");
+                int uid = Session.getInstance().getUid();
+                logActivity(uid, "Deleted student: " + rec_id );
+
             } else {
                 JOptionPane.showMessageDialog(this, "Deletion failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -1147,17 +1173,19 @@ public class adminRecord extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_imageLabel1MouseClicked
 
-    private void search1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search1MouseClicked
+    private void search1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search1MouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_search1MouseClicked
+    }//GEN-LAST:event_search1MouseExited
 
     private void search1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search1MouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_search1MouseEntered
 
-    private void search1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_search1MouseExited
+    private void search1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search1MouseClicked
+       new adminPrintPreview().setVisible(true);
+       this.dispose();
+        
+    }//GEN-LAST:event_search1MouseClicked
 
     /**
      * @param args the command line arguments

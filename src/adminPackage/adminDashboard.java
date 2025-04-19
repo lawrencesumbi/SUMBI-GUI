@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import config.Session;
 import javax.swing.*;
 import java.sql.*;
 import config.dbConnector;
@@ -160,6 +161,22 @@ public class adminDashboard extends javax.swing.JFrame {
         g2.dispose();
         return output;
     }
+    
+     private void logActivity(int user_id, String action) {
+        String sql = "INSERT INTO logs_table (user_id, logs_action, logs_stamp) VALUES (?, ?, NOW())";
+        dbConnector db = new dbConnector();
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, user_id);
+            pst.setString(2, action);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error logging activity: " + e.getMessage());
+        }
+    }
+
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -593,11 +610,14 @@ public class adminDashboard extends javax.swing.JFrame {
         "Logout Confirmation", 
         JOptionPane.YES_NO_OPTION);
 
-        if (response == JOptionPane.YES_OPTION) {
-            new loginform().setVisible(true);
-            this.dispose();
-        } else {
-        }        
+    if (response == JOptionPane.YES_OPTION) {
+        int uid = Session.getInstance().getUid(); 
+        logActivity(uid, "Logged out");           
+        Session.getInstance().clearSession();    
+        
+        new loginform().setVisible(true);
+        this.dispose();
+    }     
     }//GEN-LAST:event_logoutMouseClicked
 
     private void recordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseClicked

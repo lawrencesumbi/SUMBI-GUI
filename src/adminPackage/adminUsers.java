@@ -1,4 +1,5 @@
 
+import config.Session;
 import javax.swing.*;
 import java.sql.*;
 import config.dbConnector;
@@ -251,7 +252,19 @@ public class adminUsers extends javax.swing.JFrame {
         }
     }
     
+  private void logActivity(int user_id, String action) {
+        String sql = "INSERT INTO logs_table (user_id, logs_action, logs_stamp) VALUES (?, ?, NOW())";
+        dbConnector db = new dbConnector();
 
+        try (Connection conn = db.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, user_id);
+            pst.setString(2, action);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error logging activity: " + e.getMessage());
+        }
+    }
 
     
     
@@ -861,7 +874,10 @@ public class adminUsers extends javax.swing.JFrame {
                 int rowsInserted = pstmt.executeUpdate();
                 if (rowsInserted > 0) {
                     JOptionPane.showMessageDialog(null, "Registration successful!");
+                    int uid = Session.getInstance().getUid();
+                    logActivity(uid, "Added new user: " + user_email);
                 }
+
             }
 
         } catch (SQLException ex) {
@@ -887,6 +903,10 @@ public class adminUsers extends javax.swing.JFrame {
 
         return exists;
     }
+    
+   
+    
+    
     
     private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
         // TODO add your handling code here:
@@ -959,12 +979,15 @@ public class adminUsers extends javax.swing.JFrame {
             }
 
 
-                int rowsUpdated = pstmt.executeUpdate();
+            int rowsUpdated = pstmt.executeUpdate();
 
-                if (rowsUpdated > 0) {
-                    JOptionPane.showMessageDialog(this, "User information updated successfully!");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "User information updated successfully!");
+                int uid = Session.getInstance().getUid();
+                logActivity(uid, "Updated user: " + user_email);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } catch (SQLException ex) {
@@ -1014,6 +1037,9 @@ public class adminUsers extends javax.swing.JFrame {
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
                 JOptionPane.showMessageDialog(this, "User deleted successfully!");
+                int uid = Session.getInstance().getUid();
+                logActivity(uid, "Deleted user: " + user_email);
+
             } else {
                 JOptionPane.showMessageDialog(this, "Deletion failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -1119,16 +1145,19 @@ public class adminUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutMouseExited
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        int response = JOptionPane.showConfirmDialog(this, 
+      int response = JOptionPane.showConfirmDialog(this, 
         "Confirm Log Out?", 
         "Logout Confirmation", 
         JOptionPane.YES_NO_OPTION);
 
-        if (response == JOptionPane.YES_OPTION) {
-            new loginform().setVisible(true);
-            this.dispose();
-        } else {           
-        }        
+    if (response == JOptionPane.YES_OPTION) {
+        int uid = Session.getInstance().getUid(); 
+        logActivity(uid, "Logged out");           
+        Session.getInstance().clearSession();     
+        
+        new loginform().setVisible(true);
+        this.dispose();
+    } 
     }//GEN-LAST:event_logoutMouseClicked
 
     private void recordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseClicked

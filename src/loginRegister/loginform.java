@@ -1,4 +1,5 @@
 
+import config.Session;
 import config.dbConnector;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -286,7 +287,7 @@ public class loginform extends javax.swing.JFrame {
         dbConnector db = new dbConnector();
 
         try (Connection conn = db.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
+                PreparedStatement pst = conn.prepareStatement(sql)) {
 
             pst.setString(1, user_email);
             pst.setString(2, hashedPassword);
@@ -304,7 +305,8 @@ public class loginform extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 logActivity(user_id, "Logged in");
-                
+                Session.getInstance().setUid(user_id); // ✅ Save user session
+
                 String user_type = rs.getString("user_type");
                 String user_fname = rs.getString("user_fname");
 
@@ -325,7 +327,7 @@ public class loginform extends javax.swing.JFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    
+
     }//GEN-LAST:event_loginbuttonMouseClicked
 
     
@@ -368,8 +370,9 @@ public class loginform extends javax.swing.JFrame {
                 }
 
                 JOptionPane.showMessageDialog(this, "Login successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                
+
                 logActivity(user_id, "Logged in");
+                Session.getInstance().setUid(user_id); // ✅ Save user session
 
                 String user_type = rs.getString("user_type");
                 String user_fname = rs.getString("user_fname");

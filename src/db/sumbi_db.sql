@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2025 at 03:55 PM
+-- Generation Time: Apr 19, 2025 at 05:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,7 +39,14 @@ CREATE TABLE `logs_table` (
 --
 
 INSERT INTO `logs_table` (`logs_id`, `user_id`, `logs_action`, `logs_stamp`) VALUES
-(7, 1, 'User logged in', '2025-04-01 21:46:53');
+(7, 1, 'User logged in', '2025-04-01 21:46:53'),
+(8, 1, 'Logged in', '2025-04-19 10:52:26'),
+(9, 1, 'Logged in', '2025-04-19 11:01:08'),
+(10, 1, 'Updated Student: Patricia Ann Mae Obaobs', '2025-04-19 11:01:20'),
+(11, 1, 'Updated Student: Patricia Ann Mae Obaob', '2025-04-19 11:02:21'),
+(12, 1, 'Updated Violation: Vandalisms', '2025-04-19 11:02:35'),
+(13, 1, 'Updated user: patobaob@gmail.com', '2025-04-19 11:03:05'),
+(14, 1, 'Logged out', '2025-04-19 11:05:53');
 
 -- --------------------------------------------------------
 
@@ -123,7 +130,7 @@ CREATE TABLE `user_table` (
 
 INSERT INTO `user_table` (`user_id`, `user_fname`, `user_cnumber`, `user_email`, `user_password`, `user_type`, `user_status`, `image_path`) VALUES
 (1, 'Lawrence Sumbi', '09303172724', 'guiansumbi@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'Admin', 'Active', 'src/usersImagesguiansumbi@gmail.com.jpg'),
-(2, 'Patricia Obaob', '09059641855', 'patobaob@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', 'src/usersImagespatobaob@gmail.com.jpg'),
+(2, 'Pat Obaob', '09059641855', 'patobaob@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', 'src/usersImagespatobaob@gmail.com.jpg'),
 (4, 'Diovely Campo', '09876543210', 'dyubli@gmail.com', 'a7d579ba76398070eae654c30ff153a4c273272a', 'User', 'Active', '0'),
 (8, 'Sample2', '09123456789', 'sample2@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', '0'),
 (9, 'Sample3', '09123456789', 'sample3@gmal.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Pending', '0'),
@@ -172,7 +179,7 @@ CREATE TABLE `vio_table` (
 --
 
 INSERT INTO `vio_table` (`vio_id`, `stud_id`, `vio_name`, `vio_des`, `vio_sev`, `vio_stamp`, `image_path`, `vio_status`) VALUES
-(2, 1, 'Vandalisms', 'test12', 'test12', '25/03/31 10:27 PM', 'src/violationImages2.jpg', 'Recorded'),
+(2, 1, 'Vandalisms', 'test12', 'test12', '25/04/19 11:02 AM', 'src/violationImages2.jpg', 'Recorded'),
 (5, 2, 'Bullying', 'Sample', 'sample', '25/03/31 08:47 PM', '', ''),
 (6, 4, 'Late Submission', 'sample', 'sample', '25/03/31 08:48 PM', '', ''),
 (10, 11, 'Cheating', 'Harsh Words', 'Medium', '25/03/31 07:22 PM', 'src/violationImages10.jpg', 'Recorded'),
@@ -225,7 +232,7 @@ ALTER TABLE `vio_table`
 -- AUTO_INCREMENT for table `logs_table`
 --
 ALTER TABLE `logs_table`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `rec_table`

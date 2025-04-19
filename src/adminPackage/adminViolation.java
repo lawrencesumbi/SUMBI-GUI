@@ -5,6 +5,7 @@
  *
 */
 
+import config.Session;
 import config.dbConnector;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -199,6 +200,21 @@ public class adminViolation extends javax.swing.JFrame {
         g2.dispose();
         return output;
     }
+    
+     private void logActivity(int user_id, String action) {
+        String sql = "INSERT INTO logs_table (user_id, logs_action, logs_stamp) VALUES (?, ?, NOW())";
+        dbConnector db = new dbConnector();
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, user_id);
+            pst.setString(2, action);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error logging activity: " + e.getMessage());
+        }
+    }
+    
     
 
     /**
@@ -788,16 +804,19 @@ public class adminViolation extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsMouseExited
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        int response = JOptionPane.showConfirmDialog(this,
-            "Confirm Log Out?",
-            "Logout Confirmation",
-            JOptionPane.YES_NO_OPTION);
+      int response = JOptionPane.showConfirmDialog(this, 
+        "Confirm Log Out?", 
+        "Logout Confirmation", 
+        JOptionPane.YES_NO_OPTION);
 
-        if (response == JOptionPane.YES_OPTION) {
-            new loginform().setVisible(true);
-            this.dispose();
-        } else {
-        }
+    if (response == JOptionPane.YES_OPTION) {
+        int uid = Session.getInstance().getUid(); 
+        logActivity(uid, "Logged out");           
+        Session.getInstance().clearSession();    
+        
+        new loginform().setVisible(true);
+        this.dispose();
+    } 
     }//GEN-LAST:event_logoutMouseClicked
 
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
@@ -928,6 +947,9 @@ public class adminViolation extends javax.swing.JFrame {
             int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted > 0) {
                 JOptionPane.showMessageDialog(this, "Violation Added Successfully!");
+                int uid = Session.getInstance().getUid(); 
+                logActivity(uid, "Added Violation: " + vio_name);
+
             }
 
             pstmt.close();
@@ -995,6 +1017,9 @@ public class adminViolation extends javax.swing.JFrame {
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {
                 JOptionPane.showMessageDialog(this, "Violation Updated Successfully!");
+                 int uid = Session.getInstance().getUid(); 
+                logActivity(uid, "Updated Violation: " + vio_name);
+
             } else {
                 JOptionPane.showMessageDialog(this, "No matching record found!", "Update Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -1044,6 +1069,9 @@ public class adminViolation extends javax.swing.JFrame {
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
                 JOptionPane.showMessageDialog(this, "Violation deleted successfully!");
+                 int uid = Session.getInstance().getUid(); // 🔐 get user_id from session
+                logActivity(uid, "Deleted Violation: " + vio_id);
+
             } else {
                 JOptionPane.showMessageDialog(this, "Deletion failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
             }

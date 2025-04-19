@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import config.Session;
 import config.dbConnector;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -203,6 +204,20 @@ public class adminStudent extends javax.swing.JFrame {
 
         g2.dispose();
         return output;
+    }
+    
+     private void logActivity(int user_id, String action) {
+        String sql = "INSERT INTO logs_table (user_id, logs_action, logs_stamp) VALUES (?, ?, NOW())";
+        dbConnector db = new dbConnector();
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, user_id);
+            pst.setString(2, action);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error logging activity: " + e.getMessage());
+        }
     }
     
     /**
@@ -755,41 +770,42 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-        String stud_fname = studFirstName.getText();
-        String stud_lname = studLastName.getText();
-        String stud_program = studProgram.getText();
-        String stud_section = studSection.getText();
-        String stud_address = studAddress.getText();
-        String stud_cnumber = studCNumber.getText();
+       String stud_fname = studFirstName.getText();
+    String stud_lname = studLastName.getText();
+    String stud_program = studProgram.getText();
+    String stud_section = studSection.getText();
+    String stud_address = studAddress.getText();
+    String stud_cnumber = studCNumber.getText();
 
+    String url = "jdbc:mysql://localhost:3306/sumbi_db";
+    String user = "root";
+    String pass = "";
 
-        String url = "jdbc:mysql://localhost:3306/sumbi_db";
-        String user = "root";
-        String pass = "";
+    try {
+        Connection conn = DriverManager.getConnection(url, user, pass);
 
-        try {
-            Connection conn = DriverManager.getConnection(url, user, pass);
+        String sql = "INSERT INTO stud_table (stud_fname, stud_lname, stud_program, stud_section, stud_address, stud_cnumber) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            String sql = "INSERT INTO stud_table (stud_fname, stud_lname, stud_program, stud_section, stud_address, stud_cnumber) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, stud_fname);
+        pstmt.setString(2, stud_lname);
+        pstmt.setString(3, stud_program);
+        pstmt.setString(4, stud_section);
+        pstmt.setString(5, stud_address);
+        pstmt.setString(6, stud_cnumber);
 
-            pstmt.setString(1, stud_fname);
-            pstmt.setString(2, stud_lname);
-            pstmt.setString(3, stud_program);
-            pstmt.setString(4, stud_section);
-            pstmt.setString(5, stud_address);
-            pstmt.setString(6, stud_cnumber);
-
-            int rowsInserted = pstmt.executeUpdate();
-            if (rowsInserted > 0) {
-                JOptionPane.showMessageDialog(this, "Student Added Successfully!");
-            }
-
-            pstmt.close();
-            conn.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        int rowsInserted = pstmt.executeUpdate();
+        if (rowsInserted > 0) {
+            JOptionPane.showMessageDialog(this, "Student Added Successfully!");
+            int uid = Session.getInstance().getUid();
+            logActivity(uid, "Added student: " + stud_fname + " " + stud_lname);
         }
+
+        pstmt.close();
+        conn.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_addMouseClicked
 
     private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
@@ -801,7 +817,42 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_addMouseExited
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-        // TODO add your handling code here:
+        String stud_fname = studFirstName.getText();
+        String stud_lname = studLastName.getText();
+        String stud_program = studProgram.getText();
+        String stud_section = studSection.getText();
+        String stud_address = studAddress.getText();
+        String stud_cnumber = studCNumber.getText();
+
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        String sql = "UPDATE stud_table SET stud_lname = ?, stud_program = ?, stud_section = ?, stud_address = ?, stud_cnumber = ? WHERE stud_fname = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, stud_lname);
+            pstmt.setString(2, stud_program);
+            pstmt.setString(3, stud_section);
+            pstmt.setString(4, stud_address);
+            pstmt.setString(5, stud_cnumber);
+            pstmt.setString(6, stud_fname);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(null, "Student information updated successfully!");
+            int uid = Session.getInstance().getUid();
+            logActivity(uid, "Updated Student: " + stud_fname + " " + stud_lname);
+            
+            } else {
+                JOptionPane.showMessageDialog(null, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_editMouseClicked
 
     private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
@@ -813,7 +864,42 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_editMouseExited
 
     private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
-        // TODO add your handling code here:
+        String stud_fname = studFirstName.getText();
+
+        if (stud_fname.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please enter a First Name.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this user?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        String sql = "DELETE FROM stud_table WHERE stud_fname = ?"; // Updated table and column name if needed
+
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, stud_fname);
+
+            int rowsDeleted = pstmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(null, "User deleted successfully!");
+                int uid = Session.getInstance().getUid();
+                logActivity(uid, "Deleted user: " + stud_fname);
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Deletion failed. User not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_deleteMouseClicked
 
     private void deleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
@@ -962,16 +1048,19 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsMouseExited
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        int response = JOptionPane.showConfirmDialog(this,
-            "Confirm Log Out?",
-            "Logout Confirmation",
-            JOptionPane.YES_NO_OPTION);
+        int response = JOptionPane.showConfirmDialog(this, 
+        "Confirm Log Out?", 
+        "Logout Confirmation", 
+        JOptionPane.YES_NO_OPTION);
 
-        if (response == JOptionPane.YES_OPTION) {
-            new loginform().setVisible(true);
-            this.dispose();
-        } else {
-        }
+    if (response == JOptionPane.YES_OPTION) {
+        int uid = Session.getInstance().getUid(); 
+        logActivity(uid, "Logged out");           
+        Session.getInstance().clearSession();    
+        
+        new loginform().setVisible(true);
+        this.dispose();
+    } 
     }//GEN-LAST:event_logoutMouseClicked
 
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered

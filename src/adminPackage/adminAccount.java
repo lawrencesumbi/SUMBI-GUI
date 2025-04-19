@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import config.Session;
 import config.dbConnector;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -851,6 +852,17 @@ public class adminAccount extends javax.swing.JFrame {
                 int rowsUpdated = updatePstmt.executeUpdate();
                 if (rowsUpdated > 0) {
                     JOptionPane.showMessageDialog(this, "Password changed successfully!");
+
+                    Session session = Session.getInstance();
+                    int userId = session.getUid();
+
+                    if (userId != -1) {
+                        logActivity(userId, "Changed password for account: " + user_fname);
+                    } else {
+                        System.err.println("Session user ID not set. Cannot log password change activity.");
+                    }
+
+                    
                 } else {
                     JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -1055,6 +1067,16 @@ public class adminAccount extends javax.swing.JFrame {
                             int rowsUpdated = updatePstmt.executeUpdate();
                             if (rowsUpdated > 0) {
                                 JOptionPane.showMessageDialog(this, "Account information updated successfully!");
+                                
+                                Session session = Session.getInstance();
+                                int userId = session.getUid();
+
+                                if (userId != -1) {
+                                    logActivity(userId, "Updated the Account Information: " + user_email);
+                                } else {
+                                    System.err.println("Session user ID not set. Cannot log password change activity.");
+                                }
+                                
                             } else {
                                 JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
