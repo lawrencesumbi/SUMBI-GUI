@@ -25,6 +25,10 @@ public class adminLogs extends javax.swing.JFrame {
         initComponents();
         displayLogs();
     }
+
+    adminLogs(String user_fname) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     public void displayLogs(){

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2025 at 05:08 AM
+-- Generation Time: Apr 21, 2025 at 06:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -46,7 +46,21 @@ INSERT INTO `logs_table` (`logs_id`, `user_id`, `logs_action`, `logs_stamp`) VAL
 (11, 1, 'Updated Student: Patricia Ann Mae Obaob', '2025-04-19 11:02:21'),
 (12, 1, 'Updated Violation: Vandalisms', '2025-04-19 11:02:35'),
 (13, 1, 'Updated user: patobaob@gmail.com', '2025-04-19 11:03:05'),
-(14, 1, 'Logged out', '2025-04-19 11:05:53');
+(14, 1, 'Logged out', '2025-04-19 11:05:53'),
+(16, 1, 'Logged in', '2025-04-21 10:58:20'),
+(17, 1, 'Logged in', '2025-04-21 11:03:57'),
+(18, 1, 'Logged out', '2025-04-21 11:04:01'),
+(19, 1, 'Logged in', '2025-04-21 11:04:21'),
+(20, 1, 'Logged out', '2025-04-21 11:05:00'),
+(21, 1, 'Logged in', '2025-04-21 11:05:11'),
+(22, 1, 'Added student: Emman Bas', '2025-04-21 11:26:42'),
+(23, 1, 'Added Violation: Nangawat', '2025-04-21 11:27:18'),
+(24, 1, 'Updated Violation: Nangawat', '2025-04-21 11:29:53'),
+(25, 1, 'Logged in', '2025-04-21 11:31:55'),
+(27, 1, 'Logged in', '2025-04-21 11:37:47'),
+(29, 1, 'Logged in', '2025-04-21 11:40:17'),
+(30, 1, 'Updated Violation: Bullying', '2025-04-21 11:41:27'),
+(31, 1, 'Added New Record', '2025-04-21 11:42:34');
 
 -- --------------------------------------------------------
 
@@ -69,7 +83,8 @@ CREATE TABLE `rec_table` (
 
 INSERT INTO `rec_table` (`rec_id`, `vio_id`, `rec_sanction`, `rec_comment`, `rec_stamp`, `image_path`) VALUES
 (8, 2, 'test', 'test', '25/04/01 12:41 AM', NULL),
-(9, 10, 'Suspension for 3 days', 'Do not do it again', '25/04/01 01:33 AM', NULL);
+(9, 10, 'Suspension for 3 days', 'Do not do it again', '25/04/01 01:33 AM', NULL),
+(10, 2, 'suspension', 'fawfawfwawafwaf', '25/04/21 11:42 AM', NULL);
 
 -- --------------------------------------------------------
 
@@ -105,7 +120,8 @@ INSERT INTO `stud_table` (`stud_id`, `stud_fname`, `stud_lname`, `stud_program`,
 (9, 'Ronald', 'Rosales', 'BSIT', '1A', 'Toledo', '09123456789', NULL),
 (10, 'Benish Reyna', 'Parba', 'BSED', '1A', 'Minglanilla', '09123456789', NULL),
 (11, 'Michael', 'Bustamante', 'BSIT', '4A', 'Minglanilla', '09123456789', NULL),
-(48, 'Dray', 'Misa', 'BSIT', '2A', 'Naga', '09123456789', NULL);
+(48, 'Dray', 'Misa', 'BSIT', '2A', 'Naga', '09123456789', NULL),
+(49, 'Emman', 'Bas', 'BSIT', '2A', 'Minglanilla', '09123456789', NULL);
 
 -- --------------------------------------------------------
 
@@ -180,12 +196,13 @@ CREATE TABLE `vio_table` (
 
 INSERT INTO `vio_table` (`vio_id`, `stud_id`, `vio_name`, `vio_des`, `vio_sev`, `vio_stamp`, `image_path`, `vio_status`) VALUES
 (2, 1, 'Vandalisms', 'test12', 'test12', '25/04/19 11:02 AM', 'src/violationImages2.jpg', 'Recorded'),
-(5, 2, 'Bullying', 'Sample', 'sample', '25/03/31 08:47 PM', '', ''),
+(5, 2, 'Bullying', 'Sample', 'sample', '25/04/21 11:41 AM', 'src/violationImages5.jpg', ''),
 (6, 4, 'Late Submission', 'sample', 'sample', '25/03/31 08:48 PM', '', ''),
 (10, 11, 'Cheating', 'Harsh Words', 'Medium', '25/03/31 07:22 PM', 'src/violationImages10.jpg', 'Recorded'),
 (11, 9, 'Sleeping', 'sample', 'sample', '25/03/31 08:48 PM', NULL, 'Recorded'),
 (13, 4, 'Test', 'testestest', 'high', '25/03/31 09:24 PM', NULL, ''),
-(14, 1, 'samples1', 'samples', 'samples', '25/03/31 10:27 PM', 'src/violationImages14.jpg', 'Recorded');
+(14, 1, 'samples1', 'samples', 'samples', '25/03/31 10:27 PM', 'src/violationImages14.jpg', 'Recorded'),
+(15, 49, 'Nangawat', 'og Kasingkasing', 'High', '25/04/21 11:29 AM', 'src/violationImages15.jpg', 'Pending');
 
 --
 -- Indexes for dumped tables
@@ -232,19 +249,19 @@ ALTER TABLE `vio_table`
 -- AUTO_INCREMENT for table `logs_table`
 --
 ALTER TABLE `logs_table`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `rec_table`
 --
 ALTER TABLE `rec_table`
-  MODIFY `rec_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `rec_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `stud_table`
 --
 ALTER TABLE `stud_table`
-  MODIFY `stud_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `stud_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `user_table`
@@ -256,7 +273,7 @@ ALTER TABLE `user_table`
 -- AUTO_INCREMENT for table `vio_table`
 --
 ALTER TABLE `vio_table`
-  MODIFY `vio_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `vio_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables

@@ -771,7 +771,8 @@ public class adminViolation extends javax.swing.JFrame {
     }//GEN-LAST:event_violationMouseExited
 
     private void recordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseClicked
-
+        new adminRecord(user_fname).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_recordMouseClicked
 
     private void recordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseEntered

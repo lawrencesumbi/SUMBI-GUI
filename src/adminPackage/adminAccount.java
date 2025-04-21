@@ -531,6 +531,9 @@ public class adminAccount extends javax.swing.JFrame {
         activityLogs.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         activityLogs.setText("Activity Logs");
         activityLogs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                activityLogsMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 activityLogsMouseEntered(evt);
             }
@@ -1147,6 +1150,11 @@ public class adminAccount extends javax.swing.JFrame {
     private void activityLogs2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs2MouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_activityLogs2MouseExited
+
+    private void activityLogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogsMouseClicked
+        new adminAccount(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_activityLogsMouseClicked
 
     /**
      * @param args the command line arguments

@@ -140,7 +140,7 @@ public class adminPrintPreview extends javax.swing.JFrame {
         bodycolorPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        scc_icon = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -169,6 +169,7 @@ public class adminPrintPreview extends javax.swing.JFrame {
         complanantsname10 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         adminname = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -266,10 +267,10 @@ public class adminPrintPreview extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         bodycolorPanel.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 11, 73, 101));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Republic of the Philippines");
-        bodycolorPanel.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 20, 260, -1));
+        scc_icon.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        scc_icon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        scc_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/scc (1).png"))); // NOI18N
+        bodycolorPanel.add(scc_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 100, 100));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -399,6 +400,11 @@ public class adminPrintPreview extends javax.swing.JFrame {
         adminname.setText("Patricia Obaob");
         bodycolorPanel.add(adminname, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 650, 190, 40));
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Republic of the Philippines");
+        bodycolorPanel.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(157, 20, 260, -1));
+
         jPanel2.add(bodycolorPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 570, 710));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -502,11 +508,11 @@ public class adminPrintPreview extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
@@ -515,6 +521,7 @@ public class adminPrintPreview extends javax.swing.JFrame {
     private javax.swing.JLabel location1;
     private javax.swing.JButton printButton1;
     private javax.swing.JLabel save;
+    private javax.swing.JLabel scc_icon;
     private javax.swing.JLabel suspectsname;
     private javax.swing.JLabel txtwitness1;
     private javax.swing.JLabel txtwitness2;
