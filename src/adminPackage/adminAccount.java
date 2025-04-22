@@ -516,6 +516,9 @@ public class adminAccount extends javax.swing.JFrame {
         settings3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settings3.setText("Account Settings");
         settings3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                settings3MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 settings3MouseEntered(evt);
             }
@@ -676,7 +679,7 @@ public class adminAccount extends javax.swing.JFrame {
         leftpanel.add(J_user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 30));
 
         settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        settings.setForeground(new java.awt.Color(255, 255, 255));
+        settings.setForeground(new java.awt.Color(255, 255, 0));
         settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settings.setText("SETTINGS");
         settings.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -891,35 +894,19 @@ public class adminAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_oldPasswordFieldKeyPressed
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
+    int response = JOptionPane.showConfirmDialog(this, 
+            "Confirm Log Out?", 
+            "Logout Confirmation", 
+            JOptionPane.YES_NO_OPTION);
 
-        String sql = "SELECT user_id FROM user_table WHERE user_fname = ?"; 
-    
-        dbConnector db = new dbConnector();
+        if (response == JOptionPane.YES_OPTION) {
+            int uid = Session.getInstance().getUid(); 
+            logActivity(uid, "Logged out");           
+            Session.getInstance().clearSession();    
 
-        try (Connection conn = db.getConnection();
-             PreparedStatement pst = conn.prepareStatement(sql)) {
-
-            pst.setString(1, this.user_fname); // Set the logged-in user's first name
-
-            ResultSet rs = pst.executeQuery();
-
-            if (rs.next()) {
-                int user_id = rs.getInt("user_id");
-                int response = JOptionPane.showConfirmDialog(this,
-                    "Confirm Log Out?",
-                    "Logout Confirmation",
-                    JOptionPane.YES_NO_OPTION);
-
-                if (response == JOptionPane.YES_OPTION) {
-                    logActivity(user_id, "Logged out");
-                    new loginform().setVisible(true);
-                    this.dispose();
-                }
-            }        
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+            new loginform().setVisible(true);
+            this.dispose();
+        } 
     }//GEN-LAST:event_logoutMouseClicked
 
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
@@ -970,7 +957,8 @@ public class adminAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_studentMouseExited
 
     private void recordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseClicked
-
+        new adminRecord(user_fname).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_recordMouseClicked
 
     private void recordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseEntered
@@ -994,7 +982,7 @@ public class adminAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsMouseEntered
 
     private void settingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseExited
-        settings.setForeground(new java.awt.Color(255, 255, 255));
+        
     }//GEN-LAST:event_settingsMouseExited
 
     private void newPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newPasswordFieldActionPerformed
@@ -1132,6 +1120,10 @@ public class adminAccount extends javax.swing.JFrame {
         new adminLogs(user_fname).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_activityLogsMouseClicked
+
+    private void settings3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settings3MouseClicked
 
     /**
      * @param args the command line arguments

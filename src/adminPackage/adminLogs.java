@@ -352,7 +352,7 @@ public class adminLogs extends javax.swing.JFrame {
         leftpanel.add(J_user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 30));
 
         settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        settings.setForeground(new java.awt.Color(255, 255, 255));
+        settings.setForeground(new java.awt.Color(255, 255, 0));
         settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settings.setText("SETTINGS");
         settings.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -518,7 +518,7 @@ public class adminLogs extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsMouseEntered
 
     private void settingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseExited
-        settings.setForeground(new java.awt.Color(255, 255, 255));
+        
     }//GEN-LAST:event_settingsMouseExited
 
     private void settings3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings3MouseExited

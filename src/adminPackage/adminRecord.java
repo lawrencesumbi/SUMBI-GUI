@@ -335,7 +335,7 @@ public class adminRecord extends javax.swing.JFrame {
         leftpanel.add(rec_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 30, 30));
 
         record.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        record.setForeground(new java.awt.Color(255, 255, 255));
+        record.setForeground(new java.awt.Color(255, 255, 0));
         record.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         record.setText("RECORD");
         record.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -572,6 +572,7 @@ public class adminRecord extends javax.swing.JFrame {
         });
         violationpanel.add(studFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 110, -1));
 
+        vioName.setEditable(false);
         vioName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         vioName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -768,7 +769,7 @@ public class adminRecord extends javax.swing.JFrame {
     }//GEN-LAST:event_recordMouseEntered
 
     private void recordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseExited
-        record.setForeground(new java.awt.Color(255, 255, 255));
+        
     }//GEN-LAST:event_recordMouseExited
 
     private void usersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersMouseClicked
@@ -986,7 +987,59 @@ public class adminRecord extends javax.swing.JFrame {
     }//GEN-LAST:event_addMouseExited
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-        
+        // Get the rec_id, rec_sanction, and rec_comment from text fields
+        String rec_id_text = recIDtextfield.getText();  // Assuming recID is the text field for rec_id
+        String rec_sanction = recSanction.getText();
+        String rec_comment = recComment.getText();
+
+        // Check if rec_id is empty or invalid
+        if (rec_id_text.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Record ID is required!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int rec_id;
+        try {
+            rec_id = Integer.parseInt(rec_id_text);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid Record ID. Please enter a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Database connection setup
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            // SQL query to update the rec_sanction and rec_comment for the given rec_id
+            String sql = "UPDATE rec_table SET rec_sanction = ?, rec_comment = ? WHERE rec_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, rec_sanction);
+            pstmt.setString(2, rec_comment);
+            pstmt.setInt(3, rec_id);
+
+            int rowsUpdated = pstmt.executeUpdate();
+            pstmt.close();
+
+            if (rowsUpdated > 0) {
+                // Successfully updated the record
+                JOptionPane.showMessageDialog(this, "Record Updated Successfully!");
+
+                int uid = Session.getInstance().getUid(); // Log activity
+                logActivity(uid, "Updated Record for Record ID: " + rec_id);
+
+            } else {
+                // No record found for the given rec_id
+                JOptionPane.showMessageDialog(this, "No record found with Record ID: " + rec_id, "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_editMouseClicked
 
     private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered

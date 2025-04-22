@@ -321,43 +321,43 @@ public class adminPrintPreview extends javax.swing.JFrame {
 
         studProgramSection.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         studProgramSection.setText("studProgramSection");
-        bodycolorPanel.add(studProgramSection, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, 140, 20));
+        bodycolorPanel.add(studProgramSection, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 150, 20));
 
         studAddress.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         studAddress.setText("studAddress");
-        bodycolorPanel.add(studAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 100, 20));
+        bodycolorPanel.add(studAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 150, 20));
 
         studCNumber.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         studCNumber.setText("studCNumber");
-        bodycolorPanel.add(studCNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 100, 20));
+        bodycolorPanel.add(studCNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 150, 20));
 
         vioDate.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         vioDate.setText("vioDate");
-        bodycolorPanel.add(vioDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 350, 100, 20));
+        bodycolorPanel.add(vioDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 350, 150, 20));
 
         vioName.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         vioName.setText("vioName");
-        bodycolorPanel.add(vioName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 100, 20));
+        bodycolorPanel.add(vioName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 150, 20));
 
         vioSevi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         vioSevi.setText("vioSevi");
-        bodycolorPanel.add(vioSevi, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 100, 20));
+        bodycolorPanel.add(vioSevi, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 150, 20));
 
         vioDesc.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         vioDesc.setText("vioDesc");
-        bodycolorPanel.add(vioDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 410, 100, 20));
+        bodycolorPanel.add(vioDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 410, 150, 20));
 
         actionTaken.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         actionTaken.setText("actionTaken");
-        bodycolorPanel.add(actionTaken, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 500, 100, 20));
+        bodycolorPanel.add(actionTaken, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 500, 150, 20));
 
         comment.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         comment.setText("comment");
-        bodycolorPanel.add(comment, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 520, 100, 20));
+        bodycolorPanel.add(comment, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 520, 150, 20));
 
         dateRecorded.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         dateRecorded.setText("dateRecorded");
-        bodycolorPanel.add(dateRecorded, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 540, 100, 20));
+        bodycolorPanel.add(dateRecorded, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 540, 150, 20));
 
         jPanel2.add(bodycolorPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 570, 710));
 

@@ -348,7 +348,7 @@ public class adminViolation extends javax.swing.JFrame {
         leftpanel.add(vio_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 30, 30));
 
         violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        violation.setForeground(new java.awt.Color(255, 255, 255));
+        violation.setForeground(new java.awt.Color(255, 255, 0));
         violation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         violation.setText("VIOLATION");
         violation.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -777,7 +777,7 @@ public class adminViolation extends javax.swing.JFrame {
     }//GEN-LAST:event_violationMouseEntered
 
     private void violationMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseExited
-        violation.setForeground(new java.awt.Color(255, 255, 255));
+        
     }//GEN-LAST:event_violationMouseExited
 
     private void recordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseClicked
@@ -1116,6 +1116,7 @@ public class adminViolation extends javax.swing.JFrame {
         searchfield.setText("");
         vioIDtextfield.setText(""); 
         studID.setText("");
+        vioStat.setText("");
     }//GEN-LAST:event_refreshMouseClicked
 
     private void refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseEntered

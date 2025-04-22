@@ -323,7 +323,7 @@ public class adminStudent extends javax.swing.JFrame {
         leftpanel.add(stud_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 30, 30));
 
         student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        student.setForeground(new java.awt.Color(255, 255, 255));
+        student.setForeground(new java.awt.Color(255, 255, 0));
         student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         student.setText("STUDENT");
         student.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1025,7 +1025,7 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_studentMouseEntered
 
     private void studentMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseExited
-        student.setForeground(new java.awt.Color(255, 255, 255));
+        
     }//GEN-LAST:event_studentMouseExited
 
     private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
@@ -1042,7 +1042,8 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_violationMouseExited
 
     private void recordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseClicked
-
+        new adminRecord(user_fname).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_recordMouseClicked
 
     private void recordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseEntered
