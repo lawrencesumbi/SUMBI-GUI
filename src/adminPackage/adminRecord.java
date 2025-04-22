@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import adminPackage.adminPrintPreview;
 import config.Session;
 import config.dbConnector;
 import java.awt.BasicStroke;
@@ -223,8 +222,6 @@ public class adminRecord extends javax.swing.JFrame {
         search = new javax.swing.JLabel();
         user_fnamelabel = new javax.swing.JLabel();
         studFirstName = new javax.swing.JTextField();
-        user_cnumberlabel = new javax.swing.JLabel();
-        user_emaillabel = new javax.swing.JLabel();
         vioName = new javax.swing.JTextField();
         user_passwordlabel = new javax.swing.JLabel();
         imageLabel = new javax.swing.JLabel();
@@ -238,7 +235,8 @@ public class adminRecord extends javax.swing.JFrame {
         studLastName = new javax.swing.JTextField();
         vioID = new javax.swing.JTextField();
         imageLabel1 = new javax.swing.JLabel();
-        search1 = new javax.swing.JLabel();
+        printPrev = new javax.swing.JLabel();
+        user_passwordlabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -443,6 +441,9 @@ public class adminRecord extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 rec_tableMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                rec_tableMouseEntered(evt);
+            }
         });
         jScrollPane1.setViewportView(rec_table);
 
@@ -560,7 +561,7 @@ public class adminRecord extends javax.swing.JFrame {
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel.setText("Enter Violation ID:");
-        violationpanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 140, 20));
+        violationpanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 140, 20));
 
         studFirstName.setEditable(false);
         studFirstName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -569,19 +570,7 @@ public class adminRecord extends javax.swing.JFrame {
                 studFirstNameActionPerformed(evt);
             }
         });
-        violationpanel.add(studFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 110, -1));
-
-        user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
-        user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_cnumberlabel.setText("Student Name");
-        violationpanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 120, 20));
-
-        user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
-        user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_emaillabel.setText("Violation Name");
-        violationpanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, 120, 20));
+        violationpanel.add(studFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 70, 110, -1));
 
         vioName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         vioName.addActionListener(new java.awt.event.ActionListener() {
@@ -589,13 +578,13 @@ public class adminRecord extends javax.swing.JFrame {
                 vioNameActionPerformed(evt);
             }
         });
-        violationpanel.add(vioName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 200, -1));
+        violationpanel.add(vioName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 200, -1));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_passwordlabel.setText("Sanction / Action");
-        violationpanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 140, 20));
+        user_passwordlabel.setText("Student Name");
+        violationpanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 140, 20));
 
         imageLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -613,7 +602,7 @@ public class adminRecord extends javax.swing.JFrame {
                 recSanctionActionPerformed(evt);
             }
         });
-        violationpanel.add(recSanction, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 200, -1));
+        violationpanel.add(recSanction, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 200, -1));
 
         user_fnamelabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -635,13 +624,13 @@ public class adminRecord extends javax.swing.JFrame {
         user_emaillabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_emaillabel1.setText("Reaction / Suggestion");
-        violationpanel.add(user_emaillabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 180, 20));
+        violationpanel.add(user_emaillabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 180, 20));
 
         user_emaillabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel2.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_emaillabel2.setText("Time Stamp");
-        violationpanel.add(user_emaillabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 100, 20));
+        violationpanel.add(user_emaillabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 100, 20));
 
         recComment.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         recComment.addActionListener(new java.awt.event.ActionListener() {
@@ -649,7 +638,7 @@ public class adminRecord extends javax.swing.JFrame {
                 recCommentActionPerformed(evt);
             }
         });
-        violationpanel.add(recComment, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 200, -1));
+        violationpanel.add(recComment, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 200, -1));
 
         recStamp.setEditable(false);
         recStamp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -658,7 +647,7 @@ public class adminRecord extends javax.swing.JFrame {
                 recStampActionPerformed(evt);
             }
         });
-        violationpanel.add(recStamp, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 200, -1));
+        violationpanel.add(recStamp, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 200, -1));
 
         studLastName.setEditable(false);
         studLastName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -667,7 +656,7 @@ public class adminRecord extends javax.swing.JFrame {
                 studLastNameActionPerformed(evt);
             }
         });
-        violationpanel.add(studLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 90, -1));
+        violationpanel.add(studLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 90, -1));
 
         vioID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         vioID.addActionListener(new java.awt.event.ActionListener() {
@@ -683,12 +672,12 @@ public class adminRecord extends javax.swing.JFrame {
                 vioIDKeyTyped(evt);
             }
         });
-        violationpanel.add(vioID, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 200, -1));
+        violationpanel.add(vioID, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 40, -1));
 
         imageLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel1.setForeground(new java.awt.Color(255, 255, 255));
         imageLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        imageLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/9776924.png"))); // NOI18N
+        imageLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview (18).png"))); // NOI18N
         imageLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 imageLabel1MouseClicked(evt);
@@ -696,24 +685,30 @@ public class adminRecord extends javax.swing.JFrame {
         });
         violationpanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, 190, 190));
 
-        search1.setBackground(new java.awt.Color(255, 255, 255));
-        search1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        search1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        search1.setText("PRINTPREV");
-        search1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        search1.setOpaque(true);
-        search1.addMouseListener(new java.awt.event.MouseAdapter() {
+        printPrev.setBackground(new java.awt.Color(255, 255, 255));
+        printPrev.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        printPrev.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        printPrev.setText("PRINTPREV");
+        printPrev.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        printPrev.setOpaque(true);
+        printPrev.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                search1MouseClicked(evt);
+                printPrevMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                search1MouseEntered(evt);
+                printPrevMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                search1MouseExited(evt);
+                printPrevMouseExited(evt);
             }
         });
-        violationpanel.add(search1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 260, 90, 30));
+        violationpanel.add(printPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 260, 90, 30));
+
+        user_passwordlabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_passwordlabel1.setForeground(new java.awt.Color(255, 255, 255));
+        user_passwordlabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_passwordlabel1.setText("Sanction / Action");
+        violationpanel.add(user_passwordlabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 110, 140, 20));
 
         getContentPane().add(violationpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -830,10 +825,12 @@ public class adminRecord extends javax.swing.JFrame {
         int i = rec_table.getSelectedRow();
         TableModel model = rec_table.getModel();
 
-        // Get vio_id from selected row
+        // Get rec_id and vio_id from the selected row
         String rec_id = model.getValueAt(i, 0).toString();
+        String vio_id = model.getValueAt(i, 1).toString();
+
         recIDtextfield.setText(rec_id);
-        
+        vioID.setText(vio_id);
 
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
         String user = "root";
@@ -842,11 +839,12 @@ public class adminRecord extends javax.swing.JFrame {
         try {
             Connection conn = DriverManager.getConnection(url, user, pass);
 
+            // Query to fetch student and violation details
             String query = "SELECT s.stud_fname, s.stud_lname, v.vio_name " +
-             "FROM rec_table r " +
-             "JOIN vio_table v ON r.vio_id = v.vio_id " +
-             "JOIN stud_table s ON v.stud_id = s.stud_id " +
-             "WHERE r.rec_id = ?";
+                           "FROM rec_table r " +
+                           "JOIN vio_table v ON r.vio_id = v.vio_id " +
+                           "JOIN stud_table s ON v.stud_id = s.stud_id " +
+                           "WHERE r.rec_id = ?";
 
             PreparedStatement pstmt = conn.prepareStatement(query);
             pstmt.setString(1, rec_id);
@@ -862,37 +860,43 @@ public class adminRecord extends javax.swing.JFrame {
                 vioName.setText("");
             }
 
-            // Close resources
             rs.close();
             pstmt.close();
+
+            // NEW: Query to fetch image path using vio_id
+            String imgQuery = "SELECT image_path FROM vio_table WHERE vio_id = ?";
+            PreparedStatement imgStmt = conn.prepareStatement(imgQuery);
+            imgStmt.setString(1, vio_id);
+            ResultSet imgRs = imgStmt.executeQuery();
+
+            if (imgRs.next()) {
+                String imagePath = imgRs.getString("image_path");
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    File file = new File(imagePath);
+                    if (file.exists()) {
+                        ImageIcon icon = new ImageIcon(imagePath);
+                        Image img = icon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
+                        imageLabel.setIcon(new ImageIcon(img));
+                    } else {
+                        imageLabel.setIcon(null); // File not found
+                    }
+                } else {
+                    imageLabel.setIcon(null); // No image path in DB
+                }
+            }
+
+            imgRs.close();
+            imgStmt.close();
             conn.close();
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        // Set other violation details from TableModel
-        vioID.setText(model.getValueAt(i, 1).toString());
+        // Set other details from table model
         recSanction.setText(model.getValueAt(i, 2).toString()); // vio_des
-        recComment.setText(model.getValueAt(i, 3).toString()); // vio_sev
-        recStamp.setText(model.getValueAt(i, 4).toString()); // vio_stampA
-
-        // Handle user image (if available)
-        Object imagePathObj = model.getValueAt(i, 5); 
-        String imagePath = (imagePathObj != null) ? imagePathObj.toString() : ""; // Avoid NullPointerException
-
-        if (!imagePath.isEmpty()) {
-            File file = new File(imagePath);
-            if (file.exists()) {
-                ImageIcon icon = new ImageIcon(imagePath);
-                Image img = icon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
-                imageLabel.setIcon(new ImageIcon(img));
-            } else {
-                imageLabel.setIcon(null);
-            }
-        } else {
-            imageLabel.setIcon(null);
-        }
-    
+        recComment.setText(model.getValueAt(i, 3).toString());  // vio_sev
+        recStamp.setText(model.getValueAt(i, 4).toString());    // vio_stampA
     }//GEN-LAST:event_rec_tableMouseClicked
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
@@ -1095,10 +1099,6 @@ public class adminRecord extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_vioNameActionPerformed
 
-    private void imageLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabelMouseClicked
-        
-    }//GEN-LAST:event_imageLabelMouseClicked
-
     private void recSanctionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_recSanctionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_recSanctionActionPerformed
@@ -1174,19 +1174,93 @@ public class adminRecord extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_imageLabel1MouseClicked
 
-    private void search1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search1MouseExited
+    private void printPrevMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printPrevMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_search1MouseExited
+    }//GEN-LAST:event_printPrevMouseExited
 
-    private void search1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search1MouseEntered
+    private void printPrevMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printPrevMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_search1MouseEntered
+    }//GEN-LAST:event_printPrevMouseEntered
 
-    private void search1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_search1MouseClicked
-       new adminPrintPreview().setVisible(true);
-       this.dispose();
-        
-    }//GEN-LAST:event_search1MouseClicked
+    private void printPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printPrevMouseClicked
+// Get rec_id from text field
+    String recIdText = recIDtextfield.getText().trim();
+
+    if (recIdText.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter a Record ID!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int rec_id;
+    try {
+        rec_id = Integer.parseInt(recIdText);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Invalid Record ID. Please enter a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String url = "jdbc:mysql://localhost:3306/sumbi_db";
+    String user = "root";
+    String pass = "";
+
+    try (Connection conn = DriverManager.getConnection(url, user, pass)) {
+
+        String query = "SELECT s.stud_fname, s.stud_lname, s.stud_program, s.stud_section, s.stud_address, s.stud_cnumber, " +
+                       "v.vio_name, v.vio_des, v.vio_sev, v.vio_stamp, " +
+                       "r.rec_sanction, r.rec_comment, r.rec_stamp " +
+                       "FROM rec_table r " +
+                       "JOIN vio_table v ON r.vio_id = v.vio_id " +
+                       "JOIN stud_table s ON v.stud_id = s.stud_id " +
+                       "WHERE r.rec_id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, rec_id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Student info
+                    String fullName = rs.getString("stud_fname") + " " + rs.getString("stud_lname");
+                    String program = rs.getString("stud_program");
+                    String section = rs.getString("stud_section");
+                    String address = rs.getString("stud_address");
+                    String contact = rs.getString("stud_cnumber");
+
+                    // Violation info
+                    String vioName = rs.getString("vio_name");
+                    String vioDes = rs.getString("vio_des");
+                    String vioSev = rs.getString("vio_sev");
+                    String vioStamp = rs.getString("vio_stamp");
+
+                    // Record info
+                    String recSanction = rs.getString("rec_sanction");
+                    String recComment = rs.getString("rec_comment");
+                    String recStamp = rs.getString("rec_stamp");
+
+                    // Show report window
+                    new adminPrintPreview(
+                        fullName, program, section, address, contact,
+                        vioName, vioDes, vioSev, vioStamp,
+                        recSanction, recComment, recStamp
+                    ).setVisible(true);
+
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No data found for Record ID: " + rec_id);
+                }
+            }
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }                
+    }//GEN-LAST:event_printPrevMouseClicked
+
+    private void rec_tableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rec_tableMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rec_tableMouseEntered
+
+    private void imageLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabelMouseClicked
+
+    }//GEN-LAST:event_imageLabelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1237,6 +1311,7 @@ public class adminRecord extends javax.swing.JFrame {
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
+    private javax.swing.JLabel printPrev;
     private javax.swing.JTextField recComment;
     private javax.swing.JTextField recIDtextfield;
     private javax.swing.JTextField recSanction;
@@ -1246,7 +1321,6 @@ public class adminRecord extends javax.swing.JFrame {
     private javax.swing.JLabel record;
     private javax.swing.JLabel refresh;
     private javax.swing.JLabel search;
-    private javax.swing.JLabel search1;
     private javax.swing.JTextField searchfield;
     private javax.swing.JLabel sett_icon;
     private javax.swing.JLabel settings;
@@ -1254,13 +1328,12 @@ public class adminRecord extends javax.swing.JFrame {
     private javax.swing.JTextField studLastName;
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
-    private javax.swing.JLabel user_cnumberlabel;
-    private javax.swing.JLabel user_emaillabel;
     private javax.swing.JLabel user_emaillabel1;
     private javax.swing.JLabel user_emaillabel2;
     private javax.swing.JLabel user_fnamelabel;
     private javax.swing.JLabel user_fnamelabel1;
     private javax.swing.JLabel user_passwordlabel;
+    private javax.swing.JLabel user_passwordlabel1;
     private javax.swing.JLabel user_type1;
     private javax.swing.JLabel users;
     private javax.swing.JLabel users_icon;

@@ -494,7 +494,7 @@ public class userStudent extends javax.swing.JFrame {
                 searchfieldKeyPressed(evt);
             }
         });
-        studentpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 250, 150, 30));
+        studentpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 220, 30));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N

@@ -5,9 +5,21 @@
  */
 
 import config.dbConnector;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
 
@@ -23,11 +35,14 @@ public class adminLogs extends javax.swing.JFrame {
      */
     public adminLogs() {
         initComponents();
-        displayLogs();
     }
 
-    adminLogs(String user_fname) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public adminLogs(String user_fname) {
+        this.user_fname = user_fname;
+        initComponents();
+        displayImage(user_fname);
+        J_user_fname.setText(user_fname);
+        displayLogs();
     }
     
     
@@ -40,6 +55,64 @@ public class adminLogs extends javax.swing.JFrame {
         }catch(SQLException e){
             System.out.println("Error loading logs: "+e.getMessage());
         }
+    }
+    
+    private void displayImage(String user_fname) {
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try (Connection conn = DriverManager.getConnection(url, user, pass)) {
+            String query = "SELECT image_path FROM user_table WHERE user_fname = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setString(1, user_fname);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        String imagePath = rs.getString("image_path");
+
+                        if (imagePath != null && !imagePath.isEmpty()) {
+                            File file = new File(imagePath);
+                            if (file.exists()) {
+                                BufferedImage originalImg = ImageIO.read(file);
+                                if (originalImg != null) {
+                                    BufferedImage squaredImg = cropToSquare(originalImg);
+                                    BufferedImage roundedImg = getRoundedImageWithBorder(squaredImg, displayImage.getWidth(), displayImage.getHeight(), 2, Color.WHITE);
+                                    displayImage.setIcon(new ImageIcon(roundedImg));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SQLException | IOException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private BufferedImage cropToSquare(BufferedImage img) {
+        int size = Math.min(img.getWidth(), img.getHeight());
+        int x = (img.getWidth() - size) / 2;
+        int y = (img.getHeight() - size) / 2;
+        return img.getSubimage(x, y, size, size);
+    }
+
+    private BufferedImage getRoundedImageWithBorder(BufferedImage img, int width, int height, int borderThickness, Color borderColor) {
+        BufferedImage output = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = output.createGraphics();
+
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        Ellipse2D.Float clip = new Ellipse2D.Float(borderThickness / 2f, borderThickness / 2f, width - borderThickness, height - borderThickness);
+        g2.setClip(clip);
+        g2.drawImage(img, borderThickness / 2, borderThickness / 2, width - borderThickness, height - borderThickness, null);
+
+        g2.setClip(null);
+        g2.setStroke(new BasicStroke(borderThickness));
+        g2.setColor(borderColor);
+        g2.draw(new Ellipse2D.Float(borderThickness / 2f, borderThickness / 2f, width - borderThickness, height - borderThickness));
+
+        g2.dispose();
+        return output;
     }
     
     
@@ -63,7 +136,6 @@ public class adminLogs extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         logs_table = new javax.swing.JTable();
         activityLogs = new javax.swing.JLabel();
-        activityLogs3 = new javax.swing.JLabel();
         leftpanel = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
         displayImage = new javax.swing.JLabel();
@@ -100,7 +172,7 @@ public class adminLogs extends javax.swing.JFrame {
                 activityLogs2MouseExited(evt);
             }
         });
-        userspanel.add(activityLogs2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, 150, 30));
+        userspanel.add(activityLogs2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 150, 30));
 
         settings2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         settings2.setForeground(new java.awt.Color(255, 255, 255));
@@ -121,6 +193,9 @@ public class adminLogs extends javax.swing.JFrame {
         settings3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settings3.setText("Account Settings");
         settings3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                settings3MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 settings3MouseEntered(evt);
             }
@@ -128,7 +203,7 @@ public class adminLogs extends javax.swing.JFrame {
                 settings3MouseExited(evt);
             }
         });
-        userspanel.add(settings3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 150, 30));
+        userspanel.add(settings3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 150, 30));
 
         logs_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -157,21 +232,7 @@ public class adminLogs extends javax.swing.JFrame {
                 activityLogsMouseExited(evt);
             }
         });
-        userspanel.add(activityLogs, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 150, 30));
-
-        activityLogs3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        activityLogs3.setForeground(new java.awt.Color(255, 255, 255));
-        activityLogs3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        activityLogs3.setText("Appearance");
-        activityLogs3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                activityLogs3MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                activityLogs3MouseExited(evt);
-            }
-        });
-        userspanel.add(activityLogs3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, 150, 30));
+        userspanel.add(activityLogs, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 150, 30));
 
         leftpanel.setBackground(new java.awt.Color(0, 0, 0));
         leftpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -492,13 +553,10 @@ public class adminLogs extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_activityLogsMouseExited
 
-    private void activityLogs3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs3MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_activityLogs3MouseEntered
-
-    private void activityLogs3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs3MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_activityLogs3MouseExited
+    private void settings3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings3MouseClicked
+        new adminAccount(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_settings3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -539,7 +597,6 @@ public class adminLogs extends javax.swing.JFrame {
     private javax.swing.JLabel J_user_fname;
     private javax.swing.JLabel activityLogs;
     private javax.swing.JLabel activityLogs2;
-    private javax.swing.JLabel activityLogs3;
     private javax.swing.JLabel dash_icon1;
     private javax.swing.JLabel dashboard;
     private javax.swing.JLabel displayImage;

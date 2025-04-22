@@ -7,7 +7,7 @@ package config;
 
 /**
  *
- * @author PATRICIA
+ * 
  */
 public class Session {
     

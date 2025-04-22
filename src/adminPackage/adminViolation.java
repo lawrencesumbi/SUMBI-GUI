@@ -255,7 +255,6 @@ public class adminViolation extends javax.swing.JFrame {
         search = new javax.swing.JLabel();
         user_fnamelabel = new javax.swing.JLabel();
         studFirstName = new javax.swing.JTextField();
-        user_cnumberlabel = new javax.swing.JLabel();
         user_emaillabel = new javax.swing.JLabel();
         vioName = new javax.swing.JTextField();
         user_passwordlabel = new javax.swing.JLabel();
@@ -270,6 +269,8 @@ public class adminViolation extends javax.swing.JFrame {
         studLastName = new javax.swing.JTextField();
         studID = new javax.swing.JTextField();
         imageLabel1 = new javax.swing.JLabel();
+        user_emaillabel3 = new javax.swing.JLabel();
+        vioStat = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -566,7 +567,7 @@ public class adminViolation extends javax.swing.JFrame {
                 searchfieldKeyPressed(evt);
             }
         });
-        violationpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 260, 150, 30));
+        violationpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, 220, 30));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -600,19 +601,13 @@ public class adminViolation extends javax.swing.JFrame {
                 studFirstNameActionPerformed(evt);
             }
         });
-        violationpanel.add(studFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 110, -1));
-
-        user_cnumberlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        user_cnumberlabel.setForeground(new java.awt.Color(255, 255, 255));
-        user_cnumberlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_cnumberlabel.setText("Student Full Name");
-        violationpanel.add(user_cnumberlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 130, 20));
+        violationpanel.add(studFirstName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 110, -1));
 
         user_emaillabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_emaillabel.setText("Violation Name");
-        violationpanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 110, 20));
+        violationpanel.add(user_emaillabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 110, 20));
 
         vioName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         vioName.addActionListener(new java.awt.event.ActionListener() {
@@ -620,13 +615,13 @@ public class adminViolation extends javax.swing.JFrame {
                 vioNameActionPerformed(evt);
             }
         });
-        violationpanel.add(vioName, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 200, -1));
+        violationpanel.add(vioName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 200, -1));
 
         user_passwordlabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel.setForeground(new java.awt.Color(255, 255, 255));
         user_passwordlabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_passwordlabel.setText("Violation Description");
-        violationpanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 150, 20));
+        violationpanel.add(user_passwordlabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 150, 20));
 
         imageLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -644,7 +639,7 @@ public class adminViolation extends javax.swing.JFrame {
                 vioDesActionPerformed(evt);
             }
         });
-        violationpanel.add(vioDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, 200, -1));
+        violationpanel.add(vioDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 200, -1));
 
         user_fnamelabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -666,13 +661,13 @@ public class adminViolation extends javax.swing.JFrame {
         user_emaillabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_emaillabel1.setText("Violation Severity");
-        violationpanel.add(user_emaillabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 130, 20));
+        violationpanel.add(user_emaillabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 130, 20));
 
         user_emaillabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel2.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_emaillabel2.setText("Time Stamp");
-        violationpanel.add(user_emaillabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 90, 20));
+        user_emaillabel2.setText("Violation Status");
+        violationpanel.add(user_emaillabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 110, 20));
 
         vioSev.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         vioSev.addActionListener(new java.awt.event.ActionListener() {
@@ -680,7 +675,7 @@ public class adminViolation extends javax.swing.JFrame {
                 vioSevActionPerformed(evt);
             }
         });
-        violationpanel.add(vioSev, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 170, 200, -1));
+        violationpanel.add(vioSev, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 200, -1));
 
         vioStamp.setEditable(false);
         vioStamp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -689,7 +684,7 @@ public class adminViolation extends javax.swing.JFrame {
                 vioStampActionPerformed(evt);
             }
         });
-        violationpanel.add(vioStamp, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 200, -1));
+        violationpanel.add(vioStamp, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 200, -1));
 
         studLastName.setEditable(false);
         studLastName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -698,7 +693,7 @@ public class adminViolation extends javax.swing.JFrame {
                 studLastNameActionPerformed(evt);
             }
         });
-        violationpanel.add(studLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, 90, -1));
+        violationpanel.add(studLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 90, -1));
 
         studID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         studID.addActionListener(new java.awt.event.ActionListener() {
@@ -714,7 +709,7 @@ public class adminViolation extends javax.swing.JFrame {
                 studIDKeyTyped(evt);
             }
         });
-        violationpanel.add(studID, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 200, -1));
+        violationpanel.add(studID, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 40, -1));
 
         imageLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -726,6 +721,21 @@ public class adminViolation extends javax.swing.JFrame {
             }
         });
         violationpanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, 190, 190));
+
+        user_emaillabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        user_emaillabel3.setForeground(new java.awt.Color(255, 255, 255));
+        user_emaillabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_emaillabel3.setText("Time Stamp");
+        violationpanel.add(user_emaillabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 90, 20));
+
+        vioStat.setEditable(false);
+        vioStat.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        vioStat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vioStatActionPerformed(evt);
+            }
+        });
+        violationpanel.add(vioStat, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 200, -1));
 
         getContentPane().add(violationpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -888,6 +898,8 @@ public class adminViolation extends javax.swing.JFrame {
         } else {
             imageLabel.setIcon(null);
         }
+        
+        vioStat.setText(model.getValueAt(i, 7).toString());
     }//GEN-LAST:event_vio_tableMouseClicked
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
@@ -1228,6 +1240,10 @@ public class adminViolation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_imageLabel1MouseClicked
 
+    private void vioStatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vioStatActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vioStatActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1289,10 +1305,10 @@ public class adminViolation extends javax.swing.JFrame {
     private javax.swing.JTextField studLastName;
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
-    private javax.swing.JLabel user_cnumberlabel;
     private javax.swing.JLabel user_emaillabel;
     private javax.swing.JLabel user_emaillabel1;
     private javax.swing.JLabel user_emaillabel2;
+    private javax.swing.JLabel user_emaillabel3;
     private javax.swing.JLabel user_fnamelabel;
     private javax.swing.JLabel user_fnamelabel1;
     private javax.swing.JLabel user_passwordlabel;
@@ -1304,6 +1320,7 @@ public class adminViolation extends javax.swing.JFrame {
     private javax.swing.JTextField vioName;
     private javax.swing.JTextField vioSev;
     private javax.swing.JTextField vioStamp;
+    private javax.swing.JTextField vioStat;
     private javax.swing.JLabel vio_icon;
     private javax.swing.JTable vio_table;
     private javax.swing.JLabel violation;

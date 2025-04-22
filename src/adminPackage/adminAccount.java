@@ -297,7 +297,6 @@ public class adminAccount extends javax.swing.JFrame {
         settings2 = new javax.swing.JLabel();
         settings3 = new javax.swing.JLabel();
         activityLogs = new javax.swing.JLabel();
-        activityLogs3 = new javax.swing.JLabel();
         activityLogs2 = new javax.swing.JLabel();
         leftpanel = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
@@ -524,7 +523,7 @@ public class adminAccount extends javax.swing.JFrame {
                 settings3MouseExited(evt);
             }
         });
-        userspanel.add(settings3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 150, 30));
+        userspanel.add(settings3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 150, 30));
 
         activityLogs.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         activityLogs.setForeground(new java.awt.Color(255, 255, 255));
@@ -541,21 +540,7 @@ public class adminAccount extends javax.swing.JFrame {
                 activityLogsMouseExited(evt);
             }
         });
-        userspanel.add(activityLogs, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 30, 150, 30));
-
-        activityLogs3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        activityLogs3.setForeground(new java.awt.Color(255, 255, 255));
-        activityLogs3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        activityLogs3.setText("Appearance");
-        activityLogs3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                activityLogs3MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                activityLogs3MouseExited(evt);
-            }
-        });
-        userspanel.add(activityLogs3, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, 150, 30));
+        userspanel.add(activityLogs, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 150, 30));
 
         activityLogs2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         activityLogs2.setForeground(new java.awt.Color(255, 255, 255));
@@ -569,7 +554,7 @@ public class adminAccount extends javax.swing.JFrame {
                 activityLogs2MouseExited(evt);
             }
         });
-        userspanel.add(activityLogs2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, 150, 30));
+        userspanel.add(activityLogs2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 150, 30));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -1135,14 +1120,6 @@ public class adminAccount extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_activityLogsMouseExited
 
-    private void activityLogs3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs3MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_activityLogs3MouseEntered
-
-    private void activityLogs3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs3MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_activityLogs3MouseExited
-
     private void activityLogs2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs2MouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_activityLogs2MouseEntered
@@ -1152,7 +1129,7 @@ public class adminAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_activityLogs2MouseExited
 
     private void activityLogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogsMouseClicked
-        new adminAccount(user_fname).setVisible(true);
+        new adminLogs(user_fname).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_activityLogsMouseClicked
 
@@ -1195,7 +1172,6 @@ public class adminAccount extends javax.swing.JFrame {
     private javax.swing.JLabel J_user_fname;
     private javax.swing.JLabel activityLogs;
     private javax.swing.JLabel activityLogs2;
-    private javax.swing.JLabel activityLogs3;
     private javax.swing.JLabel cancel;
     private javax.swing.JTextField contactNumberTextField;
     private javax.swing.JLabel dash_icon1;

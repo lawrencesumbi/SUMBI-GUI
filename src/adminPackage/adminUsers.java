@@ -133,47 +133,7 @@ public class adminUsers extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "No matching record found!", "Search", JOptionPane.INFORMATION_MESSAGE);
         }
     }
-    
-
-    /*public void uploadImage(JLabel uploadImage) {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Choose Image");
-        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Images", "jpg", "png", "jpeg"));
-
-        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            
-        String url = "jdbc:mysql://localhost:3306/sumbi_db";
-        String user = "root";
-        String pass = "";
-
-        try {
-                Connection conn = DriverManager.getConnection(url, user, pass);
-                FileInputStream fis = new FileInputStream(file);
-
-                String sql = "UPDATE user_table SET user_image = ? WHERE user_email = ?";
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setBinaryStream(1, fis, (int) file.length());
-                pstmt.setString(2, emailTextField.getText().trim());
-                int rowsUpdated = pstmt.executeUpdate();
-
-                if (rowsUpdated > 0) {
-
-                    ImageIcon getIcon = new ImageIcon(file.getAbsolutePath());
-                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-                    uploadImage.setIcon(new ImageIcon(img));
-
-                    JOptionPane.showMessageDialog(null, "Image Uploaded Successfully!");
-                } else {
-                    JOptionPane.showMessageDialog(null, "User Not Found! Please check the email.");
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error Uploading Image!");
-            }
-        }
-    }*/
-
+   
 
     private void displayImage(String user_fname) {
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
