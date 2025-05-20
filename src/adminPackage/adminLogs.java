@@ -178,7 +178,7 @@ public class adminLogs extends javax.swing.JFrame {
         settings2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         settings2.setForeground(new java.awt.Color(255, 255, 255));
         settings2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        settings2.setText("Activity Logs");
+        settings2.setText("ACTIVITY LOGS");
         settings2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 settings2MouseEntered(evt);
