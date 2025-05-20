@@ -56,10 +56,13 @@ public class adminUsers extends javax.swing.JFrame {
         try {
             dbConnector dbc = new dbConnector();
 
-            // Only select the necessary columns (excluding image_path)
-            ResultSet rs = dbc.getData(
-                "SELECT user_id, user_fname, user_cnumber, user_email, user_type, user_status FROM user_table"
-            );
+            int currentUserId = Session.getInstance().getUid(); // Get current user's ID
+
+            // Exclude current user from the result
+            String query = "SELECT user_id, user_fname, user_cnumber, user_email, user_type, user_status " +
+                           "FROM user_table WHERE user_id != " + currentUserId;
+
+            ResultSet rs = dbc.getData(query);
 
             // Clear input fields
             userIDtextfield.setText("");
@@ -72,6 +75,7 @@ public class adminUsers extends javax.swing.JFrame {
 
             // Set the data model
             user_table.setModel(DbUtils.resultSetToTableModel(rs));
+            user_table.getColumnModel().getColumn(3).setPreferredWidth(150);
 
             // Set custom column headers
             String[] columnNames = {
@@ -85,10 +89,12 @@ public class adminUsers extends javax.swing.JFrame {
             // Force header update
             user_table.getTableHeader().repaint();
 
+            rs.close();
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
     }
+
 
     
     private String saveImageToFolder(String user_email) {

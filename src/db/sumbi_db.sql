@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2025 at 08:40 PM
+-- Generation Time: May 20, 2025 at 04:55 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -92,7 +92,72 @@ INSERT INTO `logs_table` (`logs_id`, `user_id`, `logs_action`, `logs_stamp`) VAL
 (91, 1, 'Logged in', '2025-04-23 02:31:05'),
 (93, 1, 'Logged in', '2025-04-23 02:36:11'),
 (95, 1, 'Logged in', '2025-04-23 02:38:07'),
-(97, 1, 'Logged in', '2025-04-23 02:40:00');
+(97, 1, 'Logged in', '2025-04-23 02:40:00'),
+(98, 1, 'Logged in', '2025-05-20 08:42:52'),
+(101, 1, 'Logged in', '2025-05-20 08:48:58'),
+(102, 1, 'Logged out', '2025-05-20 08:53:01'),
+(103, 1, 'Logged in', '2025-05-20 08:53:34'),
+(104, 1, 'Logged in', '2025-05-20 08:58:09'),
+(105, 1, 'Logged in', '2025-05-20 09:08:36'),
+(106, 1, 'Logged in', '2025-05-20 09:12:22'),
+(107, 1, 'Logged out', '2025-05-20 09:13:45'),
+(108, 2, 'Logged in', '2025-05-20 09:19:24'),
+(109, 1, 'Logged in', '2025-05-20 09:22:17'),
+(110, 1, 'Logged in', '2025-05-20 09:36:12'),
+(111, 1, 'Logged out', '2025-05-20 09:36:20'),
+(112, 2, 'Logged in', '2025-05-20 09:36:27'),
+(113, 1, 'Logged in', '2025-05-20 09:37:01'),
+(114, 1, 'Logged out', '2025-05-20 09:53:20'),
+(115, 2, 'Logged in', '2025-05-20 09:53:34'),
+(116, 2, 'Logged in', '2025-05-20 09:58:31'),
+(117, 1, 'Logged in', '2025-05-20 10:01:44'),
+(118, 1, 'Logged out', '2025-05-20 10:01:49'),
+(119, 2, 'Logged in', '2025-05-20 10:02:02'),
+(120, 2, 'Logged in', '2025-05-20 10:07:51'),
+(121, 1, 'Logged in', '2025-05-20 11:49:19'),
+(122, 1, 'Updated Student: Xander Parba', '2025-05-20 11:51:48'),
+(123, 1, 'Deleted user: Rexon', '2025-05-20 11:52:11'),
+(124, 1, 'Added student: Dray Misa', '2025-05-20 11:52:19'),
+(125, 1, 'Deleted user: Dray', '2025-05-20 11:52:38'),
+(126, 1, 'Added student: Dray Misa', '2025-05-20 11:53:21'),
+(127, 1, 'Updated Student: Dray Misa', '2025-05-20 11:54:48'),
+(128, 1, 'Logged in', '2025-05-20 11:57:11'),
+(129, 1, 'Logged in', '2025-05-20 12:05:49'),
+(130, 1, 'Logged in', '2025-05-20 12:07:08'),
+(131, 1, 'Logged in', '2025-05-20 12:11:13'),
+(132, 1, 'Logged in', '2025-05-20 12:12:05'),
+(133, 1, 'Logged in', '2025-05-20 12:13:38'),
+(134, 1, 'Logged in', '2025-05-20 12:14:07'),
+(135, 1, 'Logged in', '2025-05-20 12:23:58'),
+(137, 1, 'Logged in', '2025-05-20 19:35:44'),
+(139, 1, 'Logged in', '2025-05-20 19:39:15'),
+(141, 1, 'Logged in', '2025-05-20 19:40:14'),
+(150, 1, 'Logged in', '2025-05-20 21:25:42'),
+(151, 1, 'Deleted user: test2@gmail.com', '2025-05-20 21:26:01'),
+(152, 1, 'Deleted user: test11@gmail.com', '2025-05-20 21:26:06'),
+(153, 1, 'Logged in', '2025-05-20 21:28:19'),
+(154, 1, 'Deleted Violation: 15', '2025-05-20 21:29:24'),
+(155, 1, 'Logged in', '2025-05-20 21:34:26'),
+(157, 1, 'Logged in', '2025-05-20 22:06:19'),
+(158, 1, 'Added new user: test25@gmail.com', '2025-05-20 22:07:35'),
+(159, 1, 'Logged out', '2025-05-20 22:07:40'),
+(160, 1, 'Logged in', '2025-05-20 22:08:06'),
+(161, 1, 'Updated user: test25@gmail.com', '2025-05-20 22:08:16'),
+(162, 1, 'Logged out', '2025-05-20 22:08:19'),
+(163, 1, 'Logged in', '2025-05-20 22:08:32'),
+(164, 1, 'Logged out', '2025-05-20 22:08:50'),
+(165, 53, 'Logged in', '2025-05-20 22:09:02'),
+(167, 1, 'Logged in', '2025-05-20 22:10:06'),
+(168, 1, 'Added new user: test26@gmail.com', '2025-05-20 22:10:32'),
+(170, 1, 'Logged in', '2025-05-20 22:16:24'),
+(171, 1, 'Logged in', '2025-05-20 22:17:34'),
+(172, 1, 'Logged in', '2025-05-20 22:19:13'),
+(173, 1, 'Logged in', '2025-05-20 22:23:11'),
+(174, 1, 'Logged in', '2025-05-20 22:24:21'),
+(175, 1, 'Logged in', '2025-05-20 22:33:16'),
+(176, 1, 'Logged in', '2025-05-20 22:38:26'),
+(178, 1, 'Logged in', '2025-05-20 22:46:44'),
+(180, 1, 'Logged in', '2025-05-20 22:53:41');
 
 -- --------------------------------------------------------
 
@@ -139,7 +204,7 @@ CREATE TABLE `stud_table` (
 --
 
 INSERT INTO `stud_table` (`stud_id`, `stud_fname`, `stud_lname`, `stud_program`, `stud_section`, `stud_address`, `stud_cnumber`, `image_path`) VALUES
-(1, 'Xander', 'Parba', 'BSIT', '3A', 'Vito Minglanilla', '09123456789', ''),
+(1, 'Xander', 'Parba', 'BSIT', '3A', 'Vito Minglanilla', '09123456789', 'src/studentImagesXander_Parba.jpg'),
 (2, 'Xena Reika', 'Pader', 'BSED', '2A', 'Tulay Minglanilla', '09123456789', ''),
 (4, 'Daniel', 'Padilla', 'BSCRIM', '4C', 'Cebu City', '09123456789', ''),
 (5, 'Lawrence', 'Sumbi', 'BSIT', '2A', 'Minglanilla', '09303172724', 'src/studentImagesLawrence_Sumbi.jpg'),
@@ -149,8 +214,7 @@ INSERT INTO `stud_table` (`stud_id`, `stud_fname`, `stud_lname`, `stud_program`,
 (9, 'Ronald', 'Rosales', 'BSIT', '1A', 'Toledo', '09123456789', ''),
 (10, 'Benish Reyna', 'Parba', 'BSED', '1A', 'Minglanilla', '09123456789', ''),
 (11, 'Michael', 'Bustamante', 'BSIT', '4A', 'Minglanilla', '09123456789', ''),
-(48, 'Dray', 'Misa', 'BSIT', '2A', 'Naga', '09123456789', ''),
-(49, 'Rexon', 'Sumbi', 'BSCRIM', '2A', 'Bogo', '09123456789', NULL);
+(51, 'Dray', 'Misa', 'BSIT', '2A', 'Naga', '09123456789', 'src/studentImagesDray_Misa.jpg');
 
 -- --------------------------------------------------------
 
@@ -185,22 +249,16 @@ INSERT INTO `user_table` (`user_id`, `user_fname`, `user_cnumber`, `user_email`,
 (23, 'chuchu', '09123456789', 'chuchu@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', '0'),
 (24, 'chichi', '09123456789', 'chichi@scc.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Pending', '0'),
 (25, 'test', '09123456788', 'test@scc.com', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', 'User', 'Active', 'src/usersImagestest@scc.com.jpg'),
-(26, 'test1', '09123456788', 'test1@scc.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'User', 'Active', 'src/usersImagestest1@scc.com.jpg'),
-(27, 'test2', '09123456788', 'test2@gmail.com', 'a14bbfa74e5fa127b745f7fe5db24d51f4701e73', 'User', 'Pending', 'src/usersImagestest2@gmail.com.jpg'),
-(37, 'test11', '09123456789', 'test11@gmail.com', 'a7d579ba76398070eae654c30ff153a4c273272a', 'User', 'Active', 'src/usersImagestest11@gmail.com.jpg'),
-(38, 'test12', '09123456788', 'test12@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', 'src/usersImagestest12@gmail.com.jpg'),
-(41, 'test13', '09123456789', 'test13@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', 'src/usersImagestest13@gmail.com.jpg'),
-(42, 'test15', '09123456789', 'test14@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', 'src/usersImagestest14@gmail.com.jpg'),
 (43, 'test15', '09123456789', 'test15@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', NULL),
-(44, 'test16', '09123456789', 'test16@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', 'src/usersImagestest16@gmail.com.jpg'),
-(45, 'test18', '09123456789', 'test17@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', 'src/usersImagestest17@gmail.com.jpg'),
 (46, 'test18', '09123456789', 'test18@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', NULL),
 (47, 'test19', '09123456789', 'test19@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', NULL),
 (48, 'test20', '09123456789', 'test20@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', NULL),
 (49, 'test21', '09123456789', 'test21@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', NULL),
 (50, 'test22', '09123456789', 'test22@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', 'src/usersImagestest22@gmail.com.jpg'),
 (51, 'test23', '09123456789', 'test23@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', 'src/usersImagestest23@gmail.com.jpg'),
-(52, 'test24', '09123456789', 'test24@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', NULL);
+(52, 'test24', '09123456789', 'test24@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', NULL),
+(53, 'TEST25', '09123456789', 'test25@gmail.com', '439f824422de32bb154e0e584ed61cf9ea519024', 'User', 'Active', NULL),
+(54, 'test26', '09123456789', 'test26@gmail.com', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 'Admin', 'Active', NULL);
 
 -- --------------------------------------------------------
 
@@ -277,7 +335,7 @@ ALTER TABLE `vio_table`
 -- AUTO_INCREMENT for table `logs_table`
 --
 ALTER TABLE `logs_table`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
 
 --
 -- AUTO_INCREMENT for table `rec_table`
@@ -289,19 +347,19 @@ ALTER TABLE `rec_table`
 -- AUTO_INCREMENT for table `stud_table`
 --
 ALTER TABLE `stud_table`
-  MODIFY `stud_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `stud_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `user_table`
 --
 ALTER TABLE `user_table`
-  MODIFY `user_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `user_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `vio_table`
 --
 ALTER TABLE `vio_table`
-  MODIFY `vio_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `vio_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables

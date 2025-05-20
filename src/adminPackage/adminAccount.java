@@ -514,7 +514,7 @@ public class adminAccount extends javax.swing.JFrame {
         userspanel.add(settings2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 250, 50));
 
         settings3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        settings3.setForeground(new java.awt.Color(255, 255, 255));
+        settings3.setForeground(new java.awt.Color(255, 255, 0));
         settings3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settings3.setText("Account Settings");
         settings3.addMouseListener(new java.awt.event.MouseAdapter() {

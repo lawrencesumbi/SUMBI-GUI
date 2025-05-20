@@ -47,16 +47,33 @@ public class adminLogs extends javax.swing.JFrame {
     }
     
     
-    public void displayLogs(){
-        try{
+    public void displayLogs() {
+        try {
             dbConnector db = new dbConnector();
-            ResultSet rs = db.getData("SELECT * FROM logs_table ORDER BY logs_id DESC");
+            String query = "SELECT logs_table.logs_id AS 'Log ID', " +
+                           "user_table.user_fname AS 'User', " +
+                           "logs_table.logs_action AS 'Activity', " +
+                           "logs_table.logs_stamp AS 'Timestamp' " +
+                           "FROM logs_table " +
+                           "JOIN user_table ON logs_table.user_id = user_table.user_id " +
+                           "ORDER BY logs_table.logs_id DESC";
+
+            ResultSet rs = db.getData(query);
             logs_table.setModel(DbUtils.resultSetToTableModel(rs));
+
+            // Set preferred widths (adjust as needed)
+            logs_table.getColumnModel().getColumn(0).setPreferredWidth(100);   // Log ID
+            logs_table.getColumnModel().getColumn(1).setPreferredWidth(150);  // User
+            logs_table.getColumnModel().getColumn(2).setPreferredWidth(300);  // Activity
+            logs_table.getColumnModel().getColumn(3).setPreferredWidth(180);  // Timestamp
+
             rs.close();
-        }catch(SQLException e){
-            System.out.println("Error loading logs: "+e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error loading logs: " + e.getMessage());
         }
     }
+
+
     
     private void displayImage(String user_fname) {
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
@@ -222,7 +239,7 @@ public class adminLogs extends javax.swing.JFrame {
         userspanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 710, 470));
 
         activityLogs.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        activityLogs.setForeground(new java.awt.Color(255, 255, 255));
+        activityLogs.setForeground(new java.awt.Color(255, 255, 0));
         activityLogs.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         activityLogs.setText("Activity Logs");
         activityLogs.addMouseListener(new java.awt.event.MouseAdapter() {
