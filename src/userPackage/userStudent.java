@@ -55,8 +55,8 @@ public class userStudent extends javax.swing.JFrame {
     public void displayData() {
         try {
             dbConnector dbc = new dbConnector();
-            ResultSet rs = dbc.getData("SELECT * FROM stud_table");
-            
+            ResultSet rs = dbc.getData("SELECT stud_id, stud_fname, stud_lname, stud_program, stud_section, stud_address, stud_cnumber FROM stud_table");
+
             studFirstName.setText("");  
             studLastName.setText("");  
             studProgram.setText("");  
@@ -66,6 +66,13 @@ public class userStudent extends javax.swing.JFrame {
             searchfield.setText(""); 
 
             stud_table.setModel(DbUtils.resultSetToTableModel(rs));   
+            
+            String[] columnNames = {"ID", "First Name", "Last Name", "Program", "Section", "Address", "Contact Number"};
+            for (int col = 0; col < columnNames.length; col++) {
+                stud_table.getColumnModel().getColumn(col).setHeaderValue(columnNames[col]);
+            }
+            stud_table.getTableHeader().repaint();
+            
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
@@ -248,6 +255,7 @@ public class userStudent extends javax.swing.JFrame {
         studCNumber = new javax.swing.JTextField();
         user_fnamelabel1 = new javax.swing.JLabel();
         studIDtextfield = new javax.swing.JTextField();
+        imageLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -626,6 +634,17 @@ public class userStudent extends javax.swing.JFrame {
         });
         studentpanel.add(studIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 190, 40, -1));
 
+        imageLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        imageLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        imageLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
+        imageLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imageLabel1MouseClicked(evt);
+            }
+        });
+        studentpanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 150, 150));
+
         getContentPane().add(studentpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
         pack();
@@ -879,33 +898,37 @@ public class userStudent extends javax.swing.JFrame {
         int i = stud_table.getSelectedRow();
         TableModel model = stud_table.getModel();
 
-        studIDtextfield.setText(model.getValueAt(i, 0).toString());
-        
-        String stud_fname = model.getValueAt(i, 1).toString();
-        studFirstName.setText(stud_fname);
+        String studID = model.getValueAt(i, 0).toString();
+        studIDtextfield.setText(studID);
+        studFirstName.setText(model.getValueAt(i, 1).toString());
         studLastName.setText(model.getValueAt(i, 2).toString());
         studProgram.setText(model.getValueAt(i, 3).toString());
         studSection.setText(model.getValueAt(i, 4).toString());
         studAddress.setText(model.getValueAt(i, 5).toString());
         studCNumber.setText(model.getValueAt(i, 6).toString());
 
-        // Get user_image from the table model
-        Object imageData = model.getValueAt(i, 7); // Assuming column 7 stores the image
-
-        if (imageData != null && imageData instanceof byte[]) {
-        byte[] imgBytes = (byte[]) imageData;
-
-        if (imgBytes.length > 0) { // Check if the byte array is not empty
-            ImageIcon getIcon = new ImageIcon(imgBytes);
-            Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-            uploadImage.setIcon(new ImageIcon(img)); // Set the image in JLabel
-        } else {
-            // If byte array is empty, set default image
-            uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
-        }
-        } else {
-            // If imageData is null or not a byte array, set default image
-            uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));
+        // Fetch image_path separately based on stud_id
+        try {
+            dbConnector dbc = new dbConnector();
+            ResultSet rs = dbc.getData("SELECT image_path FROM stud_table WHERE stud_id = '" + studID + "'");
+            if (rs.next()) {
+                String imagePath = rs.getString("image_path");
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    File file = new File(imagePath);
+                    if (file.exists()) {
+                        ImageIcon icon = new ImageIcon(imagePath);
+                        Image img = icon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
+                        uploadImage.setIcon(new ImageIcon(img));
+                    } else {
+                        uploadImage.setIcon(null);
+                    }
+                } else {
+                    uploadImage.setIcon(null);
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error fetching image_path: " + ex.getMessage());
+            uploadImage.setIcon(null);
         }
     }//GEN-LAST:event_stud_tableMouseClicked
 
@@ -944,6 +967,10 @@ public class userStudent extends javax.swing.JFrame {
         new userAccount(user_fname).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_settingsMouseClicked
+
+    private void imageLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_imageLabel1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -988,6 +1015,7 @@ public class userStudent extends javax.swing.JFrame {
     private javax.swing.JLabel delete;
     private javax.swing.JLabel displayImage;
     private javax.swing.JLabel edit;
+    private javax.swing.JLabel imageLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;

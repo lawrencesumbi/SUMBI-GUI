@@ -37,7 +37,6 @@ public class userDashboard extends javax.swing.JFrame {
         J_user_fname.setText(user_fname);
         displayDashboard();
         displayImage(user_fname);
-        displayData();
     }
     
     public void displayDashboard() {
@@ -59,18 +58,6 @@ public class userDashboard extends javax.swing.JFrame {
         }
     }
     
-    public void displayData() {
-        try {
-            dbConnector dbc = new dbConnector();
-
-            String sql = "SELECT * FROM stud_table";
-            ResultSet rs = dbc.getData(sql);
-
-            user_table.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-        }
-    }
     
     private void displayImage(String user_fname) {
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
@@ -152,8 +139,7 @@ public class userDashboard extends javax.swing.JFrame {
         user_type5 = new javax.swing.JLabel();
         dash_icon3 = new javax.swing.JLabel();
         totalStudents = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        user_table = new javax.swing.JTable();
+        user_type2 = new javax.swing.JLabel();
         leftpanel = new javax.swing.JPanel();
         displayImage = new javax.swing.JLabel();
         user_type = new javax.swing.JLabel();
@@ -190,7 +176,7 @@ public class userDashboard extends javax.swing.JFrame {
         user_type3.setText("0");
         stat_panel.add(user_type3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
-        userspanel.add(stat_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 100, 190, 120));
+        userspanel.add(stat_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 190, 120));
 
         studnum_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -207,7 +193,7 @@ public class userDashboard extends javax.swing.JFrame {
         user_type13.setText("2024-2025");
         studnum_panel.add(user_type13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 100, 30));
 
-        userspanel.add(studnum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 190, 120));
+        userspanel.add(studnum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 190, 120));
 
         vionum_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -224,36 +210,15 @@ public class userDashboard extends javax.swing.JFrame {
         totalStudents.setText("0");
         vionum_panel.add(totalStudents, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
-        userspanel.add(vionum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 190, 120));
+        userspanel.add(vionum_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, 190, 120));
 
-        jScrollPane1.setBackground(new java.awt.Color(204, 0, 0));
-        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jScrollPane1MouseClicked(evt);
-            }
-        });
+        user_type2.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
+        user_type2.setForeground(new java.awt.Color(255, 255, 255));
+        user_type2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_type2.setText("Welcome to Student Violation System!");
+        userspanel.add(user_type2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, 610, 50));
 
-        user_table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        user_table.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                user_tableMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(user_table);
-
-        userspanel.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 710, 300));
-
-        getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
+        getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 520));
 
         leftpanel.setBackground(new java.awt.Color(0, 0, 0));
         leftpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -262,39 +227,39 @@ public class userDashboard extends javax.swing.JFrame {
         displayImage.setForeground(new java.awt.Color(255, 255, 255));
         displayImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview1.png"))); // NOI18N
-        leftpanel.add(displayImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, 130));
+        leftpanel.add(displayImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 130, 130));
 
         user_type.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         user_type.setForeground(new java.awt.Color(255, 255, 255));
         user_type.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_type.setText("User");
-        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 50, -1));
+        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 50, -1));
 
         J_user_fname.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         J_user_fname.setForeground(new java.awt.Color(255, 255, 255));
         J_user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         J_user_fname.setText("Fullname");
-        leftpanel.add(J_user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 30));
+        leftpanel.add(J_user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 170, 30));
 
         dash_icon1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-dashboard-layout-24.png"))); // NOI18N
         dash_icon1.setText("jLabel1");
-        leftpanel.add(dash_icon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 30, 30));
+        leftpanel.add(dash_icon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 30, 30));
 
         stud_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-student-male-24.png"))); // NOI18N
         stud_icon.setText("jLabel1");
-        leftpanel.add(stud_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 30, 30));
+        leftpanel.add(stud_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 30, 30));
 
         vio_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-foul-30.png"))); // NOI18N
         vio_icon.setText("jLabel1");
-        leftpanel.add(vio_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 30, 30));
+        leftpanel.add(vio_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 30, 30));
 
         sett_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-settings-50.png"))); // NOI18N
         sett_icon.setText("jLabel1");
-        leftpanel.add(sett_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 30, 30));
+        leftpanel.add(sett_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 400, 30, 30));
 
         log_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-open-pane-24.png"))); // NOI18N
         log_icon.setText("jLabel1");
-        leftpanel.add(log_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 30, 30));
+        leftpanel.add(log_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 30, 30));
 
         dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         dashboard.setForeground(new java.awt.Color(255, 255, 255));
@@ -311,7 +276,7 @@ public class userDashboard extends javax.swing.JFrame {
                 dashboardMouseExited(evt);
             }
         });
-        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, 50));
+        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, 50));
 
         student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         student.setForeground(new java.awt.Color(255, 255, 255));
@@ -328,7 +293,7 @@ public class userDashboard extends javax.swing.JFrame {
                 studentMouseExited(evt);
             }
         });
-        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, 90, 50));
+        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, 90, 50));
 
         violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         violation.setForeground(new java.awt.Color(255, 255, 255));
@@ -345,7 +310,7 @@ public class userDashboard extends javax.swing.JFrame {
                 violationMouseExited(evt);
             }
         });
-        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 110, 50));
+        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 110, 50));
 
         account.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         account.setForeground(new java.awt.Color(255, 255, 255));
@@ -362,7 +327,7 @@ public class userDashboard extends javax.swing.JFrame {
                 accountMouseExited(evt);
             }
         });
-        leftpanel.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 100, 50));
+        leftpanel.add(account, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, 100, 50));
 
         logout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         logout.setForeground(new java.awt.Color(255, 255, 255));
@@ -379,21 +344,13 @@ public class userDashboard extends javax.swing.JFrame {
                 logoutMouseExited(evt);
             }
         });
-        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 90, 50));
+        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, 90, 50));
 
-        getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 600));
+        getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 520));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
-
-    }//GEN-LAST:event_jScrollPane1MouseClicked
-
-    private void user_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_user_tableMouseClicked
-
-    }//GEN-LAST:event_user_tableMouseClicked
 
     private void dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseClicked
 
@@ -512,7 +469,6 @@ public class userDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel dash_icon4;
     private javax.swing.JLabel dashboard;
     private javax.swing.JLabel displayImage;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
@@ -522,9 +478,9 @@ public class userDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel student;
     private javax.swing.JPanel studnum_panel;
     private javax.swing.JLabel totalStudents;
-    private javax.swing.JTable user_table;
     private javax.swing.JLabel user_type;
     private javax.swing.JLabel user_type13;
+    private javax.swing.JLabel user_type2;
     private javax.swing.JLabel user_type3;
     private javax.swing.JLabel user_type4;
     private javax.swing.JLabel user_type5;

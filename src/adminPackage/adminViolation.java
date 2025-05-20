@@ -61,8 +61,13 @@ public class adminViolation extends javax.swing.JFrame {
     public void displayData() {
         try {
             dbConnector dbc = new dbConnector();
-            ResultSet rs = dbc.getData("SELECT * FROM vio_table");
-            
+
+            // Only select the required columns
+            ResultSet rs = dbc.getData(
+                "SELECT vio_id, stud_id, vio_name, vio_des, vio_sev, vio_stamp, vio_status FROM vio_table"
+            );
+
+            // Clear the input fields
             studFirstName.setText("");  
             studLastName.setText("");  
             vioName.setText("");  
@@ -71,11 +76,21 @@ public class adminViolation extends javax.swing.JFrame {
             vioStamp.setText(""); 
             searchfield.setText(""); 
 
-            vio_table.setModel(DbUtils.resultSetToTableModel(rs));   
+            // Set the table model with only the selected columns
+            vio_table.setModel(DbUtils.resultSetToTableModel(rs));
+
+            // Optional: Rename headers
+            String[] columnNames = {"Violation ID", "Student ID", "Violation", "Description", "Severity", "Timestamp", "Status"};
+            for (int col = 0; col < columnNames.length; col++) {
+                vio_table.getColumnModel().getColumn(col).setHeaderValue(columnNames[col]);
+            }
+            vio_table.getTableHeader().repaint();
+
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
     }
+
     
     private String saveImageToFolder(String user_email) {
         try {
@@ -853,53 +868,64 @@ public class adminViolation extends javax.swing.JFrame {
         try {
             Connection conn = DriverManager.getConnection(url, user, pass);
 
-            // Query to fetch student first name and last name using JOIN
-            String query = "SELECT stud_table.stud_fname, stud_table.stud_lname FROM vio_table "
-                    + "JOIN stud_table ON vio_table.stud_id = stud_table.stud_id "
-                    + "WHERE vio_table.vio_id = ?";
+            // Query to fetch student first and last name
+            String studentQuery = "SELECT stud_table.stud_fname, stud_table.stud_lname " +
+                                  "FROM vio_table " +
+                                  "JOIN stud_table ON vio_table.stud_id = stud_table.stud_id " +
+                                  "WHERE vio_table.vio_id = ?";
+            PreparedStatement studentStmt = conn.prepareStatement(studentQuery);
+            studentStmt.setString(1, vio_id);
+            ResultSet studentRs = studentStmt.executeQuery();
 
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, vio_id);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                studFirstName.setText(rs.getString("stud_fname"));
-                studLastName.setText(rs.getString("stud_lname"));
+            if (studentRs.next()) {
+                studFirstName.setText(studentRs.getString("stud_fname"));
+                studLastName.setText(studentRs.getString("stud_lname"));
             }
 
-            // Close resources
-            rs.close();
-            pstmt.close();
+            studentRs.close();
+            studentStmt.close();
+
+            // Query to fetch image_path separately
+            String imageQuery = "SELECT stud_table.image_path " +
+                                "FROM vio_table " +
+                                "JOIN stud_table ON vio_table.stud_id = stud_table.stud_id " +
+                                "WHERE vio_table.vio_id = ?";
+            PreparedStatement imageStmt = conn.prepareStatement(imageQuery);
+            imageStmt.setString(1, vio_id);
+            ResultSet imageRs = imageStmt.executeQuery();
+
+            if (imageRs.next()) {
+                String imagePath = imageRs.getString("image_path");
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    File file = new File(imagePath);
+                    if (file.exists()) {
+                        ImageIcon icon = new ImageIcon(imagePath);
+                        Image img = icon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
+                        imageLabel.setIcon(new ImageIcon(img));
+                    } else {
+                        imageLabel.setIcon(null);
+                    }
+                } else {
+                    imageLabel.setIcon(null);
+                }
+            }
+
+            imageRs.close();
+            imageStmt.close();
             conn.close();
+
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        // Set other violation details from TableModel
+        // Set violation details from table model (ensure columns are in correct order)
+        // NOTE: Make sure model column indices match your table model
         studID.setText(model.getValueAt(i, 1).toString());
-        vioName.setText(model.getValueAt(i, 2).toString()); // vio_name
-        vioDes.setText(model.getValueAt(i, 3).toString()); // vio_des
-        vioSev.setText(model.getValueAt(i, 4).toString()); // vio_sev
-        vioStamp.setText(model.getValueAt(i, 5).toString()); // vio_stampA
-
-        // Handle user image (if available)
-        Object imagePathObj = model.getValueAt(i, 6); 
-        String imagePath = (imagePathObj != null) ? imagePathObj.toString() : ""; // Avoid NullPointerException
-
-        if (!imagePath.isEmpty()) {
-            File file = new File(imagePath);
-            if (file.exists()) {
-                ImageIcon icon = new ImageIcon(imagePath);
-                Image img = icon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
-                imageLabel.setIcon(new ImageIcon(img));
-            } else {
-                imageLabel.setIcon(null);
-            }
-        } else {
-            imageLabel.setIcon(null);
-        }
-        
-        vioStat.setText(model.getValueAt(i, 7).toString());
+        vioName.setText(model.getValueAt(i, 2).toString());     // vio_name
+        vioDes.setText(model.getValueAt(i, 3).toString());      // vio_des
+        vioSev.setText(model.getValueAt(i, 4).toString());      // vio_sev
+        vioStamp.setText(model.getValueAt(i, 5).toString());    // vio_stamp
+        vioStat.setText(model.getValueAt(i, 6).toString());     // vio_status
     }//GEN-LAST:event_vio_tableMouseClicked
 
     private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked

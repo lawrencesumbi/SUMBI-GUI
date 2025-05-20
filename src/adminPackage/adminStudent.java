@@ -72,6 +72,13 @@ public class adminStudent extends javax.swing.JFrame {
             searchfield.setText(""); 
 
             stud_table.setModel(DbUtils.resultSetToTableModel(rs));   
+            
+            String[] columnNames = {"ID", "First Name", "Last Name", "Program", "Section", "Address", "Contact Number"};
+            for (int col = 0; col < columnNames.length; col++) {
+                stud_table.getColumnModel().getColumn(col).setHeaderValue(columnNames[col]);
+            }
+            stud_table.getTableHeader().repaint();
+            
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
