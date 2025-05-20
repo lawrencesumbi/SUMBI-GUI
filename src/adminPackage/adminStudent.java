@@ -61,8 +61,8 @@ public class adminStudent extends javax.swing.JFrame {
     public void displayData() {
         try {
             dbConnector dbc = new dbConnector();
-            ResultSet rs = dbc.getData("SELECT * FROM stud_table");
-            
+            ResultSet rs = dbc.getData("SELECT stud_id, stud_fname, stud_lname, stud_program, stud_section, stud_address, stud_cnumber FROM stud_table");
+
             studFirstName.setText("");  
             studLastName.setText("");  
             studProgram.setText("");  
@@ -76,6 +76,7 @@ public class adminStudent extends javax.swing.JFrame {
             System.out.println("Error: " + ex.getMessage());
         }
     }
+
     
     private String saveImageToFolder(String user_email) {
         try {
@@ -712,30 +713,36 @@ public class adminStudent extends javax.swing.JFrame {
         int i = stud_table.getSelectedRow();
         TableModel model = stud_table.getModel();
 
-        studIDtextfield.setText(model.getValueAt(i, 0).toString());
-        
-        String stud_fname = model.getValueAt(i, 1).toString();
-        studFirstName.setText(stud_fname);
+        String studID = model.getValueAt(i, 0).toString();
+        studIDtextfield.setText(studID);
+        studFirstName.setText(model.getValueAt(i, 1).toString());
         studLastName.setText(model.getValueAt(i, 2).toString());
         studProgram.setText(model.getValueAt(i, 3).toString());
         studSection.setText(model.getValueAt(i, 4).toString());
         studAddress.setText(model.getValueAt(i, 5).toString());
         studCNumber.setText(model.getValueAt(i, 6).toString());
 
-
-        Object imagePathObj = model.getValueAt(i, 7); 
-        String imagePath = (imagePathObj != null) ? imagePathObj.toString() : ""; // Avoid NullPointerException
-
-        if (!imagePath.isEmpty()) {
-            File file = new File(imagePath);
-            if (file.exists()) {
-                ImageIcon icon = new ImageIcon(imagePath);
-                Image img = icon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
-                imageLabel.setIcon(new ImageIcon(img));
-            } else {
-                imageLabel.setIcon(null);
+        // Fetch image_path separately based on stud_id
+        try {
+            dbConnector dbc = new dbConnector();
+            ResultSet rs = dbc.getData("SELECT image_path FROM stud_table WHERE stud_id = '" + studID + "'");
+            if (rs.next()) {
+                String imagePath = rs.getString("image_path");
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    File file = new File(imagePath);
+                    if (file.exists()) {
+                        ImageIcon icon = new ImageIcon(imagePath);
+                        Image img = icon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
+                        imageLabel.setIcon(new ImageIcon(img));
+                    } else {
+                        imageLabel.setIcon(null);
+                    }
+                } else {
+                    imageLabel.setIcon(null);
+                }
             }
-        } else {
+        } catch (SQLException ex) {
+            System.out.println("Error fetching image_path: " + ex.getMessage());
             imageLabel.setIcon(null);
         }
     }//GEN-LAST:event_stud_tableMouseClicked
