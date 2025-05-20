@@ -41,6 +41,7 @@ import net.proteanit.sql.DbUtils;
  */
 public class adminStudent extends javax.swing.JFrame {
     private String user_fname;
+    private String vio_id;
 
     /**
      * Creates new form adminStudent
@@ -275,6 +276,7 @@ public class adminStudent extends javax.swing.JFrame {
         studIDtextfield = new javax.swing.JTextField();
         imageLabel = new javax.swing.JLabel();
         imageLabel1 = new javax.swing.JLabel();
+        violate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -498,7 +500,7 @@ public class adminStudent extends javax.swing.JFrame {
                 addMouseExited(evt);
             }
         });
-        studentpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 60, 30));
+        studentpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 60, 30));
 
         edit.setBackground(new java.awt.Color(255, 255, 255));
         edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -517,7 +519,7 @@ public class adminStudent extends javax.swing.JFrame {
                 editMouseExited(evt);
             }
         });
-        studentpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 60, 30));
+        studentpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 60, 30));
 
         delete.setBackground(new java.awt.Color(255, 255, 255));
         delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -536,7 +538,7 @@ public class adminStudent extends javax.swing.JFrame {
                 deleteMouseExited(evt);
             }
         });
-        studentpanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 60, 30));
+        studentpanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 60, 30));
 
         refresh.setBackground(new java.awt.Color(255, 255, 255));
         refresh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -555,7 +557,7 @@ public class adminStudent extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        studentpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 120, 30));
+        studentpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 120, 30));
 
         searchfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         searchfield.addActionListener(new java.awt.event.ActionListener() {
@@ -568,7 +570,7 @@ public class adminStudent extends javax.swing.JFrame {
                 searchfieldKeyPressed(evt);
             }
         });
-        studentpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 220, 30));
+        studentpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 150, 30));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -587,7 +589,7 @@ public class adminStudent extends javax.swing.JFrame {
                 searchMouseExited(evt);
             }
         });
-        studentpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 250, 70, 30));
+        studentpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 250, 70, 30));
 
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -677,7 +679,7 @@ public class adminStudent extends javax.swing.JFrame {
         user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel1.setText("Student ID");
-        studentpanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 70, 30));
+        studentpanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, 70, 30));
 
         studIDtextfield.setEditable(false);
         studIDtextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -687,7 +689,7 @@ public class adminStudent extends javax.swing.JFrame {
                 studIDtextfieldActionPerformed(evt);
             }
         });
-        studentpanel.add(studIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 190, 40, -1));
+        studentpanel.add(studIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 20, 40, -1));
 
         imageLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -697,7 +699,7 @@ public class adminStudent extends javax.swing.JFrame {
                 imageLabelMouseClicked(evt);
             }
         });
-        studentpanel.add(imageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 150, 150));
+        studentpanel.add(imageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 150, 150));
 
         imageLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -708,7 +710,26 @@ public class adminStudent extends javax.swing.JFrame {
                 imageLabel1MouseClicked(evt);
             }
         });
-        studentpanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 150, 150));
+        studentpanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 150, 150));
+
+        violate.setBackground(new java.awt.Color(255, 255, 255));
+        violate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        violate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        violate.setText("VIOLATE");
+        violate.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        violate.setOpaque(true);
+        violate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                violateMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                violateMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                violateMouseExited(evt);
+            }
+        });
+        studentpanel.add(violate, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, 90, 30));
 
         getContentPane().add(studentpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -1056,7 +1077,7 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_violationMouseExited
 
     private void recordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseClicked
-        new adminRecord(user_fname).setVisible(true);
+        new adminRecord(user_fname, vio_id).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_recordMouseClicked
 
@@ -1129,6 +1150,18 @@ public class adminStudent extends javax.swing.JFrame {
     private void imageLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabelMouseClicked
         imageHandler.chooseImage(imageLabel);
     }//GEN-LAST:event_imageLabelMouseClicked
+
+    private void violateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violateMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_violateMouseClicked
+
+    private void violateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violateMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_violateMouseEntered
+
+    private void violateMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violateMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_violateMouseExited
 
     /**
      * @param args the command line arguments
@@ -1208,6 +1241,7 @@ public class adminStudent extends javax.swing.JFrame {
     private javax.swing.JLabel users;
     private javax.swing.JLabel users_icon;
     private javax.swing.JLabel vio_icon;
+    private javax.swing.JLabel violate;
     private javax.swing.JLabel violation;
     // End of variables declaration//GEN-END:variables
 

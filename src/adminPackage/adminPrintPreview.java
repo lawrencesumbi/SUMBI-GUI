@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 public class adminPrintPreview extends javax.swing.JFrame {
     private String user_fname;
     private JPanel reportPanel;
+    private String vio_id;
     
     /**
      * Creates new form adminPrintPreview
@@ -399,7 +400,7 @@ public class adminPrintPreview extends javax.swing.JFrame {
     }//GEN-LAST:event_printButtonActionPerformed
 
     private void printButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButton4ActionPerformed
-        new adminRecord(user_fname).setVisible(true);
+        new adminRecord(user_fname, vio_id).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_printButton4ActionPerformed
 

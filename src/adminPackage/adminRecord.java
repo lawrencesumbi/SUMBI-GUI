@@ -40,6 +40,7 @@ import javax.swing.Icon;
  */
 public class adminRecord extends javax.swing.JFrame {
     private String user_fname;
+    private String vio_id;
     /**
      * Creates new form adminRecord
      */
@@ -48,13 +49,16 @@ public class adminRecord extends javax.swing.JFrame {
         displayData();
     }
     
-    public adminRecord(String user_fname) {
+    public adminRecord(String user_fname, String vio_id ) {
         this.user_fname = user_fname;
+        this.vio_id = vio_id;
         initComponents();
+        vioID.setText(vio_id);
         displayImage(user_fname);
         J_user_fname.setText(user_fname); 
         displayData();
     }
+    
     
     public void displayData() {
         try {
@@ -560,7 +564,7 @@ public class adminRecord extends javax.swing.JFrame {
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_fnamelabel.setText("Enter Violation ID:");
+        user_fnamelabel.setText("VIOLATION DETAILS:");
         violationpanel.add(user_fnamelabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 140, 20));
 
         studFirstName.setEditable(false);
@@ -659,10 +663,34 @@ public class adminRecord extends javax.swing.JFrame {
         });
         violationpanel.add(studLastName, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 90, -1));
 
+        vioID.setEditable(false);
         vioID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        vioID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        vioID.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                vioIDComponentAdded(evt);
+            }
+        });
+        vioID.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                vioIDFocusLost(evt);
+            }
+        });
+        vioID.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                vioIDInputMethodTextChanged(evt);
+            }
+        });
         vioID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 vioIDActionPerformed(evt);
+            }
+        });
+        vioID.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                vioIDPropertyChange(evt);
             }
         });
         vioID.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1314,6 +1342,178 @@ public class adminRecord extends javax.swing.JFrame {
     private void imageLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabelMouseClicked
 
     }//GEN-LAST:event_imageLabelMouseClicked
+
+    private void vioIDInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_vioIDInputMethodTextChanged
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        String vio_id = vioID.getText().trim(); // Get the entered ID
+
+        if (vio_id.isEmpty()) {
+            studFirstName.setText(""); // Clear fields if empty
+            studLastName.setText("");
+            vioName.setText("");
+            return;
+        }
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            // Correct SQL query with JOIN to fetch both student name and violation name
+            String sql = "SELECT s.stud_fname, s.stud_lname, v.vio_name FROM vio_table v " +
+                         "JOIN stud_table s ON v.stud_id = s.stud_id WHERE v.vio_id = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vio_id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                studFirstName.setText(rs.getString("stud_fname"));
+                studLastName.setText(rs.getString("stud_lname"));
+                vioName.setText(rs.getString("vio_name"));
+            } else {
+                studFirstName.setText(""); // Clear fields if no match
+                studLastName.setText("");
+                vioName.setText("");
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_vioIDInputMethodTextChanged
+
+    private void vioIDComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_vioIDComponentAdded
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        String vio_id = vioID.getText().trim(); // Get the entered ID
+
+        if (vio_id.isEmpty()) {
+            studFirstName.setText(""); // Clear fields if empty
+            studLastName.setText("");
+            vioName.setText("");
+            return;
+        }
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            // Correct SQL query with JOIN to fetch both student name and violation name
+            String sql = "SELECT s.stud_fname, s.stud_lname, v.vio_name FROM vio_table v " +
+                         "JOIN stud_table s ON v.stud_id = s.stud_id WHERE v.vio_id = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vio_id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                studFirstName.setText(rs.getString("stud_fname"));
+                studLastName.setText(rs.getString("stud_lname"));
+                vioName.setText(rs.getString("vio_name"));
+            } else {
+                studFirstName.setText(""); // Clear fields if no match
+                studLastName.setText("");
+                vioName.setText("");
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_vioIDComponentAdded
+
+    private void vioIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_vioIDFocusLost
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        String vio_id = vioID.getText().trim(); // Get the entered ID
+
+        if (vio_id.isEmpty()) {
+            studFirstName.setText(""); // Clear fields if empty
+            studLastName.setText("");
+            vioName.setText("");
+            return;
+        }
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            // Correct SQL query with JOIN to fetch both student name and violation name
+            String sql = "SELECT s.stud_fname, s.stud_lname, v.vio_name FROM vio_table v " +
+                         "JOIN stud_table s ON v.stud_id = s.stud_id WHERE v.vio_id = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vio_id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                studFirstName.setText(rs.getString("stud_fname"));
+                studLastName.setText(rs.getString("stud_lname"));
+                vioName.setText(rs.getString("vio_name"));
+            } else {
+                studFirstName.setText(""); // Clear fields if no match
+                studLastName.setText("");
+                vioName.setText("");
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_vioIDFocusLost
+
+    private void vioIDPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_vioIDPropertyChange
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        String vio_id = vioID.getText().trim(); // Get the entered ID
+
+        if (vio_id.isEmpty()) {
+            studFirstName.setText(""); // Clear fields if empty
+            studLastName.setText("");
+            vioName.setText("");
+            return;
+        }
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            // Correct SQL query with JOIN to fetch both student name and violation name
+            String sql = "SELECT s.stud_fname, s.stud_lname, v.vio_name FROM vio_table v " +
+                         "JOIN stud_table s ON v.stud_id = s.stud_id WHERE v.vio_id = ?";
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vio_id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                studFirstName.setText(rs.getString("stud_fname"));
+                studLastName.setText(rs.getString("stud_lname"));
+                vioName.setText(rs.getString("vio_name"));
+            } else {
+                studFirstName.setText(""); // Clear fields if no match
+                studLastName.setText("");
+                vioName.setText("");
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_vioIDPropertyChange
 
     /**
      * @param args the command line arguments

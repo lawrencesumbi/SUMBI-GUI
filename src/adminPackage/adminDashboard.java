@@ -32,6 +32,7 @@ import javax.swing.table.TableModel;
  */
 public class adminDashboard extends javax.swing.JFrame {
     private String user_fname;
+    private String vio_id;
     /**
      * Creates new form
      */
@@ -605,7 +606,7 @@ public class adminDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutMouseClicked
 
     private void recordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseClicked
-        new adminRecord(user_fname).setVisible(true);
+        new adminRecord(user_fname, vio_id).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_recordMouseClicked
 
