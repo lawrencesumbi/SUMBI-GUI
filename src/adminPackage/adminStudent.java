@@ -42,6 +42,7 @@ import net.proteanit.sql.DbUtils;
 public class adminStudent extends javax.swing.JFrame {
     private String user_fname;
     private String vio_id;
+    private String stud_id;
 
     /**
      * Creates new form adminStudent
@@ -74,7 +75,7 @@ public class adminStudent extends javax.swing.JFrame {
 
             stud_table.setModel(DbUtils.resultSetToTableModel(rs));   
             
-            String[] columnNames = {"ID", "First Name", "Last Name", "Program", "Section", "Address", "Contact Number"};
+            String[] columnNames = {"Student ID", "First Name", "Last Name", "Program", "Section", "Address", "Contact Number"};
             for (int col = 0; col < columnNames.length; col++) {
                 stud_table.getColumnModel().getColumn(col).setHeaderValue(columnNames[col]);
             }
@@ -1064,7 +1065,7 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_studentMouseExited
 
     private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
-        new adminViolation(user_fname).setVisible(true);
+        new adminViolation(user_fname, stud_id).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_violationMouseClicked
 
@@ -1152,7 +1153,11 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_imageLabelMouseClicked
 
     private void violateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violateMouseClicked
-        // TODO add your handling code here:
+        String stud_id = studIDtextfield.getText();
+
+        adminViolation violationWindow = new adminViolation(user_fname, stud_id);
+        violationWindow.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_violateMouseClicked
 
     private void violateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violateMouseEntered

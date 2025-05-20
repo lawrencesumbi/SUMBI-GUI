@@ -32,6 +32,7 @@ import javax.swing.JLabel;
 public class adminUsers extends javax.swing.JFrame {
     private String user_fname;
     private String vio_id;
+    private String stud_id;
 
 
     /**
@@ -1069,7 +1070,7 @@ public class adminUsers extends javax.swing.JFrame {
     }//GEN-LAST:event_studentMouseExited
 
     private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
-        new adminViolation(user_fname).setVisible(true);
+        new adminViolation(user_fname, stud_id).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_violationMouseClicked
 

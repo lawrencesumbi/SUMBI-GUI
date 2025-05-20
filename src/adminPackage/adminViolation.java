@@ -43,6 +43,7 @@ import javax.swing.Icon;
 public class adminViolation extends javax.swing.JFrame {
     private String user_fname;
     private String vio_id;
+    private String stud_id;
     /**
      * Creates new form adminViolation
      */
@@ -51,9 +52,11 @@ public class adminViolation extends javax.swing.JFrame {
         displayData();
     }
     
-    public adminViolation(String user_fname) {
+    public adminViolation(String user_fname, String stud_id) {
         this.user_fname = user_fname;
+        this.stud_id = stud_id;
         initComponents();
+        studID.setText(stud_id);
         displayImage(user_fname);
         J_user_fname.setText(user_fname); 
         displayData();
@@ -715,9 +718,27 @@ public class adminViolation extends javax.swing.JFrame {
 
         studID.setEditable(false);
         studID.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        studID.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        studID.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                studIDFocusLost(evt);
+            }
+        });
+        studID.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                studIDInputMethodTextChanged(evt);
+            }
+        });
         studID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 studIDActionPerformed(evt);
+            }
+        });
+        studID.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                studIDPropertyChange(evt);
             }
         });
         studID.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -1315,6 +1336,120 @@ public class adminViolation extends javax.swing.JFrame {
     private void RECORDMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RECORDMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_RECORDMouseExited
+
+    private void studIDPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_studIDPropertyChange
+        String url = "jdbc:mysql://localhost:3306/sumbi_db"; 
+        String user = "root"; 
+        String pass = ""; 
+
+        String stud_id = studID.getText().trim(); // Get the entered ID
+
+        if (stud_id.isEmpty()) { 
+            studFirstName.setText(""); // Clear fields if empty
+            studLastName.setText("");
+            return; 
+        }
+
+        try { 
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            // Correct SQL query
+            String sql = "SELECT stud_fname, stud_lname FROM stud_table WHERE stud_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, stud_id); 
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) { 
+                studFirstName.setText(rs.getString("stud_fname")); 
+                studLastName.setText(rs.getString("stud_lname"));
+            } else { 
+                studFirstName.setText(""); // Clear fields if no match
+                studLastName.setText(""); 
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) { 
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+        } 
+    }//GEN-LAST:event_studIDPropertyChange
+
+    private void studIDInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_studIDInputMethodTextChanged
+        String url = "jdbc:mysql://localhost:3306/sumbi_db"; 
+        String user = "root"; 
+        String pass = ""; 
+
+        String stud_id = studID.getText().trim(); // Get the entered ID
+
+        if (stud_id.isEmpty()) { 
+            studFirstName.setText(""); // Clear fields if empty
+            studLastName.setText("");
+            return; 
+        }
+
+        try { 
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            // Correct SQL query
+            String sql = "SELECT stud_fname, stud_lname FROM stud_table WHERE stud_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, stud_id); 
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) { 
+                studFirstName.setText(rs.getString("stud_fname")); 
+                studLastName.setText(rs.getString("stud_lname"));
+            } else { 
+                studFirstName.setText(""); // Clear fields if no match
+                studLastName.setText(""); 
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) { 
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+        } 
+    }//GEN-LAST:event_studIDInputMethodTextChanged
+
+    private void studIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_studIDFocusLost
+        String url = "jdbc:mysql://localhost:3306/sumbi_db"; 
+        String user = "root"; 
+        String pass = ""; 
+
+        String stud_id = studID.getText().trim(); // Get the entered ID
+
+        if (stud_id.isEmpty()) { 
+            studFirstName.setText(""); // Clear fields if empty
+            studLastName.setText("");
+            return; 
+        }
+
+        try { 
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            // Correct SQL query
+            String sql = "SELECT stud_fname, stud_lname FROM stud_table WHERE stud_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, stud_id); 
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) { 
+                studFirstName.setText(rs.getString("stud_fname")); 
+                studLastName.setText(rs.getString("stud_lname"));
+            } else { 
+                studFirstName.setText(""); // Clear fields if no match
+                studLastName.setText(""); 
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) { 
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+        } 
+    }//GEN-LAST:event_studIDFocusLost
 
     /**
      * @param args the command line arguments

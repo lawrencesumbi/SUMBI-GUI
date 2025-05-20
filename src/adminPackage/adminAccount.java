@@ -42,6 +42,7 @@ import net.proteanit.sql.DbUtils;
 public class adminAccount extends javax.swing.JFrame {
     private String user_fname;
     private String vio_id;
+    private String stud_id;
     /**
      * Creates new form adminAccount
      */
@@ -919,7 +920,7 @@ public class adminAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutMouseExited
 
     private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
-        new adminViolation(user_fname).setVisible(true);
+        new adminViolation(user_fname, stud_id).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_violationMouseClicked
 
