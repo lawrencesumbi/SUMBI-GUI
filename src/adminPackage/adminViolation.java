@@ -1062,15 +1062,7 @@ public class adminViolation extends javax.swing.JFrame {
         String vio_des = vioDes.getText();
         String vio_sev = vioSev.getText();
         String imagePath = null;
-    
-        if (imageLabel.getIcon() != null) {
-            imagePath = saveImageToFolder(vio_id);
-        }
-        
-        LocalDateTime currDateTime = LocalDateTime.now();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm a");
-        String vio_stamp = currDateTime.format(format);
-        
+
         if (vio_id.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Violation ID doesn't exist!", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -1082,6 +1074,41 @@ public class adminViolation extends javax.swing.JFrame {
 
         try {
             Connection conn = DriverManager.getConnection(url, user, pass);
+
+            // 👉 Check if the status is "Recorded"
+            String checkSql = "SELECT vio_status FROM vio_table WHERE vio_id = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            checkStmt.setString(1, vio_id);
+            ResultSet rs = checkStmt.executeQuery();
+
+            if (rs.next()) {
+                String status = rs.getString("vio_status");
+                if ("Recorded".equalsIgnoreCase(status)) {
+                    JOptionPane.showMessageDialog(this, "This violation is marked as 'Recorded' and cannot be edited.", "Access Denied", JOptionPane.WARNING_MESSAGE);
+                    rs.close();
+                    checkStmt.close();
+                    conn.close();
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Violation not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                rs.close();
+                checkStmt.close();
+                conn.close();
+                return;
+            }
+
+            rs.close();
+            checkStmt.close();
+
+            // Continue with the update if status is NOT "Recorded"
+            if (imageLabel.getIcon() != null) {
+                imagePath = saveImageToFolder(vio_id);
+            }
+
+            LocalDateTime currDateTime = LocalDateTime.now();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm a");
+            String vio_stamp = currDateTime.format(format);
 
             String sql;
             if (imagePath != null) {
@@ -1095,7 +1122,7 @@ public class adminViolation extends javax.swing.JFrame {
             pstmt.setString(2, vio_des);
             pstmt.setString(3, vio_sev);
             pstmt.setString(4, vio_stamp);
-            
+
             if (imagePath != null) {
                 pstmt.setString(5, imagePath);
                 pstmt.setString(6, vio_id);
@@ -1106,9 +1133,8 @@ public class adminViolation extends javax.swing.JFrame {
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {
                 JOptionPane.showMessageDialog(this, "Violation Updated Successfully!");
-                 int uid = Session.getInstance().getUid(); 
+                int uid = Session.getInstance().getUid(); 
                 logActivity(uid, "Updated Violation: " + vio_name);
-
             } else {
                 JOptionPane.showMessageDialog(this, "No matching record found!", "Update Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -1132,7 +1158,7 @@ public class adminViolation extends javax.swing.JFrame {
         String vio_id = vioIDtextfield.getText(); // Assuming there's a text field for user_id
 
         if (vio_id.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter a User ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please enter a Violation ID.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -1143,9 +1169,34 @@ public class adminViolation extends javax.swing.JFrame {
         try {
             Connection conn = DriverManager.getConnection(url, user, pass);
 
-            
+            // 👉 Check if the status is "Recorded"
+            String checkSql = "SELECT vio_status FROM vio_table WHERE vio_id = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            checkStmt.setString(1, vio_id);
+            ResultSet rs = checkStmt.executeQuery();
 
-            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
+            if (rs.next()) {
+                String status = rs.getString("vio_status");
+                if ("Recorded".equalsIgnoreCase(status)) {
+                    JOptionPane.showMessageDialog(this, "This violation is marked as 'Recorded' and cannot be deleted.", "Access Denied", JOptionPane.WARNING_MESSAGE);
+                    rs.close();
+                    checkStmt.close();
+                    conn.close();
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Violation not found.", "Error", JOptionPane.ERROR_MESSAGE);
+                rs.close();
+                checkStmt.close();
+                conn.close();
+                return;
+            }
+
+            rs.close();
+            checkStmt.close();
+
+            // Proceed with deletion
+            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this violation?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
             if (confirm != JOptionPane.YES_OPTION) {
                 conn.close();
                 return;
@@ -1158,9 +1209,8 @@ public class adminViolation extends javax.swing.JFrame {
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
                 JOptionPane.showMessageDialog(this, "Violation deleted successfully!");
-                 int uid = Session.getInstance().getUid(); // 🔐 get user_id from session
+                int uid = Session.getInstance().getUid(); // 🔐 get user_id from session
                 logActivity(uid, "Deleted Violation: " + vio_id);
-
             } else {
                 JOptionPane.showMessageDialog(this, "Deletion failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
             }

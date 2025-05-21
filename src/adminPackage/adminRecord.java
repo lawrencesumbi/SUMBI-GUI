@@ -1286,8 +1286,7 @@ public class adminRecord extends javax.swing.JFrame {
     }//GEN-LAST:event_printPrevMouseEntered
 
     private void printPrevMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printPrevMouseClicked
-// Get rec_id from text field
-    String recIdText = recIDtextfield.getText().trim();
+String recIdText = recIDtextfield.getText().trim();
 
     if (recIdText.isEmpty()) {
         JOptionPane.showMessageDialog(null, "Please enter a Record ID!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1308,8 +1307,8 @@ public class adminRecord extends javax.swing.JFrame {
 
     try (Connection conn = DriverManager.getConnection(url, user, pass)) {
 
-        String query = "SELECT s.stud_fname, s.stud_lname, s.stud_program, s.stud_section, s.stud_address, s.stud_cnumber, " +
-                       "v.vio_name, v.vio_des, v.vio_sev, v.vio_stamp, " +
+        String query = "SELECT s.stud_fname, s.stud_lname, s.stud_program, s.stud_section, s.stud_address, s.stud_cnumber, s.image_path AS stud_image_path, " +
+                       "v.vio_name, v.vio_des, v.vio_sev, v.vio_stamp, v.image_path AS vio_image_path, " +
                        "r.rec_sanction, r.rec_comment, r.rec_stamp " +
                        "FROM rec_table r " +
                        "JOIN vio_table v ON r.vio_id = v.vio_id " +
@@ -1320,29 +1319,29 @@ public class adminRecord extends javax.swing.JFrame {
             stmt.setInt(1, rec_id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    // Student info
                     String fullName = rs.getString("stud_fname") + " " + rs.getString("stud_lname");
                     String program = rs.getString("stud_program");
                     String section = rs.getString("stud_section");
                     String address = rs.getString("stud_address");
                     String contact = rs.getString("stud_cnumber");
 
-                    // Violation info
                     String vioName = rs.getString("vio_name");
                     String vioDes = rs.getString("vio_des");
                     String vioSev = rs.getString("vio_sev");
                     String vioStamp = rs.getString("vio_stamp");
 
-                    // Record info
                     String recSanction = rs.getString("rec_sanction");
                     String recComment = rs.getString("rec_comment");
                     String recStamp = rs.getString("rec_stamp");
 
-                    // Show report window
+                    String studPhotoPath = rs.getString("stud_image_path");
+                    String vioPhotoPath = rs.getString("vio_image_path");
+
                     new adminPrintPreview(
                         fullName, program, section, address, contact,
                         vioName, vioDes, vioSev, vioStamp,
-                        recSanction, recComment, recStamp
+                        recSanction, recComment, recStamp,
+                        studPhotoPath, vioPhotoPath
                     ).setVisible(true);
 
                     this.dispose();
@@ -1354,7 +1353,7 @@ public class adminRecord extends javax.swing.JFrame {
 
     } catch (SQLException ex) {
         ex.printStackTrace();
-    }                
+    }                 
     }//GEN-LAST:event_printPrevMouseClicked
 
     private void rec_tableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rec_tableMouseEntered

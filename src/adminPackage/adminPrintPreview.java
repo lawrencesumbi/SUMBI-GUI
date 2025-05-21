@@ -10,10 +10,12 @@ import config.dbConnector;
 import config.panelPrinter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -55,7 +57,8 @@ public class adminPrintPreview extends javax.swing.JFrame {
 
     public adminPrintPreview(String fullName, String program, String section, String address, String contact,
                          String vioNameVal, String vioDes, String vioSev, String vioStamp,
-                         String recSanction, String recComment, String recStamp) {
+                         String recSanction, String recComment, String recStamp,
+                         String studPhotoPath, String vioPhotoPath) {
 
         initComponents();
 
@@ -76,8 +79,20 @@ public class adminPrintPreview extends javax.swing.JFrame {
         comment.setText(recComment);
         dateRecorded.setText(recStamp);
 
+        // Image handling (use default icon if path is null or file doesn't exist)
+        if (studPhotoPath != null && new File(studPhotoPath).exists()) {
+            studPhoto.setIcon(new ImageIcon(studPhotoPath));
+        } else {
+            studPhoto.setIcon(new ImageIcon("default_student.png")); // fallback image
+        }
 
-        
+        if (vioPhotoPath != null && new File(vioPhotoPath).exists()) {
+            vioPhoto.setIcon(new ImageIcon(vioPhotoPath));
+        } else {
+            vioPhoto.setIcon(new ImageIcon("default_violation.png")); // fallback image
+        }
+
+        // Optional: Print Button
         if (reportPanel == null) {
             reportPanel = new JPanel(); 
         }
@@ -92,8 +107,8 @@ public class adminPrintPreview extends javax.swing.JFrame {
         });
 
         this.add(printButton); 
-
     }
+
 
     private void printReport() {
         panelPrinter printer = new panelPrinter(bodycolorPanel);
@@ -163,11 +178,12 @@ public class adminPrintPreview extends javax.swing.JFrame {
         actionTaken = new javax.swing.JLabel();
         comment = new javax.swing.JLabel();
         dateRecorded = new javax.swing.JLabel();
+        studPhoto = new javax.swing.JLabel();
+        vioPhoto = new javax.swing.JLabel();
         printButton = new javax.swing.JButton();
         printButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(650, 830));
 
         jPanel2.setBackground(new java.awt.Color(204, 0, 0));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -201,7 +217,7 @@ public class adminPrintPreview extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("S T U D E N T    V I O L A T I O N    S Y S T E M");
-        bodycolorPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 485, -1));
+        bodycolorPanel.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 485, -1));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -211,40 +227,40 @@ public class adminPrintPreview extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("SANCTION DETAILS");
-        bodycolorPanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 470, 130, 20));
+        bodycolorPanel.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 500, 130, 20));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("Student's Name:");
-        bodycolorPanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, 120, 20));
+        bodycolorPanel.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, 120, 20));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Student's Address:");
-        bodycolorPanel.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 120, 20));
+        bodycolorPanel.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, 120, 20));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Student's Contact #:");
-        bodycolorPanel.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 130, 20));
+        bodycolorPanel.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 130, 20));
 
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("Recorded by:");
-        bodycolorPanel.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 650, 110, 20));
+        bodycolorPanel.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 630, 110, 20));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setText("Student's Program:");
-        bodycolorPanel.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, 20));
+        bodycolorPanel.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, -1, 20));
 
         studFullName.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         studFullName.setText("studFullName");
-        bodycolorPanel.add(studFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 150, 20));
+        bodycolorPanel.add(studFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 150, 20));
 
         adminName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminName.setText("Admin Name");
-        bodycolorPanel.add(adminName, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 670, 190, 40));
+        bodycolorPanel.add(adminName, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 650, 190, 40));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -269,96 +285,116 @@ public class adminPrintPreview extends javax.swing.JFrame {
         jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("STUDENT DETAILS");
-        bodycolorPanel.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 120, 20));
+        bodycolorPanel.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 120, 20));
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Violation Name:");
-        bodycolorPanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, 100, 20));
+        bodycolorPanel.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, 110, 20));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("Violation Description:");
-        bodycolorPanel.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 410, 140, 20));
+        bodycolorPanel.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 450, 150, 20));
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel25.setText("Violation Severity:");
-        bodycolorPanel.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, 120, 20));
+        bodycolorPanel.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 130, 20));
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("VIOLATION DETAILS");
-        bodycolorPanel.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 140, 20));
+        bodycolorPanel.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, 140, 20));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("Violation Date:");
-        bodycolorPanel.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 350, 110, 20));
+        bodycolorPanel.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, 110, 20));
 
         jLabel27.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel27.setText("Action Taken:");
-        bodycolorPanel.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 500, 100, 20));
+        bodycolorPanel.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, 110, 20));
 
         jLabel28.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel28.setText("Comment:");
-        bodycolorPanel.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 520, 80, 20));
+        bodycolorPanel.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 550, 90, 20));
 
         jLabel26.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel26.setText("Date Recorded:");
-        bodycolorPanel.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 540, 110, 20));
+        bodycolorPanel.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 570, 120, 20));
 
         jLabel29.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("Reported by:");
-        bodycolorPanel.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 650, 110, 20));
+        bodycolorPanel.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 630, 110, 20));
 
         userName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userName.setText("User Name");
-        bodycolorPanel.add(userName, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 670, 190, 40));
+        bodycolorPanel.add(userName, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 650, 190, 40));
 
         studProgramSection.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         studProgramSection.setText("studProgramSection");
-        bodycolorPanel.add(studProgramSection, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 150, 20));
+        bodycolorPanel.add(studProgramSection, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 270, 150, 20));
 
         studAddress.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         studAddress.setText("studAddress");
-        bodycolorPanel.add(studAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 150, 20));
+        bodycolorPanel.add(studAddress, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 150, 20));
 
         studCNumber.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         studCNumber.setText("studCNumber");
-        bodycolorPanel.add(studCNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, 150, 20));
+        bodycolorPanel.add(studCNumber, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 150, 20));
 
         vioDate.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         vioDate.setText("vioDate");
-        bodycolorPanel.add(vioDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 350, 150, 20));
+        bodycolorPanel.add(vioDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 150, 20));
 
         vioName.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         vioName.setText("vioName");
-        bodycolorPanel.add(vioName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 150, 20));
+        bodycolorPanel.add(vioName, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 410, 150, 20));
 
         vioSevi.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         vioSevi.setText("vioSevi");
-        bodycolorPanel.add(vioSevi, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 390, 150, 20));
+        bodycolorPanel.add(vioSevi, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 430, 150, 20));
 
         vioDesc.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         vioDesc.setText("vioDesc");
-        bodycolorPanel.add(vioDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 410, 150, 20));
+        bodycolorPanel.add(vioDesc, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 450, 150, 20));
 
         actionTaken.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         actionTaken.setText("actionTaken");
-        bodycolorPanel.add(actionTaken, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 500, 150, 20));
+        bodycolorPanel.add(actionTaken, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 530, 150, 20));
 
         comment.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         comment.setText("comment");
-        bodycolorPanel.add(comment, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 520, 150, 20));
+        bodycolorPanel.add(comment, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 550, 150, 20));
 
         dateRecorded.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         dateRecorded.setText("dateRecorded");
-        bodycolorPanel.add(dateRecorded, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 540, 150, 20));
+        bodycolorPanel.add(dateRecorded, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 570, 150, 20));
+
+        studPhoto.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        studPhoto.setForeground(new java.awt.Color(255, 255, 255));
+        studPhoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        studPhoto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                studPhotoMouseClicked(evt);
+            }
+        });
+        bodycolorPanel.add(studPhoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, 150, 150));
+
+        vioPhoto.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        vioPhoto.setForeground(new java.awt.Color(255, 255, 255));
+        vioPhoto.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        vioPhoto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                vioPhotoMouseClicked(evt);
+            }
+        });
+        bodycolorPanel.add(vioPhoto, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, 190, 190));
 
         jPanel2.add(bodycolorPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 570, 710));
 
@@ -403,6 +439,14 @@ public class adminPrintPreview extends javax.swing.JFrame {
         new adminRecord(user_fname, vio_id).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_printButton4ActionPerformed
+
+    private void studPhotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studPhotoMouseClicked
+        imageHandler.chooseImage(studPhoto);
+    }//GEN-LAST:event_studPhotoMouseClicked
+
+    private void vioPhotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vioPhotoMouseClicked
+        imageHandler.chooseVioImage(studPhoto);
+    }//GEN-LAST:event_vioPhotoMouseClicked
 
     /**
      * @param args the command line arguments
@@ -478,11 +522,13 @@ public class adminPrintPreview extends javax.swing.JFrame {
     private javax.swing.JLabel studAddress;
     private javax.swing.JLabel studCNumber;
     private javax.swing.JLabel studFullName;
+    private javax.swing.JLabel studPhoto;
     private javax.swing.JLabel studProgramSection;
     private javax.swing.JLabel userName;
     private javax.swing.JLabel vioDate;
     private javax.swing.JLabel vioDesc;
     private javax.swing.JLabel vioName;
+    private javax.swing.JLabel vioPhoto;
     private javax.swing.JLabel vioSevi;
     // End of variables declaration//GEN-END:variables
 }
