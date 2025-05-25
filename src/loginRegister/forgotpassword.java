@@ -6,6 +6,8 @@
 import config.dbConnector;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,49 +30,70 @@ public class forgotpassword extends javax.swing.JFrame {
     }
     
     private void sendPin() {
-        dbConnector dbc = new dbConnector();
-        Connection con = dbc.getConnection();
+    dbConnector dbc = new dbConnector();
+    Connection con = dbc.getConnection();
 
-        String user_input = enteremail.getText().trim();
-        if (user_input.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter your email or contact number.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    String user_input = enteremail.getText().trim();
+    if (user_input.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter your email or contact number.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        boolean isEmail = user_input.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com$"); 
-        boolean isPhone = user_input.matches("^\\d{10,15}$");
+    boolean isEmail = user_input.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com$"); 
+    boolean isPhone = user_input.matches("^\\d{10,15}$");
 
-        if (!isEmail && !isPhone) {
-            JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid email or contact number.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (!isEmail && !isPhone) {
+        JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid email or contact number.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        try {
-            String query = "SELECT user_email, user_cnumber FROM user_table WHERE user_email = ? OR user_cnumber = ?";
-            PreparedStatement pst = con.prepareStatement(query);
-            pst.setString(1, user_input);
-            pst.setString(2, user_input);
-            ResultSet rs = pst.executeQuery();
+    try {
+        String query = "SELECT user_email, user_cnumber FROM user_table WHERE user_email = ? OR user_cnumber = ?";
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.setString(1, user_input);
+        pst.setString(2, user_input);
+        ResultSet rs = pst.executeQuery();
 
-            if (rs.next()) {
-                String foundEmail = rs.getString("user_email"); 
-                generatedPin = 100000 + new Random().nextInt(900000);
-                System.out.println("NOTIFICATION: Reset PIN for " + foundEmail + " is " + generatedPin);
+        if (rs.next()) {
+            String foundEmail = rs.getString("user_email"); 
 
-                JOptionPane.showMessageDialog(this, "A PIN has been sent to your email or phone number. Please check your inbox.", 
-                                              "PIN Sent", JOptionPane.INFORMATION_MESSAGE);
+            // Generate random 6-digit PIN
+            int generatedPin = 100000 + new Random().nextInt(900000);
 
-                this.setVisible(false);
-                new verification(foundEmail, generatedPin).setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Email or contact number not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            // Display PIN with copy option
+            String message = "<html><center>NOTIFICATION:<br>Reset PIN for <b>" + foundEmail + "</b> is:<br><h2>" + generatedPin + "</h2></center></html>";
+
+            int option = JOptionPane.showOptionDialog(
+                this,
+                message,
+                "PIN Generated",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new String[]{"Copy PIN", "OK"},
+                "OK"
+            );
+
+            if (option == 0) { // If "Copy PIN" is clicked
+                StringSelection stringSelection = new StringSelection(String.valueOf(generatedPin));
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+                JOptionPane.showMessageDialog(this, "PIN copied to clipboard!");
             }
 
-            con.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+            // Proceed to verification screen
+            this.setVisible(false);
+            new verification(foundEmail, generatedPin).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Email or contact number not found.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
+
+
  
 
     /**
@@ -99,8 +122,8 @@ public class forgotpassword extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/forgotten.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 320, 190));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/6179011.png"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 230, 190));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -110,6 +133,7 @@ public class forgotpassword extends javax.swing.JFrame {
         back.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         back.setForeground(new java.awt.Color(255, 255, 255));
         back.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        back.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview (19).png"))); // NOI18N
         back.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 backMouseClicked(evt);
@@ -121,12 +145,12 @@ public class forgotpassword extends javax.swing.JFrame {
                 backMouseExited(evt);
             }
         });
-        jPanel1.add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 50));
+        jPanel1.add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 60));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Forgot Password?");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 140, 30));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 140, 30));
 
         enteremail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         enteremail.setHorizontalAlignment(javax.swing.JTextField.CENTER);

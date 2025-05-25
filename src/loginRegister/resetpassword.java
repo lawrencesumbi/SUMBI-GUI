@@ -93,6 +93,7 @@ public class resetpassword extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         resetPassword = new javax.swing.JLabel();
         emailTextField = new javax.swing.JTextField();
+        back1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -102,8 +103,8 @@ public class resetpassword extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/resetpassword.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 400, 250));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/6195699.png"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 280, 220));
 
         back.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         back.setForeground(new java.awt.Color(255, 255, 255));
@@ -136,7 +137,7 @@ public class resetpassword extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("Reset your Password");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 170, 30));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 170, 30));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -176,6 +177,23 @@ public class resetpassword extends javax.swing.JFrame {
         });
         jPanel1.add(emailTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 360, 40));
 
+        back1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        back1.setForeground(new java.awt.Color(255, 255, 255));
+        back1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        back1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview (19).png"))); // NOI18N
+        back1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                back1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                back1MouseExited(evt);
+            }
+        });
+        jPanel1.add(back1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 60));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -192,7 +210,7 @@ public class resetpassword extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
-        new loginform().setVisible(true);
+        new verification().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backMouseClicked
 
@@ -261,6 +279,19 @@ public class resetpassword extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_emailTextFieldActionPerformed
 
+    private void back1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back1MouseClicked
+        new loginform().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_back1MouseClicked
+
+    private void back1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back1MouseEntered
+
+    }//GEN-LAST:event_back1MouseEntered
+
+    private void back1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back1MouseExited
+
+    }//GEN-LAST:event_back1MouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -298,6 +329,7 @@ public class resetpassword extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel back;
+    private javax.swing.JLabel back1;
     private javax.swing.JTextField emailTextField;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;

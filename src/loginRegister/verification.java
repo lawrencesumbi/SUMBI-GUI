@@ -14,6 +14,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import java.awt.Toolkit;
+import java.awt.datatransfer.StringSelection;
 
 
 /**
@@ -76,6 +78,7 @@ public class verification extends javax.swing.JFrame {
         enterpin = new javax.swing.JTextField();
         back = new javax.swing.JLabel();
         verifybutton = new javax.swing.JLabel();
+        back1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -85,13 +88,13 @@ public class verification extends javax.swing.JFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image_forest_green.png"))); // NOI18N
-        jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 320, 210));
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview (20).png"))); // NOI18N
+        jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 320, 210));
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
         jLabel14.setText("Verification");
-        jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 190, 20));
+        jPanel4.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 90, 20));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
@@ -172,6 +175,23 @@ public class verification extends javax.swing.JFrame {
         });
         jPanel4.add(verifybutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 430, 110, 40));
 
+        back1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        back1.setForeground(new java.awt.Color(255, 255, 255));
+        back1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        back1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview (19).png"))); // NOI18N
+        back1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                back1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                back1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                back1MouseExited(evt);
+            }
+        });
+        jPanel4.add(back1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 60));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,32 +225,50 @@ public class verification extends javax.swing.JFrame {
     }//GEN-LAST:event_backMouseExited
 
     private void resendMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendMouseClicked
-        dbConnector dbc = new dbConnector();
-        Connection con = dbc.getConnection();
-        
-        try {
-            String query = "SELECT user_email FROM user_table WHERE user_email = ?";
-            PreparedStatement pst = con.prepareStatement(query);
-            pst.setString(1, user_email);
-            ResultSet rs = pst.executeQuery();
+    dbConnector dbc = new dbConnector();
+    Connection con = dbc.getConnection();
+    
+    try {
+        String query = "SELECT user_email FROM user_table WHERE user_email = ?";
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.setString(1, user_email);
+        ResultSet rs = pst.executeQuery();
 
-            if (rs.next()) {
-                generatedPin = 100000 + new Random().nextInt(900000);
-                System.out.println("NOTIFICATION: Reset PIN for " + user_email + " is " + generatedPin);
+        if (rs.next()) {
+            // Generate random 6-digit PIN
+            int generatedPin = 100000 + new Random().nextInt(900000);
 
-                JOptionPane.showMessageDialog(this, "A PIN has been sent to your email. Please check your inbox.", 
-                                              "PIN Sent", JOptionPane.INFORMATION_MESSAGE);
+            // Display PIN with copy option
+            String message = "<html><center>NOTIFICATION:<br>Reset PIN for <b>" + user_email + "</b> is:<br><h2>" + generatedPin + "</h2></center></html>";
 
-                this.setVisible(false);
-               new verification(user_email, generatedPin).setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Email not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            int option = JOptionPane.showOptionDialog(
+                this,
+                message,
+                "PIN Generated",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new String[]{"Copy PIN", "OK"},
+                "OK"
+            );
+
+            if (option == 0) { // If "Copy PIN" is clicked
+                StringSelection stringSelection = new StringSelection(String.valueOf(generatedPin));
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
+                JOptionPane.showMessageDialog(this, "PIN copied to clipboard!");
             }
 
-            con.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+            // Proceed to verification screen
+            this.setVisible(false);
+            new verification(user_email, generatedPin).setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "Email not found.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
     }//GEN-LAST:event_resendMouseClicked
 
     private void verifybuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verifybuttonMouseClicked
@@ -256,6 +294,19 @@ public class verification extends javax.swing.JFrame {
     private void resendMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resendMouseExited
        resend.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_resendMouseExited
+
+    private void back1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back1MouseClicked
+        new loginform().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_back1MouseClicked
+
+    private void back1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back1MouseEntered
+
+    }//GEN-LAST:event_back1MouseEntered
+
+    private void back1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_back1MouseExited
+
+    }//GEN-LAST:event_back1MouseExited
 
     /**
      * @param args the command line arguments
@@ -294,6 +345,7 @@ public class verification extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel back;
+    private javax.swing.JLabel back1;
     private javax.swing.JTextField enterpin;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;

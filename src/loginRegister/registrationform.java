@@ -63,7 +63,7 @@ public class registrationform extends javax.swing.JFrame {
         systemlabel = new javax.swing.JLabel();
         studentlabel = new javax.swing.JLabel();
         RightPanel = new javax.swing.JPanel();
-        backbutton = new javax.swing.JLabel();
+        Login = new javax.swing.JLabel();
         emailTextField = new javax.swing.JTextField();
         user_emaillabel = new javax.swing.JLabel();
         registerlabel = new javax.swing.JLabel();
@@ -116,24 +116,24 @@ public class registrationform extends javax.swing.JFrame {
         RightPanel.setBackground(new java.awt.Color(204, 0, 0));
         RightPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        backbutton.setBackground(new java.awt.Color(255, 255, 255));
-        backbutton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        backbutton.setForeground(new java.awt.Color(255, 255, 255));
-        backbutton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        backbutton.setText("Back");
-        backbutton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        backbutton.addMouseListener(new java.awt.event.MouseAdapter() {
+        Login.setBackground(new java.awt.Color(255, 255, 255));
+        Login.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        Login.setForeground(new java.awt.Color(255, 255, 255));
+        Login.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Login.setText("Login");
+        Login.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Login.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                backbuttonMouseClicked(evt);
+                LoginMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                backbuttonMouseEntered(evt);
+                LoginMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                backbuttonMouseExited(evt);
+                LoginMouseExited(evt);
             }
         });
-        RightPanel.add(backbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 80, 30));
+        RightPanel.add(Login, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, 80, 30));
 
         emailTextField.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         emailTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -273,18 +273,18 @@ public class registrationform extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fullNameTextFieldActionPerformed
 
-    private void backbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backbuttonMouseClicked
+    private void LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseClicked
         new loginform().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_backbuttonMouseClicked
+    }//GEN-LAST:event_LoginMouseClicked
 
-    private void backbuttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backbuttonMouseEntered
-        backbutton.setForeground(new java.awt.Color(255, 255, 0));
-    }//GEN-LAST:event_backbuttonMouseEntered
+    private void LoginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseEntered
+        Login.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_LoginMouseEntered
 
-    private void backbuttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backbuttonMouseExited
-        backbutton.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_backbuttonMouseExited
+    private void LoginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseExited
+        Login.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_LoginMouseExited
 
     private void registerbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerbuttonMouseClicked
         String user_fname = fullNameTextField.getText();
@@ -451,8 +451,8 @@ public class registrationform extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel HeaderPanel;
     private javax.swing.JPanel LeftPanel;
+    private javax.swing.JLabel Login;
     private javax.swing.JPanel RightPanel;
-    private javax.swing.JLabel backbutton;
     private javax.swing.JLabel cn_error;
     private javax.swing.JTextField contactNumberTextField;
     private javax.swing.JTextField emailTextField;
