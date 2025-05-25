@@ -268,7 +268,6 @@ public class userViolation extends javax.swing.JFrame {
         imageLabel1 = new javax.swing.JLabel();
         user_emaillabel3 = new javax.swing.JLabel();
         vioStat = new javax.swing.JTextField();
-        RECORD = new javax.swing.JLabel();
         user_emaillabel4 = new javax.swing.JLabel();
         leftpanel = new javax.swing.JPanel();
         displayImage = new javax.swing.JLabel();
@@ -335,7 +334,7 @@ public class userViolation extends javax.swing.JFrame {
                 addMouseExited(evt);
             }
         });
-        violationpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 60, 30));
+        violationpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 60, 30));
 
         edit.setBackground(new java.awt.Color(255, 255, 255));
         edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -354,7 +353,7 @@ public class userViolation extends javax.swing.JFrame {
                 editMouseExited(evt);
             }
         });
-        violationpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 320, 60, 30));
+        violationpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 60, 30));
 
         delete.setBackground(new java.awt.Color(255, 255, 255));
         delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -373,7 +372,7 @@ public class userViolation extends javax.swing.JFrame {
                 deleteMouseExited(evt);
             }
         });
-        violationpanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 320, 60, 30));
+        violationpanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 310, 60, 30));
 
         refresh.setBackground(new java.awt.Color(255, 255, 255));
         refresh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -392,7 +391,7 @@ public class userViolation extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        violationpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, 120, 30));
+        violationpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 120, 30));
 
         searchfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         searchfield.addActionListener(new java.awt.event.ActionListener() {
@@ -405,7 +404,7 @@ public class userViolation extends javax.swing.JFrame {
                 searchfieldKeyPressed(evt);
             }
         });
-        violationpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 320, 150, 30));
+        violationpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 310, 150, 30));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -424,7 +423,7 @@ public class userViolation extends javax.swing.JFrame {
                 searchMouseExited(evt);
             }
         });
-        violationpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 320, 70, 30));
+        violationpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 70, 30));
 
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -594,25 +593,6 @@ public class userViolation extends javax.swing.JFrame {
         });
         violationpanel.add(vioStat, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 200, -1));
 
-        RECORD.setBackground(new java.awt.Color(255, 255, 255));
-        RECORD.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        RECORD.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        RECORD.setText("RECORD");
-        RECORD.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        RECORD.setOpaque(true);
-        RECORD.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                RECORDMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                RECORDMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                RECORDMouseExited(evt);
-            }
-        });
-        violationpanel.add(RECORD, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 320, 90, 30));
-
         user_emaillabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_emaillabel4.setForeground(new java.awt.Color(255, 255, 255));
         user_emaillabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -684,6 +664,9 @@ public class userViolation extends javax.swing.JFrame {
         student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         student.setText("STUDENT");
         student.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                studentMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 studentMouseEntered(evt);
             }
@@ -694,7 +677,7 @@ public class userViolation extends javax.swing.JFrame {
         leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, 90, 50));
 
         violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        violation.setForeground(new java.awt.Color(255, 255, 255));
+        violation.setForeground(new java.awt.Color(255, 255, 0));
         violation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         violation.setText("VIOLATION");
         violation.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -747,6 +730,7 @@ public class userViolation extends javax.swing.JFrame {
         getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 600));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void vio_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vio_tableMouseClicked
@@ -1330,22 +1314,6 @@ public class userViolation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_vioStatActionPerformed
 
-    private void RECORDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RECORDMouseClicked
-        String vio_id = vioIDtextfield.getText();  // Get the vio_id from text field
-
-        adminRecord recordWindow = new adminRecord(user_fname, vio_id); // Pass vioID
-        recordWindow.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_RECORDMouseClicked
-
-    private void RECORDMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RECORDMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RECORDMouseEntered
-
-    private void RECORDMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RECORDMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_RECORDMouseExited
-
     private void dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseClicked
         new userDashboard(user_fname).setVisible(true);
         this.dispose();
@@ -1376,7 +1344,7 @@ public class userViolation extends javax.swing.JFrame {
     }//GEN-LAST:event_violationMouseEntered
 
     private void violationMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseExited
-        violation.setForeground(new java.awt.Color(255, 255, 255));
+        
     }//GEN-LAST:event_violationMouseExited
 
     private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
@@ -1412,6 +1380,11 @@ public class userViolation extends javax.swing.JFrame {
     private void logoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseExited
         logout.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_logoutMouseExited
+
+    private void studentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseClicked
+        new userStudent(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_studentMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1450,7 +1423,6 @@ public class userViolation extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel J_user_fname;
-    private javax.swing.JLabel RECORD;
     private javax.swing.JLabel add;
     private javax.swing.JLabel dash_icon;
     private javax.swing.JLabel dashboard;

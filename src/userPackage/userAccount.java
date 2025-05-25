@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import config.Session;
 import config.dbConnector;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -39,6 +40,8 @@ import net.proteanit.sql.DbUtils;
  */
 public class userAccount extends javax.swing.JFrame {
     private String user_fname;
+    private String vio_id;
+    private String stud_id;
     /**
      * Creates new form userAccount
      */
@@ -84,6 +87,20 @@ public class userAccount extends javax.swing.JFrame {
 
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+    
+    private void logActivity(int user_id, String action) {
+        String sql = "INSERT INTO logs_table (user_id, logs_action, logs_stamp) VALUES (?, ?, NOW())";
+        dbConnector db = new dbConnector();
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, user_id);
+            pst.setString(2, action);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error logging activity: " + e.getMessage());
         }
     }
     
@@ -316,7 +333,6 @@ public class userAccount extends javax.swing.JFrame {
         emailTextField = new javax.swing.JTextField();
         user_passwordlabel = new javax.swing.JLabel();
         imageLabel = new javax.swing.JLabel();
-        settings1 = new javax.swing.JLabel();
         cancel = new javax.swing.JLabel();
         updatePassword = new javax.swing.JLabel();
         user_fnamelabel1 = new javax.swing.JLabel();
@@ -326,6 +342,7 @@ public class userAccount extends javax.swing.JFrame {
         newPasswordField = new javax.swing.JPasswordField();
         save = new javax.swing.JLabel();
         imageLabel1 = new javax.swing.JLabel();
+        settings2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -423,7 +440,7 @@ public class userAccount extends javax.swing.JFrame {
         leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 110, 50));
 
         settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        settings.setForeground(new java.awt.Color(255, 255, 255));
+        settings.setForeground(new java.awt.Color(255, 255, 0));
         settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         settings.setText("SETTINGS");
         settings.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -518,20 +535,6 @@ public class userAccount extends javax.swing.JFrame {
             }
         });
         userspanel.add(imageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 150, 150));
-
-        settings1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        settings1.setForeground(new java.awt.Color(255, 255, 255));
-        settings1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        settings1.setText("ACCOUNT SETTINGS");
-        settings1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                settings1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                settings1MouseExited(evt);
-            }
-        });
-        userspanel.add(settings1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 250, 50));
 
         cancel.setBackground(new java.awt.Color(255, 255, 255));
         cancel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -649,6 +652,20 @@ public class userAccount extends javax.swing.JFrame {
         });
         userspanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 180, 150, 150));
 
+        settings2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        settings2.setForeground(new java.awt.Color(255, 255, 255));
+        settings2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        settings2.setText("ACCOUNT SETTINGS");
+        settings2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                settings2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                settings2MouseExited(evt);
+            }
+        });
+        userspanel.add(settings2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, 250, 50));
+
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
         pack();
@@ -677,7 +694,7 @@ public class userAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_logoutMouseClicked
 
     private void settingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseExited
-        settings.setForeground(new java.awt.Color(255, 255, 255));
+        
     }//GEN-LAST:event_settingsMouseExited
 
     private void settingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseEntered
@@ -697,7 +714,8 @@ public class userAccount extends javax.swing.JFrame {
     }//GEN-LAST:event_violationMouseEntered
 
     private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
-        // TODO add your handling code here:
+        new userViolation(user_fname, stud_id).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_violationMouseClicked
 
     private void studentMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseExited
@@ -742,14 +760,6 @@ public class userAccount extends javax.swing.JFrame {
         imageHandler.chooseImage(imageLabel);
     }//GEN-LAST:event_imageLabelMouseClicked
 
-    private void settings1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_settings1MouseEntered
-
-    private void settings1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_settings1MouseExited
-
     private void cancelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancelMouseClicked
         try {
             dbConnector dbc = new dbConnector();
@@ -790,76 +800,92 @@ public class userAccount extends javax.swing.JFrame {
 
     private void updatePasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updatePasswordMouseClicked
         String user_fname = fullNameTextField.getText();
-        String user_cnumber = contactNumberTextField.getText();
-        String user_email = emailTextField.getText();
+    String user_cnumber = contactNumberTextField.getText();
+    String user_email = emailTextField.getText();
 
-        String oldPassword = oldPasswordField.getText();
-        String newPassword = newPasswordField.getText();
+    String oldPassword = oldPasswordField.getText();
+    String newPassword = newPasswordField.getText();
 
-        if (!user_cnumber.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (!user_cnumber.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (newPassword.length() < 8) {
-            JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (newPassword.length() < 8) {
+        JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (!user_email.toLowerCase().endsWith(".com")) {
-            JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (!user_email.toLowerCase().endsWith(".com")) {
+        JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        String hashedNewPassword = passwordHash(newPassword);
+    String hashedNewPassword = passwordHash(newPassword);
+    String oldPasswordHash = passwordHash(oldPassword);
 
-        String oldPasswordHash = passwordHash(oldPassword);
+    String url = "jdbc:mysql://localhost:3306/sumbi_db";
+    String dbUser = "root";
+    String dbPass = "";
 
-        String url = "jdbc:mysql://localhost:3306/sumbi_db";
-        String user = "root";
-        String pass = "";
+    try {
+        Connection conn = DriverManager.getConnection(url, dbUser, dbPass);
 
-        try {
-            Connection conn = DriverManager.getConnection(url, user, pass);
+        String selectQuery = "SELECT user_password FROM user_table WHERE user_email = ?";
+        PreparedStatement selectPstmt = conn.prepareStatement(selectQuery);
+        selectPstmt.setString(1, user_email);
+        ResultSet rs = selectPstmt.executeQuery();
 
-            String selectQuery = "SELECT user_password FROM user_table WHERE user_email = ?";
-            PreparedStatement selectPstmt = conn.prepareStatement(selectQuery);
-            selectPstmt.setString(1, user_email);
-            ResultSet rs = selectPstmt.executeQuery();
+        if (rs.next()) {
+            String storedPassword = rs.getString("user_password");
 
-            if (rs.next()) {
-                String storedPassword = rs.getString("user_password");
-
-                if (!storedPassword.equals(oldPasswordHash)) {
-                    JOptionPane.showMessageDialog(this, "Old password is incorrect.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                String updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, user_password = ? WHERE user_email = ?";
-                PreparedStatement updatePstmt = conn.prepareStatement(updateQuery);
-                updatePstmt.setString(1, user_fname);
-                updatePstmt.setString(2, user_cnumber);
-                updatePstmt.setString(3, hashedNewPassword);
-                updatePstmt.setString(4, user_email);
-
-                int rowsUpdated = updatePstmt.executeUpdate();
-                if (rowsUpdated > 0) {
-                    JOptionPane.showMessageDialog(this, "Password changed successfully!");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-
-                updatePstmt.close();
-            } else {
-                JOptionPane.showMessageDialog(this, "User not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (!storedPassword.equals(oldPasswordHash)) {
+                JOptionPane.showMessageDialog(this, "Old password is incorrect.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
 
-            rs.close();
-            selectPstmt.close();
-            conn.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            String updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, user_password = ? WHERE user_email = ?";
+            PreparedStatement updatePstmt = conn.prepareStatement(updateQuery);
+            updatePstmt.setString(1, user_fname);
+            updatePstmt.setString(2, user_cnumber);
+            updatePstmt.setString(3, hashedNewPassword);
+            updatePstmt.setString(4, user_email);
+
+            int rowsUpdated = updatePstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Password changed successfully!\nYou will be logged out for security.");
+
+                // Log the activity
+                Session session = Session.getInstance();
+                int userId = session.getUid();
+                if (userId != -1) {
+                    logActivity(userId, "Changed password for account: " + user_fname);
+                } else {
+                    System.err.println("Session user ID not set. Cannot log password change activity.");
+                }
+
+                // ✅ Log out user
+                this.dispose();    // Close current window
+
+                // ✅ Show login form (replace `LoginForm` with your login class name)
+                loginform loginForm = new loginform();
+                loginForm.setVisible(true);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            updatePstmt.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "User not found.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        rs.close();
+        selectPstmt.close();
+        conn.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_updatePasswordMouseClicked
 
     private void updatePasswordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updatePasswordMouseEntered
@@ -893,7 +919,7 @@ public class userAccount extends javax.swing.JFrame {
     private void saveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveMouseClicked
         String user_fname = fullNameTextField.getText();
         String user_cnumber = contactNumberTextField.getText();
-        String user_email = emailTextField.getText();  
+        String user_email = emailTextField.getText();
 
         if (!user_cnumber.matches("\\d+")) {
             JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -915,31 +941,41 @@ public class userAccount extends javax.swing.JFrame {
                 selectPstmt.setString(1, user_email);
                 try (ResultSet rs = selectPstmt.executeQuery()) {
                     if (rs.next()) {
-                        
-                    boolean hasImage = (imageLabel.getIcon() != null);
-                    String updateQuery;
 
-                    if (hasImage) {
-                        updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, image_path = ? WHERE user_email = ?";
-                    } else {
-                        updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ? WHERE user_email = ?";
-                    }
-
-                    try (PreparedStatement updatePstmt = conn.prepareStatement(updateQuery)) {
-                        updatePstmt.setString(1, user_fname);
-                        updatePstmt.setString(2, user_cnumber);
+                        boolean hasImage = (imageLabel.getIcon() != null);
+                        String updateQuery;
 
                         if (hasImage) {
-                            String imagePath = saveImageToFolder(user_email);
-                            updatePstmt.setString(3, imagePath);
-                            updatePstmt.setString(4, user_email);
+                            updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, image_path = ? WHERE user_email = ?";
                         } else {
-                            updatePstmt.setString(3, user_email);
+                            updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ? WHERE user_email = ?";
                         }
+
+                        try (PreparedStatement updatePstmt = conn.prepareStatement(updateQuery)) {
+                            updatePstmt.setString(1, user_fname);
+                            updatePstmt.setString(2, user_cnumber);
+
+                            if (hasImage) {
+                                String imagePath = saveImageToFolder(user_email);
+                                updatePstmt.setString(3, imagePath);
+                                updatePstmt.setString(4, user_email);
+                            } else {
+                                updatePstmt.setString(3, user_email);
+                            }
 
                             int rowsUpdated = updatePstmt.executeUpdate();
                             if (rowsUpdated > 0) {
                                 JOptionPane.showMessageDialog(this, "Account information updated successfully!");
+
+                                Session session = Session.getInstance();
+                                int userId = session.getUid();
+
+                                if (userId != -1) {
+                                    logActivity(userId, "Updated the Account Information: " + user_email);
+                                } else {
+                                    System.err.println("Session user ID not set. Cannot log password change activity.");
+                                }
+
                             } else {
                                 JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
@@ -965,6 +1001,14 @@ public class userAccount extends javax.swing.JFrame {
     private void imageLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabel1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_imageLabel1MouseClicked
+
+    private void settings2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settings2MouseEntered
+
+    private void settings2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settings2MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_settings2MouseExited
 
     /**
      * @param args the command line arguments
@@ -1020,7 +1064,7 @@ public class userAccount extends javax.swing.JFrame {
     private javax.swing.JLabel save;
     private javax.swing.JLabel sett_icon;
     private javax.swing.JLabel settings;
-    private javax.swing.JLabel settings1;
+    private javax.swing.JLabel settings2;
     private javax.swing.JLabel stud_icon;
     private javax.swing.JLabel student;
     private javax.swing.JLabel updatePassword;

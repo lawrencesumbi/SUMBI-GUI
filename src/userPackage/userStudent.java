@@ -38,7 +38,7 @@ import net.proteanit.sql.DbUtils;
  *
  * @author Admin
  */
-public class adminStudent extends javax.swing.JFrame {
+public class userStudent extends javax.swing.JFrame {
     private String user_fname;
     private String vio_id;
     private String stud_id;
@@ -46,12 +46,12 @@ public class adminStudent extends javax.swing.JFrame {
     /**
      * Creates new form adminStudent
      */
-    public adminStudent() {
+    public userStudent() {
         initComponents(); 
         displayData();
     }
 
-    public adminStudent(String user_fname) {
+    public userStudent(String user_fname) {
         this.user_fname = user_fname;
         initComponents();
         displayImage(user_fname);
@@ -336,7 +336,7 @@ public class adminStudent extends javax.swing.JFrame {
         leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, 50));
 
         student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        student.setForeground(new java.awt.Color(255, 255, 255));
+        student.setForeground(new java.awt.Color(255, 255, 0));
         student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         student.setText("STUDENT");
         student.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -699,7 +699,7 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_studentMouseEntered
 
     private void studentMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseExited
-        student.setForeground(new java.awt.Color(255, 255, 255));
+        
     }//GEN-LAST:event_studentMouseExited
 
     private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
@@ -1091,7 +1091,7 @@ public class adminStudent extends javax.swing.JFrame {
     private void violateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violateMouseClicked
         String stud_id = studIDtextfield.getText();
 
-        adminViolation violationWindow = new adminViolation(user_fname, stud_id);
+        userViolation violationWindow = new userViolation(user_fname, stud_id);
         violationWindow.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_violateMouseClicked

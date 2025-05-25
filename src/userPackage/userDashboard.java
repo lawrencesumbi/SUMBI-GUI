@@ -24,6 +24,8 @@ import javax.swing.table.TableModel;
 
 public class userDashboard extends javax.swing.JFrame {
     private String user_fname;
+    private String vio_id;
+    private String stud_id;
     /**
      * Creates new form userDashboard
      */
@@ -51,10 +53,20 @@ public class userDashboard extends javax.swing.JFrame {
                 studentCount = studentResultSet.getInt("student_count");
             }
             totalStudents.setText("" + studentCount);
+            
+            String sqlViolations = "SELECT COUNT(vio_name) AS violation_count FROM vio_table";
+            ResultSet violationResultSet = dbc.getData(sqlViolations);
+
+            int violationCount = 0;
+            if (violationResultSet.next()) {
+                violationCount = violationResultSet.getInt("violation_count");
+            }
+            totalViolations.setText("" + violationCount);
 
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
             totalStudents.setText("Error fetching data");
+            totalViolations.setText("Error fetching data");
         }
     }
     
@@ -130,7 +142,7 @@ public class userDashboard extends javax.swing.JFrame {
         stat_panel = new javax.swing.JPanel();
         user_type4 = new javax.swing.JLabel();
         dash_icon = new javax.swing.JLabel();
-        user_type3 = new javax.swing.JLabel();
+        totalViolations = new javax.swing.JLabel();
         studnum_panel = new javax.swing.JPanel();
         dash_icon4 = new javax.swing.JLabel();
         user_type8 = new javax.swing.JLabel();
@@ -171,10 +183,10 @@ public class userDashboard extends javax.swing.JFrame {
         dash_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-foul-48.png"))); // NOI18N
         stat_panel.add(dash_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, -1, 40));
 
-        user_type3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        user_type3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_type3.setText("0");
-        stat_panel.add(user_type3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
+        totalViolations.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        totalViolations.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        totalViolations.setText("0");
+        stat_panel.add(totalViolations, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 50, 40));
 
         userspanel.add(stat_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 230, 190, 120));
 
@@ -262,7 +274,7 @@ public class userDashboard extends javax.swing.JFrame {
         leftpanel.add(log_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 30, 30));
 
         dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        dashboard.setForeground(new java.awt.Color(255, 255, 255));
+        dashboard.setForeground(new java.awt.Color(255, 255, 0));
         dashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dashboard.setText("DASHBOARD");
         dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -361,7 +373,7 @@ public class userDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_dashboardMouseEntered
 
     private void dashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseExited
-        dashboard.setForeground(new java.awt.Color(255, 255, 255));
+        
     }//GEN-LAST:event_dashboardMouseExited
 
     private void studentMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseEntered
@@ -373,7 +385,8 @@ public class userDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_studentMouseExited
 
     private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
-        // TODO add your handling code here:
+        new userViolation(user_fname, stud_id).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_violationMouseClicked
 
     private void violationMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseEntered
@@ -478,10 +491,10 @@ public class userDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel student;
     private javax.swing.JPanel studnum_panel;
     private javax.swing.JLabel totalStudents;
+    private javax.swing.JLabel totalViolations;
     private javax.swing.JLabel user_type;
     private javax.swing.JLabel user_type13;
     private javax.swing.JLabel user_type2;
-    private javax.swing.JLabel user_type3;
     private javax.swing.JLabel user_type4;
     private javax.swing.JLabel user_type5;
     private javax.swing.JLabel user_type8;

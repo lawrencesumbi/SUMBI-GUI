@@ -299,7 +299,6 @@ public class adminAccount extends javax.swing.JFrame {
         settings2 = new javax.swing.JLabel();
         settings3 = new javax.swing.JLabel();
         activityLogs = new javax.swing.JLabel();
-        activityLogs2 = new javax.swing.JLabel();
         leftpanel = new javax.swing.JPanel();
         logout = new javax.swing.JLabel();
         displayImage = new javax.swing.JLabel();
@@ -528,7 +527,7 @@ public class adminAccount extends javax.swing.JFrame {
                 settings3MouseExited(evt);
             }
         });
-        userspanel.add(settings3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 150, 30));
+        userspanel.add(settings3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 150, 30));
 
         activityLogs.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         activityLogs.setForeground(new java.awt.Color(255, 255, 255));
@@ -545,21 +544,7 @@ public class adminAccount extends javax.swing.JFrame {
                 activityLogsMouseExited(evt);
             }
         });
-        userspanel.add(activityLogs, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 150, 30));
-
-        activityLogs2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        activityLogs2.setForeground(new java.awt.Color(255, 255, 255));
-        activityLogs2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        activityLogs2.setText("About System");
-        activityLogs2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                activityLogs2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                activityLogs2MouseExited(evt);
-            }
-        });
-        userspanel.add(activityLogs2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 150, 30));
+        userspanel.add(activityLogs, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 150, 30));
 
         getContentPane().add(userspanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -790,88 +775,93 @@ public class adminAccount extends javax.swing.JFrame {
 
     private void updatePasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updatePasswordMouseClicked
         String user_fname = fullNameTextField.getText();
-        String user_cnumber = contactNumberTextField.getText();
-        String user_email = emailTextField.getText();
+    String user_cnumber = contactNumberTextField.getText();
+    String user_email = emailTextField.getText();
 
-        String oldPassword = oldPasswordField.getText();
-        String newPassword = newPasswordField.getText();
+    String oldPassword = oldPasswordField.getText();
+    String newPassword = newPasswordField.getText();
 
-        if (!user_cnumber.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (!user_cnumber.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (newPassword.length() < 8) {
-            JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (newPassword.length() < 8) {
+        JOptionPane.showMessageDialog(this, "Password should have at least 8 characters.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        if (!user_email.toLowerCase().endsWith(".com")) {
-            JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+    if (!user_email.toLowerCase().endsWith(".com")) {
+        JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        String hashedNewPassword = passwordHash(newPassword);
+    String hashedNewPassword = passwordHash(newPassword);
+    String oldPasswordHash = passwordHash(oldPassword);
 
-        String oldPasswordHash = passwordHash(oldPassword);
+    String url = "jdbc:mysql://localhost:3306/sumbi_db";
+    String dbUser = "root";
+    String pass = "";
 
-        String url = "jdbc:mysql://localhost:3306/sumbi_db";
-        String user = "root";
-        String pass = "";
+    try {
+        Connection conn = DriverManager.getConnection(url, dbUser, pass);
 
-        try {
-            Connection conn = DriverManager.getConnection(url, user, pass);
+        String selectQuery = "SELECT user_password FROM user_table WHERE user_email = ?";
+        PreparedStatement selectPstmt = conn.prepareStatement(selectQuery);
+        selectPstmt.setString(1, user_email);
+        ResultSet rs = selectPstmt.executeQuery();
 
-            String selectQuery = "SELECT user_password FROM user_table WHERE user_email = ?";
-            PreparedStatement selectPstmt = conn.prepareStatement(selectQuery);
-            selectPstmt.setString(1, user_email);
-            ResultSet rs = selectPstmt.executeQuery();
+        if (rs.next()) {
+            String storedPassword = rs.getString("user_password");
 
-            if (rs.next()) {
-                String storedPassword = rs.getString("user_password");
-
-                if (!storedPassword.equals(oldPasswordHash)) {
-                    JOptionPane.showMessageDialog(this, "Old password is incorrect.", "Error", JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                String updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, user_password = ? WHERE user_email = ?";
-                PreparedStatement updatePstmt = conn.prepareStatement(updateQuery);
-                updatePstmt.setString(1, user_fname);
-                updatePstmt.setString(2, user_cnumber);
-                updatePstmt.setString(3, hashedNewPassword);
-                updatePstmt.setString(4, user_email);
-
-                int rowsUpdated = updatePstmt.executeUpdate();
-                if (rowsUpdated > 0) {
-                    JOptionPane.showMessageDialog(this, "Password changed successfully!");
-
-                    Session session = Session.getInstance();
-                    int userId = session.getUid();
-
-                    if (userId != -1) {
-                        logActivity(userId, "Changed password for account: " + user_fname);
-                    } else {
-                        System.err.println("Session user ID not set. Cannot log password change activity.");
-                    }
-
-                    
-                } else {
-                    JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
-
-                updatePstmt.close();
-            } else {
-                JOptionPane.showMessageDialog(this, "User not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (!storedPassword.equals(oldPasswordHash)) {
+                JOptionPane.showMessageDialog(this, "Old password is incorrect.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
             }
 
+            String updateQuery = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, user_password = ? WHERE user_email = ?";
+            PreparedStatement updatePstmt = conn.prepareStatement(updateQuery);
+            updatePstmt.setString(1, user_fname);
+            updatePstmt.setString(2, user_cnumber);
+            updatePstmt.setString(3, hashedNewPassword);
+            updatePstmt.setString(4, user_email);
 
-            rs.close();
-            selectPstmt.close();
-            conn.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            int rowsUpdated = updatePstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Password changed successfully!\nYou will be logged out for security.");
+
+                // Log the activity
+                Session session = Session.getInstance();
+                int userId = session.getUid();
+                if (userId != -1) {
+                    logActivity(userId, "Changed password for account: " + user_fname);
+                } else {
+                    System.err.println("Session user ID not set. Cannot log password change activity.");
+                }
+
+                // ✅ Log the user out
+                 // Assuming you have a logout() method in Session
+                this.dispose(); // Close current window
+
+                // Redirect to login
+                loginform loginForm = new loginform();
+                loginForm.setVisible(true);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            updatePstmt.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "User not found.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+        rs.close();
+        selectPstmt.close();
+        conn.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
 
     }//GEN-LAST:event_updatePasswordMouseClicked
 
@@ -1110,14 +1100,6 @@ public class adminAccount extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_activityLogsMouseExited
 
-    private void activityLogs2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs2MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_activityLogs2MouseEntered
-
-    private void activityLogs2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs2MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_activityLogs2MouseExited
-
     private void activityLogsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogsMouseClicked
         new adminLogs(user_fname).setVisible(true);
         this.dispose();
@@ -1165,7 +1147,6 @@ public class adminAccount extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel J_user_fname;
     private javax.swing.JLabel activityLogs;
-    private javax.swing.JLabel activityLogs2;
     private javax.swing.JLabel cancel;
     private javax.swing.JTextField contactNumberTextField;
     private javax.swing.JLabel dash_icon1;
