@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 25, 2025 at 04:25 PM
+-- Generation Time: May 25, 2025 at 06:59 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -160,7 +160,46 @@ INSERT INTO `logs_table` (`logs_id`, `user_id`, `logs_action`, `logs_stamp`) VAL
 (404, 1, 'Logged in', '2025-05-25 22:13:42'),
 (405, 1, 'Logged in', '2025-05-25 22:23:04'),
 (406, 1, 'Printed a report from the admin panel.', '2025-05-25 22:24:02'),
-(407, 1, 'Logged out', '2025-05-25 22:25:11');
+(407, 1, 'Logged out', '2025-05-25 22:25:11'),
+(408, 1, 'Logged in', '2025-05-25 22:32:15'),
+(409, 1, 'Updated Violation: Bullyingg', '2025-05-25 22:32:37'),
+(410, 1, 'Logged out', '2025-05-25 22:35:20'),
+(411, 1, 'Logged in', '2025-05-25 22:35:30'),
+(412, 1, 'Added new user: dray@gmail.com', '2025-05-25 22:36:06'),
+(413, 1, 'Logged out', '2025-05-25 22:36:15'),
+(414, 58, 'Logged in', '2025-05-25 22:36:25'),
+(415, 1, 'Logged in', '2025-05-25 22:46:51'),
+(416, 1, 'Logged out', '2025-05-25 22:46:54'),
+(417, 2, 'Logged in', '2025-05-25 22:47:04'),
+(418, 58, 'Logged in', '2025-05-25 22:47:26'),
+(419, 2, 'Logged in', '2025-05-25 22:50:08'),
+(420, 1, 'Logged in', '2025-05-25 22:52:08'),
+(421, 2, 'Logged in', '2025-05-25 22:53:18'),
+(422, 2, 'Logged in', '2025-05-25 22:57:27'),
+(423, 2, 'Logged in', '2025-05-25 23:01:04'),
+(424, 2, 'Logged in', '2025-05-25 23:09:51'),
+(425, 2, 'Added student: King James Obaob', '2025-05-25 23:11:52'),
+(426, 2, 'Added Violation: Lying', '2025-05-25 23:13:51'),
+(427, 1, 'Logged in', '2025-05-25 23:14:24'),
+(429, 2, 'Logged in', '2025-05-25 23:31:50'),
+(430, 2, 'Logged out', '2025-05-25 23:32:26'),
+(431, 1, 'Logged in', '2025-05-25 23:32:34'),
+(432, 1, 'Updated user: jaylon@gmail.com', '2025-05-25 23:34:31'),
+(433, 1, 'Updated user: jaylon@gmail.com', '2025-05-25 23:34:42'),
+(434, 1, 'Logged out', '2025-05-25 23:36:13'),
+(435, 1, 'Logged in', '2025-05-25 23:36:20'),
+(437, 1, 'Logged in', '2025-05-25 23:40:48'),
+(438, 1, 'Logged in', '2025-05-25 23:47:15'),
+(439, 1, 'Logged out', '2025-05-25 23:47:29'),
+(440, 2, 'Logged in', '2025-05-25 23:47:36'),
+(441, 2, 'Logged out', '2025-05-25 23:48:41'),
+(442, 1, 'Logged in', '2025-05-26 00:16:03'),
+(443, 1, 'Logged out', '2025-05-26 00:16:05'),
+(444, 2, 'Logged in', '2025-05-26 00:18:09'),
+(445, 2, 'Logged out', '2025-05-26 00:18:11'),
+(446, 1, 'Logged in', '2025-05-26 00:21:12'),
+(447, 1, 'Logged out', '2025-05-26 00:21:17'),
+(448, 1, 'Logged in', '2025-05-26 00:53:33');
 
 -- --------------------------------------------------------
 
@@ -210,7 +249,8 @@ CREATE TABLE `stud_table` (
 INSERT INTO `stud_table` (`stud_id`, `stud_fname`, `stud_lname`, `stud_program`, `stud_section`, `stud_address`, `stud_cnumber`, `image_path`, `user_id`) VALUES
 (54, 'Bryll Josh', 'Parba', 'BSIT', '1C', 'Minglanilla', '09123456789', 'src/studentImagesBryll Josh_Parba.jpg', 1),
 (57, 'Xander', 'Parba', 'BSED', '1A', 'Minglanilla', '09123456789', NULL, 1),
-(59, 'Mary Divine Grace', 'Obaob', 'BSED', '1A', 'San Fernando', '09123456789', 'src/studentImagesMary Divine Grace_Obaob.jpg', 2);
+(59, 'Mary Divine Grace', 'Obaob', 'BSED', '1A', 'San Fernando', '09123456789', 'src/studentImagesMary Divine Grace_Obaob.jpg', 2),
+(60, 'King James', 'Obaob', 'BSED', '1A', 'San Fernando', '09123456789', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -235,8 +275,9 @@ CREATE TABLE `user_table` (
 
 INSERT INTO `user_table` (`user_id`, `user_fname`, `user_cnumber`, `user_email`, `user_password`, `user_type`, `user_status`, `image_path`) VALUES
 (1, 'Lawrence Sumbi', '09303172724', 'guiansumbi@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'Admin', 'Active', 'src/usersImagesguiansumbi@gmail.com.jpg'),
-(2, 'Patricia Ann Obaob', '09059641855', 'patobaob@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Active', 'src/usersImagespatobaob@gmail.com.jpg'),
-(57, 'Jaylon Mantillas', '09123456789', 'jaylon@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Pending', NULL);
+(2, 'Patricia Ann Obaob', '09059641855', 'patobaob@gmail.com', 'a7d579ba76398070eae654c30ff153a4c273272a', 'User', 'Active', 'src/usersImagespatobaob@gmail.com.jpg'),
+(57, 'Jaylon Mantillas', '09123456789', 'jaylon@gmail.com', '7c222fb2927d828af22f592134e8932480637c0d', 'User', 'Pending', NULL),
+(58, 'Dranreb Misa', '0912345678', 'dray@gmail.com', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 'User', 'Active', NULL);
 
 -- --------------------------------------------------------
 
@@ -262,8 +303,9 @@ CREATE TABLE `vio_table` (
 
 INSERT INTO `vio_table` (`vio_id`, `stud_id`, `vio_name`, `vio_des`, `vio_sev`, `vio_stamp`, `image_path`, `vio_status`, `user_id`) VALUES
 (17, 54, 'Cheating', 'Bringing CheatSheet in Exam', 'Low', '25/05/25 05:14 PM', 'src/violationImages17.jpg', 'Recorded', 1),
-(19, 57, 'Bullying', 'Saying \"Bayot\" to his cm', 'Minor', '25/05/25 05:27 PM', NULL, 'Pending', 1),
-(21, 59, 'Plagiarism', 'Copying of others work', 'Minor', '25/05/25 10:06 PM', 'src/violationImages21.jpg', 'Recorded', 2);
+(19, 57, 'Bullyingg', 'Saying \"Bayot\" to his cm', 'Minor', '25/05/25 10:32 PM', NULL, 'Pending', 1),
+(21, 59, 'Plagiarism', 'Copying of others work', 'Minor', '25/05/25 10:06 PM', 'src/violationImages21.jpg', 'Recorded', 2),
+(22, 60, 'Lying', 'Provinding False Information', 'Minor', '25/05/25 11:13 PM', NULL, 'Pending', 2);
 
 --
 -- Indexes for dumped tables
@@ -313,7 +355,7 @@ ALTER TABLE `vio_table`
 -- AUTO_INCREMENT for table `logs_table`
 --
 ALTER TABLE `logs_table`
-  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=408;
+  MODIFY `logs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=449;
 
 --
 -- AUTO_INCREMENT for table `rec_table`
@@ -325,19 +367,19 @@ ALTER TABLE `rec_table`
 -- AUTO_INCREMENT for table `stud_table`
 --
 ALTER TABLE `stud_table`
-  MODIFY `stud_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `stud_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `user_table`
 --
 ALTER TABLE `user_table`
-  MODIFY `user_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `user_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `vio_table`
 --
 ALTER TABLE `vio_table`
-  MODIFY `vio_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `vio_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- Constraints for dumped tables
