@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import config.Session;
 import config.dbConnector;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -16,12 +17,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -34,17 +38,20 @@ import net.proteanit.sql.DbUtils;
  *
  * @author Admin
  */
-public class userStudent extends javax.swing.JFrame {
+public class adminStudent extends javax.swing.JFrame {
     private String user_fname;
+    private String vio_id;
+    private String stud_id;
+
     /**
-     * 
+     * Creates new form adminStudent
      */
-    public userStudent() {
+    public adminStudent() {
         initComponents(); 
         displayData();
     }
-    
-    public userStudent(String user_fname) {
+
+    public adminStudent(String user_fname) {
         this.user_fname = user_fname;
         initComponents();
         displayImage(user_fname);
@@ -67,7 +74,7 @@ public class userStudent extends javax.swing.JFrame {
 
             stud_table.setModel(DbUtils.resultSetToTableModel(rs));   
             
-            String[] columnNames = {"ID", "First Name", "Last Name", "Program", "Section", "Address", "Contact Number"};
+            String[] columnNames = {"Student ID", "First Name", "Last Name", "Program", "Section", "Address", "Contact Number"};
             for (int col = 0; col < columnNames.length; col++) {
                 stud_table.getColumnModel().getColumn(col).setHeaderValue(columnNames[col]);
             }
@@ -76,6 +83,38 @@ public class userStudent extends javax.swing.JFrame {
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
+    }
+
+    
+    private String saveImageToFolder(String user_email) {
+        try {
+            // Convert JLabel Icon to BufferedImage
+            Icon icon = imageLabel.getIcon();
+            if (icon instanceof ImageIcon) {
+                Image image = ((ImageIcon) icon).getImage();
+                BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_RGB);
+                Graphics2D g2 = bufferedImage.createGraphics();
+                g2.drawImage(image, 0, 0, null);
+                g2.dispose();
+
+                // Define Folder and File Name
+                String folderPath = "src/studentImages";
+                File directory = new File(folderPath);
+                if (!directory.exists()) {
+                    directory.mkdir(); // Create folder if not exists
+                }
+
+                // Save image with unique name
+                String filePath = folderPath + user_email + ".jpg";
+                File outputFile = new File(filePath);
+                ImageIO.write(bufferedImage, "jpg", outputFile);
+
+                return filePath; // Return the saved image path
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error saving image: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
     }
     
     private void highlightRow() {
@@ -111,44 +150,7 @@ public class userStudent extends javax.swing.JFrame {
         }
     }
     
-    public void uploadImage(JLabel uploadImage) {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Choose Image");
-        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Images", "jpg", "png", "jpeg"));
-
-        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            
-        String url = "jdbc:mysql://localhost:3306/sumbi_db";
-        String user = "root";
-        String pass = "";
-
-        try {
-                Connection conn = DriverManager.getConnection(url, user, pass);
-                FileInputStream fis = new FileInputStream(file);
-       
-                String sql = "UPDATE stud_table SET stud_image = ? WHERE stud_fname = ?";
-                PreparedStatement pstmt = conn.prepareStatement(sql);
-                pstmt.setBinaryStream(1, fis, (int) file.length());
-                pstmt.setString(2, studFirstName.getText().trim());
-                int rowsUpdated = pstmt.executeUpdate();
-
-                if (rowsUpdated > 0) {
-
-                    ImageIcon getIcon = new ImageIcon(file.getAbsolutePath());
-                    Image img = getIcon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-                    uploadImage.setIcon(new ImageIcon(img));
-
-                    JOptionPane.showMessageDialog(null, "Image Uploaded Successfully!");
-                } else {
-                    JOptionPane.showMessageDialog(null, "User Not Found! Please check the email.");
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error Uploading Image!");
-            }
-        }
-    }
+    
     
     private void displayImage(String user_fname) {
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
@@ -208,6 +210,20 @@ public class userStudent extends javax.swing.JFrame {
         return output;
     }
     
+     private void logActivity(int user_id, String action) {
+        String sql = "INSERT INTO logs_table (user_id, logs_action, logs_stamp) VALUES (?, ?, NOW())";
+        dbConnector db = new dbConnector();
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, user_id);
+            pst.setString(2, action);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error logging activity: " + e.getMessage());
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -249,13 +265,14 @@ public class userStudent extends javax.swing.JFrame {
         user_passwordlabel = new javax.swing.JLabel();
         user_passwordlabel1 = new javax.swing.JLabel();
         user_passwordlabel2 = new javax.swing.JLabel();
-        uploadImage = new javax.swing.JLabel();
         studSection = new javax.swing.JTextField();
         studAddress = new javax.swing.JTextField();
         studCNumber = new javax.swing.JTextField();
         user_fnamelabel1 = new javax.swing.JLabel();
         studIDtextfield = new javax.swing.JTextField();
+        imageLabel = new javax.swing.JLabel();
         imageLabel1 = new javax.swing.JLabel();
+        violate = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -432,7 +449,7 @@ public class userStudent extends javax.swing.JFrame {
                 addMouseExited(evt);
             }
         });
-        studentpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 60, 30));
+        studentpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 60, 30));
 
         edit.setBackground(new java.awt.Color(255, 255, 255));
         edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -451,7 +468,7 @@ public class userStudent extends javax.swing.JFrame {
                 editMouseExited(evt);
             }
         });
-        studentpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 60, 30));
+        studentpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, 60, 30));
 
         delete.setBackground(new java.awt.Color(255, 255, 255));
         delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -470,7 +487,7 @@ public class userStudent extends javax.swing.JFrame {
                 deleteMouseExited(evt);
             }
         });
-        studentpanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 60, 30));
+        studentpanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 250, 60, 30));
 
         refresh.setBackground(new java.awt.Color(255, 255, 255));
         refresh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -489,7 +506,7 @@ public class userStudent extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        studentpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 250, 120, 30));
+        studentpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 120, 30));
 
         searchfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         searchfield.addActionListener(new java.awt.event.ActionListener() {
@@ -502,7 +519,7 @@ public class userStudent extends javax.swing.JFrame {
                 searchfieldKeyPressed(evt);
             }
         });
-        studentpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 220, 30));
+        studentpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 150, 30));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -521,7 +538,7 @@ public class userStudent extends javax.swing.JFrame {
                 searchMouseExited(evt);
             }
         });
-        studentpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 250, 70, 30));
+        studentpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 250, 70, 30));
 
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -583,17 +600,6 @@ public class userStudent extends javax.swing.JFrame {
         user_passwordlabel2.setText("Student Contact Number");
         studentpanel.add(user_passwordlabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 190, 20));
 
-        uploadImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        uploadImage.setForeground(new java.awt.Color(255, 255, 255));
-        uploadImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png"))); // NOI18N
-        uploadImage.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                uploadImageMouseClicked(evt);
-            }
-        });
-        studentpanel.add(uploadImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 150, 150));
-
         studSection.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         studSection.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -622,7 +628,7 @@ public class userStudent extends javax.swing.JFrame {
         user_fnamelabel1.setForeground(new java.awt.Color(255, 255, 255));
         user_fnamelabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_fnamelabel1.setText("Student ID");
-        studentpanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 190, 70, 30));
+        studentpanel.add(user_fnamelabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, 70, 30));
 
         studIDtextfield.setEditable(false);
         studIDtextfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -632,7 +638,17 @@ public class userStudent extends javax.swing.JFrame {
                 studIDtextfieldActionPerformed(evt);
             }
         });
-        studentpanel.add(studIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 190, 40, -1));
+        studentpanel.add(studIDtextfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 20, 40, -1));
+
+        imageLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        imageLabel.setForeground(new java.awt.Color(255, 255, 255));
+        imageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                imageLabelMouseClicked(evt);
+            }
+        });
+        studentpanel.add(imageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 150, 150));
 
         imageLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         imageLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -643,7 +659,26 @@ public class userStudent extends javax.swing.JFrame {
                 imageLabel1MouseClicked(evt);
             }
         });
-        studentpanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 150, 150));
+        studentpanel.add(imageLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 70, 150, 150));
+
+        violate.setBackground(new java.awt.Color(255, 255, 255));
+        violate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        violate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        violate.setText("VIOLATE");
+        violate.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        violate.setOpaque(true);
+        violate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                violateMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                violateMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                violateMouseExited(evt);
+            }
+        });
+        studentpanel.add(violate, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, 90, 30));
 
         getContentPane().add(studentpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -668,7 +703,8 @@ public class userStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_studentMouseExited
 
     private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
-        // TODO add your handling code here:
+        new userViolation(user_fname, stud_id).setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_violationMouseClicked
 
     private void violationMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseEntered
@@ -708,6 +744,85 @@ public class userStudent extends javax.swing.JFrame {
         logout.setForeground(new java.awt.Color(255, 255, 255));
     }//GEN-LAST:event_logoutMouseExited
 
+    private void dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseClicked
+        new userDashboard(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_dashboardMouseClicked
+
+    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
+        new userAccount(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_settingsMouseClicked
+
+    private void stud_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stud_tableMouseClicked
+        int i = stud_table.getSelectedRow();
+        TableModel model = stud_table.getModel();
+
+        String studID = model.getValueAt(i, 0).toString();
+        studIDtextfield.setText(studID);
+        studFirstName.setText(model.getValueAt(i, 1).toString());
+        studLastName.setText(model.getValueAt(i, 2).toString());
+        studProgram.setText(model.getValueAt(i, 3).toString());
+        studSection.setText(model.getValueAt(i, 4).toString());
+        studAddress.setText(model.getValueAt(i, 5).toString());
+        studCNumber.setText(model.getValueAt(i, 6).toString());
+
+        // Fetch image_path separately based on stud_id
+        try {
+            dbConnector dbc = new dbConnector();
+            ResultSet rs = dbc.getData("SELECT image_path FROM stud_table WHERE stud_id = '" + studID + "'");
+            if (rs.next()) {
+                String imagePath = rs.getString("image_path");
+                if (imagePath != null && !imagePath.isEmpty()) {
+                    File file = new File(imagePath);
+                    if (file.exists()) {
+                        ImageIcon icon = new ImageIcon(imagePath);
+                        Image img = icon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
+                        imageLabel.setIcon(new ImageIcon(img));
+                    } else {
+                        imageLabel.setIcon(null);
+                    }
+                } else {
+                    imageLabel.setIcon(null);
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error fetching image_path: " + ex.getMessage());
+            imageLabel.setIcon(null);
+        }
+    }//GEN-LAST:event_stud_tableMouseClicked
+
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+        int i = stud_table.getSelectedRow();
+        TableModel model = stud_table.getModel();
+
+        studIDtextfield.setText(model.getValueAt(i, 0).toString());
+
+        String stud_fname = model.getValueAt(i, 1).toString();
+        studFirstName.setText(stud_fname);
+        studLastName.setText(model.getValueAt(i, 2).toString());
+        studProgram.setText(model.getValueAt(i, 3).toString());
+        studSection.setText(model.getValueAt(i, 4).toString());
+        studAddress.setText(model.getValueAt(i, 5).toString());
+        studCNumber.setText(model.getValueAt(i, 6).toString());
+
+        Object imagePathObj = model.getValueAt(i, 7);
+        String imagePath = (imagePathObj != null) ? imagePathObj.toString() : ""; // Avoid NullPointerException
+
+        if (!imagePath.isEmpty()) {
+            File file = new File(imagePath);
+            if (file.exists()) {
+                ImageIcon icon = new ImageIcon(imagePath);
+                Image img = icon.getImage().getScaledInstance(imageLabel.getWidth(), imageLabel.getHeight(), Image.SCALE_SMOOTH);
+                imageLabel.setIcon(new ImageIcon(img));
+            } else {
+                imageLabel.setIcon(null);
+            }
+        } else {
+            imageLabel.setIcon(null);
+        }
+    }//GEN-LAST:event_jScrollPane1MouseClicked
+
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
         String stud_fname = studFirstName.getText();
         String stud_lname = studLastName.getText();
@@ -716,14 +831,27 @@ public class userStudent extends javax.swing.JFrame {
         String stud_address = studAddress.getText();
         String stud_cnumber = studCNumber.getText();
 
+        if (stud_fname.isEmpty() || stud_lname.isEmpty() || stud_cnumber.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!stud_cnumber.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
         String user = "root";
         String pass = "";
 
+        // Get the current user's user_id from Session
+        int user_id = Session.getInstance().getUid();
+
         try {
             Connection conn = DriverManager.getConnection(url, user, pass);
 
-            String sql = "INSERT INTO stud_table (stud_fname, stud_lname, stud_program, stud_section, stud_address, stud_cnumber) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO stud_table (stud_fname, stud_lname, stud_program, stud_section, stud_address, stud_cnumber, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, stud_fname);
@@ -732,10 +860,13 @@ public class userStudent extends javax.swing.JFrame {
             pstmt.setString(4, stud_section);
             pstmt.setString(5, stud_address);
             pstmt.setString(6, stud_cnumber);
+            pstmt.setInt(7, user_id);  // Add user_id to the query
 
             int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted > 0) {
                 JOptionPane.showMessageDialog(this, "Student Added Successfully!");
+                int uid = Session.getInstance().getUid();
+                logActivity(uid, "Added student: " + stud_fname + " " + stud_lname);
             }
 
             pstmt.close();
@@ -761,31 +892,65 @@ public class userStudent extends javax.swing.JFrame {
         String stud_address = studAddress.getText();
         String stud_cnumber = studCNumber.getText();
 
+        if (stud_fname.isEmpty() || stud_lname.isEmpty() || stud_cnumber.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!stud_cnumber.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to update this student?", "Confirm Update", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) return;
+
         String url = "jdbc:mysql://localhost:3306/sumbi_db";
         String user = "root";
         String pass = "";
 
-        String sql = "UPDATE stud_table SET stud_lname = ?, stud_program = ?, stud_section = ?, stud_address = ?, stud_cnumber = ? WHERE stud_fname = ?";
+        // Get user_id from Session
+        int user_id = Session.getInstance().getUid();
 
-        try (Connection conn = DriverManager.getConnection(url, user, pass);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DriverManager.getConnection(url, user, pass)) {
+            String sql;
 
-            pstmt.setString(1, stud_lname);
-            pstmt.setString(2, stud_program);
-            pstmt.setString(3, stud_section);
-            pstmt.setString(4, stud_address);
-            pstmt.setString(5, stud_cnumber);
-            pstmt.setString(6, stud_fname);
-
-            int rowsUpdated = pstmt.executeUpdate();
-            if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(null, "Student information updated successfully!");
+            if (imageLabel.getIcon() == null) {
+                // No image: Set image_path to NULL in database
+                sql = "UPDATE stud_table SET stud_lname = ?, stud_program = ?, stud_section = ?, stud_address = ?, stud_cnumber = ?, image_path = NULL, user_id = ? WHERE stud_fname = ?";
             } else {
-                JOptionPane.showMessageDialog(null, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                // Image is present: Update image_path
+                sql = "UPDATE stud_table SET stud_lname = ?, stud_program = ?, stud_section = ?, stud_address = ?, stud_cnumber = ?, image_path = ?, user_id = ? WHERE stud_fname = ?";
+            }
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setString(1, stud_lname);
+                pstmt.setString(2, stud_program);
+                pstmt.setString(3, stud_section);
+                pstmt.setString(4, stud_address);
+                pstmt.setString(5, stud_cnumber);
+
+                if (imageLabel.getIcon() != null) {
+                    String imagePath = saveImageToFolder(stud_fname + "_" + stud_lname); // customize filename
+                    pstmt.setString(6, imagePath);
+                    pstmt.setInt(7, user_id);
+                    pstmt.setString(8, stud_fname);
+                } else {
+                    pstmt.setInt(6, user_id);
+                    pstmt.setString(7, stud_fname);
+                }
+
+                int rowsUpdated = pstmt.executeUpdate();
+                if (rowsUpdated > 0) {
+                    JOptionPane.showMessageDialog(this, "Student information updated successfully!");
+                    logActivity(user_id, "Updated Student: " + stud_fname + " " + stud_lname);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_editMouseClicked
 
@@ -817,13 +982,16 @@ public class userStudent extends javax.swing.JFrame {
         String sql = "DELETE FROM stud_table WHERE stud_fname = ?"; // Updated table and column name if needed
 
         try (Connection conn = DriverManager.getConnection(url, user, pass);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, stud_fname);
 
             int rowsDeleted = pstmt.executeUpdate();
             if (rowsDeleted > 0) {
                 JOptionPane.showMessageDialog(null, "User deleted successfully!");
+                int uid = Session.getInstance().getUid();
+                logActivity(uid, "Deleted user: " + stud_fname);
+
             } else {
                 JOptionPane.showMessageDialog(null, "Deletion failed. User not found.", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -843,28 +1011,34 @@ public class userStudent extends javax.swing.JFrame {
 
     private void refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseClicked
         displayData();
-        studFirstName.setText("");  
-        studLastName.setText("");  
-        studProgram.setText("");  
-        studSection.setText("");  
-        studAddress.setText("");  
-        studCNumber.setText(""); 
-        uploadImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image-removebg-preview1.png")));  
-        searchfield.setText(""); 
-        studIDtextfield.setText(""); 
+        studFirstName.setText("");
+        studLastName.setText("");
+        studProgram.setText("");
+        studSection.setText("");
+        studAddress.setText("");
+        studCNumber.setText("");
+        imageLabel.setIcon(null);
+        searchfield.setText("");
+        studIDtextfield.setText("");
     }//GEN-LAST:event_refreshMouseClicked
 
     private void refreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseEntered
-        
+
     }//GEN-LAST:event_refreshMouseEntered
 
     private void refreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseExited
-       
+
     }//GEN-LAST:event_refreshMouseExited
 
     private void searchfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchfieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchfieldActionPerformed
+
+    private void searchfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchfieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            highlightRow();
+        }
+    }//GEN-LAST:event_searchfieldKeyPressed
 
     private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
         highlightRow();
@@ -890,48 +1064,6 @@ public class userStudent extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_studProgramActionPerformed
 
-    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jScrollPane1MouseClicked
-
-    private void stud_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stud_tableMouseClicked
-        int i = stud_table.getSelectedRow();
-        TableModel model = stud_table.getModel();
-
-        String studID = model.getValueAt(i, 0).toString();
-        studIDtextfield.setText(studID);
-        studFirstName.setText(model.getValueAt(i, 1).toString());
-        studLastName.setText(model.getValueAt(i, 2).toString());
-        studProgram.setText(model.getValueAt(i, 3).toString());
-        studSection.setText(model.getValueAt(i, 4).toString());
-        studAddress.setText(model.getValueAt(i, 5).toString());
-        studCNumber.setText(model.getValueAt(i, 6).toString());
-
-        // Fetch image_path separately based on stud_id
-        try {
-            dbConnector dbc = new dbConnector();
-            ResultSet rs = dbc.getData("SELECT image_path FROM stud_table WHERE stud_id = '" + studID + "'");
-            if (rs.next()) {
-                String imagePath = rs.getString("image_path");
-                if (imagePath != null && !imagePath.isEmpty()) {
-                    File file = new File(imagePath);
-                    if (file.exists()) {
-                        ImageIcon icon = new ImageIcon(imagePath);
-                        Image img = icon.getImage().getScaledInstance(uploadImage.getWidth(), uploadImage.getHeight(), Image.SCALE_SMOOTH);
-                        uploadImage.setIcon(new ImageIcon(img));
-                    } else {
-                        uploadImage.setIcon(null);
-                    }
-                } else {
-                    uploadImage.setIcon(null);
-                }
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error fetching image_path: " + ex.getMessage());
-            uploadImage.setIcon(null);
-        }
-    }//GEN-LAST:event_stud_tableMouseClicked
-
     private void studSectionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studSectionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_studSectionActionPerformed
@@ -944,33 +1076,33 @@ public class userStudent extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_studCNumberActionPerformed
 
-    private void uploadImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_uploadImageMouseClicked
-        uploadImage(uploadImage);
-    }//GEN-LAST:event_uploadImageMouseClicked
-
-    private void dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseClicked
-        new userDashboard(user_fname).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_dashboardMouseClicked
-
-    private void searchfieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchfieldKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) { 
-            highlightRow();
-        }
-    }//GEN-LAST:event_searchfieldKeyPressed
-
     private void studIDtextfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studIDtextfieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_studIDtextfieldActionPerformed
 
-    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
-        new userAccount(user_fname).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_settingsMouseClicked
+    private void imageLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabelMouseClicked
+        imageHandler.chooseStudImage(imageLabel);
+    }//GEN-LAST:event_imageLabelMouseClicked
 
     private void imageLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabel1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_imageLabel1MouseClicked
+
+    private void violateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violateMouseClicked
+        String stud_id = studIDtextfield.getText();
+
+        adminViolation violationWindow = new adminViolation(user_fname, stud_id);
+        violationWindow.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_violateMouseClicked
+
+    private void violateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violateMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_violateMouseEntered
+
+    private void violateMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violateMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_violateMouseExited
 
     /**
      * @param args the command line arguments
@@ -1015,6 +1147,7 @@ public class userStudent extends javax.swing.JFrame {
     private javax.swing.JLabel delete;
     private javax.swing.JLabel displayImage;
     private javax.swing.JLabel edit;
+    private javax.swing.JLabel imageLabel;
     private javax.swing.JLabel imageLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel leftpanel;
@@ -1036,7 +1169,6 @@ public class userStudent extends javax.swing.JFrame {
     private javax.swing.JTable stud_table;
     private javax.swing.JLabel student;
     private javax.swing.JPanel studentpanel;
-    private javax.swing.JLabel uploadImage;
     private javax.swing.JLabel user_cnumberlabel;
     private javax.swing.JLabel user_emaillabel;
     private javax.swing.JLabel user_fnamelabel;
@@ -1046,6 +1178,7 @@ public class userStudent extends javax.swing.JFrame {
     private javax.swing.JLabel user_passwordlabel2;
     private javax.swing.JLabel user_type;
     private javax.swing.JLabel vio_icon;
+    private javax.swing.JLabel violate;
     private javax.swing.JLabel violation;
     // End of variables declaration//GEN-END:variables
 }

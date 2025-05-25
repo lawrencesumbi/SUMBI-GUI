@@ -2,9 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- *
-*/
-
+ */
 import config.Session;
 import config.dbConnector;
 import java.awt.BasicStroke;
@@ -40,19 +38,19 @@ import javax.swing.Icon;
  *
  * @author Admin
  */
-public class adminViolation extends javax.swing.JFrame {
+public class userViolation extends javax.swing.JFrame {
     private String user_fname;
     private String vio_id;
     private String stud_id;
     /**
-     * Creates new form adminViolation
+     * Creates new form userViolation
      */
-    public adminViolation() {
-        initComponents(); 
+    public userViolation() {
+        initComponents();
         displayData();
     }
     
-    public adminViolation(String user_fname, String stud_id) {
+    public userViolation(String user_fname, String stud_id) {
         this.user_fname = user_fname;
         this.stud_id = stud_id;
         initComponents();
@@ -233,8 +231,6 @@ public class adminViolation extends javax.swing.JFrame {
             System.err.println("Error logging activity: " + e.getMessage());
         }
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -245,24 +241,6 @@ public class adminViolation extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        leftpanel = new javax.swing.JPanel();
-        displayImage = new javax.swing.JLabel();
-        J_user_fname = new javax.swing.JLabel();
-        user_type1 = new javax.swing.JLabel();
-        dashboard = new javax.swing.JLabel();
-        dash_icon = new javax.swing.JLabel();
-        stud_icon = new javax.swing.JLabel();
-        student = new javax.swing.JLabel();
-        vio_icon = new javax.swing.JLabel();
-        violation = new javax.swing.JLabel();
-        rec_icon = new javax.swing.JLabel();
-        record = new javax.swing.JLabel();
-        users_icon = new javax.swing.JLabel();
-        users = new javax.swing.JLabel();
-        sett_icon = new javax.swing.JLabel();
-        settings = new javax.swing.JLabel();
-        log_icon = new javax.swing.JLabel();
-        logout = new javax.swing.JLabel();
         violationpanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         vio_table = new javax.swing.JTable();
@@ -292,184 +270,23 @@ public class adminViolation extends javax.swing.JFrame {
         vioStat = new javax.swing.JTextField();
         RECORD = new javax.swing.JLabel();
         user_emaillabel4 = new javax.swing.JLabel();
+        leftpanel = new javax.swing.JPanel();
+        displayImage = new javax.swing.JLabel();
+        user_type = new javax.swing.JLabel();
+        J_user_fname = new javax.swing.JLabel();
+        dash_icon = new javax.swing.JLabel();
+        stud_icon = new javax.swing.JLabel();
+        vio_icon = new javax.swing.JLabel();
+        sett_icon = new javax.swing.JLabel();
+        log_icon = new javax.swing.JLabel();
+        dashboard = new javax.swing.JLabel();
+        student = new javax.swing.JLabel();
+        violation = new javax.swing.JLabel();
+        settings = new javax.swing.JLabel();
+        logout = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        leftpanel.setBackground(new java.awt.Color(0, 0, 0));
-        leftpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        displayImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        displayImage.setForeground(new java.awt.Color(255, 255, 255));
-        displayImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview1.png"))); // NOI18N
-        displayImage.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                displayImageMouseClicked(evt);
-            }
-        });
-        leftpanel.add(displayImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, 130));
-
-        J_user_fname.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        J_user_fname.setForeground(new java.awt.Color(255, 255, 255));
-        J_user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        J_user_fname.setText("Fullname");
-        leftpanel.add(J_user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 30));
-
-        user_type1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        user_type1.setForeground(new java.awt.Color(255, 255, 255));
-        user_type1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        user_type1.setText("Admin");
-        leftpanel.add(user_type1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 70, -1));
-
-        dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        dashboard.setForeground(new java.awt.Color(255, 255, 255));
-        dashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        dashboard.setText("DASHBOARD");
-        dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dashboardMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                dashboardMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                dashboardMouseExited(evt);
-            }
-        });
-        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 230, -1, 50));
-
-        dash_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-dashboard-layout-24.png"))); // NOI18N
-        dash_icon.setText("jLabel1");
-        leftpanel.add(dash_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 30, 30));
-
-        stud_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-student-male-24.png"))); // NOI18N
-        stud_icon.setText("jLabel1");
-        leftpanel.add(stud_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 30, 30));
-
-        student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        student.setForeground(new java.awt.Color(255, 255, 255));
-        student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        student.setText("STUDENT");
-        student.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                studentMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                studentMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                studentMouseExited(evt);
-            }
-        });
-        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 280, -1, 50));
-
-        vio_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-foul-30.png"))); // NOI18N
-        vio_icon.setText("jLabel1");
-        leftpanel.add(vio_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 30, 30));
-
-        violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        violation.setForeground(new java.awt.Color(255, 255, 0));
-        violation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        violation.setText("VIOLATION");
-        violation.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                violationMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                violationMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                violationMouseExited(evt);
-            }
-        });
-        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 110, 50));
-
-        rec_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-record-50.png"))); // NOI18N
-        rec_icon.setText("jLabel1");
-        leftpanel.add(rec_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 30, 30));
-
-        record.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        record.setForeground(new java.awt.Color(255, 255, 255));
-        record.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        record.setText("RECORD");
-        record.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                recordMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                recordMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                recordMouseExited(evt);
-            }
-        });
-        leftpanel.add(record, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 380, 90, 50));
-
-        users_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-user-icon-30.png"))); // NOI18N
-        users_icon.setText("jLabel1");
-        leftpanel.add(users_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 30, 30));
-
-        users.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        users.setForeground(new java.awt.Color(255, 255, 255));
-        users.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        users.setText("USERS");
-        users.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                usersMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                usersMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                usersMouseExited(evt);
-            }
-        });
-        leftpanel.add(users, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 70, 50));
-
-        sett_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-settings-50.png"))); // NOI18N
-        sett_icon.setText("jLabel1");
-        leftpanel.add(sett_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, 30, 30));
-
-        settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        settings.setForeground(new java.awt.Color(255, 255, 255));
-        settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        settings.setText("SETTINGS");
-        settings.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                settingsMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                settingsMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                settingsMouseExited(evt);
-            }
-        });
-        leftpanel.add(settings, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 480, 100, 50));
-
-        log_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-open-pane-24.png"))); // NOI18N
-        log_icon.setText("jLabel1");
-        leftpanel.add(log_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 30, 30));
-
-        logout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        logout.setForeground(new java.awt.Color(255, 255, 255));
-        logout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logout.setText("LOG OUT");
-        logout.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logoutMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                logoutMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                logoutMouseExited(evt);
-            }
-        });
-        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 530, 90, 50));
-
-        getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 600));
 
         violationpanel.setBackground(new java.awt.Color(204, 0, 0));
         violationpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -804,104 +621,133 @@ public class adminViolation extends javax.swing.JFrame {
 
         getContentPane().add(violationpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
-        pack();
-        setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+        leftpanel.setBackground(new java.awt.Color(0, 0, 0));
+        leftpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-    private void displayImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_displayImageMouseClicked
+        displayImage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        displayImage.setForeground(new java.awt.Color(255, 255, 255));
+        displayImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        displayImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/default-avatar-profile-icon-social-media-user-image-gray-avatar-icon-blank-profile-silhouette-illustration-vector-removebg-preview1.png"))); // NOI18N
+        leftpanel.add(displayImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 130, 130));
 
-    }//GEN-LAST:event_displayImageMouseClicked
+        user_type.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        user_type.setForeground(new java.awt.Color(255, 255, 255));
+        user_type.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        user_type.setText("User");
+        leftpanel.add(user_type, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, 50, -1));
 
-    private void dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseClicked
-        new adminDashboard(user_fname).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_dashboardMouseClicked
+        J_user_fname.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        J_user_fname.setForeground(new java.awt.Color(255, 255, 255));
+        J_user_fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        J_user_fname.setText("Fullname");
+        leftpanel.add(J_user_fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 30));
 
-    private void dashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseEntered
-        dashboard.setForeground(new java.awt.Color(255, 255, 0));
-    }//GEN-LAST:event_dashboardMouseEntered
+        dash_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-dashboard-layout-24.png"))); // NOI18N
+        dash_icon.setText("jLabel1");
+        leftpanel.add(dash_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 30, 30));
 
-    private void dashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseExited
+        stud_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-student-male-24.png"))); // NOI18N
+        stud_icon.setText("jLabel1");
+        leftpanel.add(stud_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 30, 30));
+
+        vio_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-foul-30.png"))); // NOI18N
+        vio_icon.setText("jLabel1");
+        leftpanel.add(vio_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 30, 30));
+
+        sett_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-settings-50.png"))); // NOI18N
+        sett_icon.setText("jLabel1");
+        leftpanel.add(sett_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 30, 30));
+
+        log_icon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-open-pane-24.png"))); // NOI18N
+        log_icon.setText("jLabel1");
+        leftpanel.add(log_icon, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 30, 30));
+
+        dashboard.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         dashboard.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_dashboardMouseExited
+        dashboard.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dashboard.setText("DASHBOARD");
+        dashboard.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                dashboardMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                dashboardMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                dashboardMouseExited(evt);
+            }
+        });
+        leftpanel.add(dashboard, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, 50));
 
-    private void studentMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseEntered
-        student.setForeground(new java.awt.Color(255, 255, 0));
-    }//GEN-LAST:event_studentMouseEntered
-
-    private void studentMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseExited
+        student.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         student.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_studentMouseExited
+        student.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        student.setText("STUDENT");
+        student.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                studentMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                studentMouseExited(evt);
+            }
+        });
+        leftpanel.add(student, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 310, 90, 50));
 
-    private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_violationMouseClicked
+        violation.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        violation.setForeground(new java.awt.Color(255, 255, 255));
+        violation.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        violation.setText("VIOLATION");
+        violation.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                violationMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                violationMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                violationMouseExited(evt);
+            }
+        });
+        leftpanel.add(violation, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, 110, 50));
 
-    private void violationMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseEntered
-        violation.setForeground(new java.awt.Color(255, 255, 0));
-    }//GEN-LAST:event_violationMouseEntered
-
-    private void violationMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseExited
-        
-    }//GEN-LAST:event_violationMouseExited
-
-    private void recordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseClicked
-        new adminRecord(user_fname, vio_id).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_recordMouseClicked
-
-    private void recordMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseEntered
-        record.setForeground(new java.awt.Color(255, 255, 0));
-    }//GEN-LAST:event_recordMouseEntered
-
-    private void recordMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_recordMouseExited
-        record.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_recordMouseExited
-
-    private void usersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersMouseClicked
-        new adminUsers(user_fname).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_usersMouseClicked
-
-    private void usersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersMouseEntered
-        users.setForeground(new java.awt.Color(255, 255, 0));
-    }//GEN-LAST:event_usersMouseEntered
-
-    private void usersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersMouseExited
-        users.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_usersMouseExited
-
-    private void settingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseEntered
-        settings.setForeground(new java.awt.Color(255, 255, 0));
-    }//GEN-LAST:event_settingsMouseEntered
-
-    private void settingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseExited
+        settings.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         settings.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_settingsMouseExited
+        settings.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        settings.setText("SETTINGS");
+        settings.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                settingsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                settingsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                settingsMouseExited(evt);
+            }
+        });
+        leftpanel.add(settings, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 430, 100, 50));
 
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-      int response = JOptionPane.showConfirmDialog(this, 
-        "Confirm Log Out?", 
-        "Logout Confirmation", 
-        JOptionPane.YES_NO_OPTION);
-
-    if (response == JOptionPane.YES_OPTION) {
-        int uid = Session.getInstance().getUid(); 
-        logActivity(uid, "Logged out");           
-        Session.getInstance().clearSession();    
-        
-        new loginform().setVisible(true);
-        this.dispose();
-    } 
-    }//GEN-LAST:event_logoutMouseClicked
-
-    private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
-        logout.setForeground(new java.awt.Color(255, 255, 0));
-    }//GEN-LAST:event_logoutMouseEntered
-
-    private void logoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseExited
+        logout.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         logout.setForeground(new java.awt.Color(255, 255, 255));
-    }//GEN-LAST:event_logoutMouseExited
+        logout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logout.setText("LOG OUT");
+        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoutMouseExited(evt);
+            }
+        });
+        leftpanel.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 490, 90, 50));
+
+        getContentPane().add(leftpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 600));
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
     private void vio_tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vio_tableMouseClicked
         int i = vio_table.getSelectedRow();
@@ -920,9 +766,9 @@ public class adminViolation extends javax.swing.JFrame {
 
             // Query to fetch student first and last name
             String studentQuery = "SELECT stud_table.stud_fname, stud_table.stud_lname " +
-                                  "FROM vio_table " +
-                                  "JOIN stud_table ON vio_table.stud_id = stud_table.stud_id " +
-                                  "WHERE vio_table.vio_id = ?";
+            "FROM vio_table " +
+            "JOIN stud_table ON vio_table.stud_id = stud_table.stud_id " +
+            "WHERE vio_table.vio_id = ?";
             PreparedStatement studentStmt = conn.prepareStatement(studentQuery);
             studentStmt.setString(1, vio_id);
             ResultSet studentRs = studentStmt.executeQuery();
@@ -937,9 +783,9 @@ public class adminViolation extends javax.swing.JFrame {
 
             // Query to fetch image_path separately
             String imageQuery = "SELECT vio_table.image_path " +
-                                "FROM vio_table " +
-                                "JOIN stud_table ON vio_table.stud_id = stud_table.stud_id " +
-                                "WHERE vio_table.vio_id = ?";
+            "FROM vio_table " +
+            "JOIN stud_table ON vio_table.stud_id = stud_table.stud_id " +
+            "WHERE vio_table.vio_id = ?";
             PreparedStatement imageStmt = conn.prepareStatement(imageQuery);
             imageStmt.setString(1, vio_id);
             ResultSet imageRs = imageStmt.executeQuery();
@@ -983,74 +829,73 @@ public class adminViolation extends javax.swing.JFrame {
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-    String stud_id = studID.getText(); 
-    String vio_name = vioName.getText();
-    String vio_des = vioDes.getText();
-    String vio_sev = vioSev.getText();
-    String imagePath = null;
-    String vio_status = "Pending";
+        String stud_id = studID.getText();
+        String vio_name = vioName.getText();
+        String vio_des = vioDes.getText();
+        String vio_sev = vioSev.getText();
+        String imagePath = null;
+        String vio_status = "Pending";
 
-    if (imageLabel.getIcon() != null) {
-        imagePath = saveImageToFolder(stud_id);
-    }
-
-    LocalDateTime currDateTime = LocalDateTime.now();
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm a");
-    String vio_stamp = currDateTime.format(format);
-
-    if (stud_id.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Student ID doesn't exist!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Get the current logged-in user's ID
-    int user_id = Session.getInstance().getUid();
-
-    String url = "jdbc:mysql://localhost:3306/sumbi_db";
-    String user = "root";
-    String pass = "";
-
-    try {
-        Connection conn = DriverManager.getConnection(url, user, pass);
-        String sql;
-        PreparedStatement pstmt;
-
-        if (imagePath != null) {
-            sql = "INSERT INTO vio_table (stud_id, vio_name, vio_des, vio_sev, vio_stamp, image_path, vio_status, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, stud_id);
-            pstmt.setString(2, vio_name);
-            pstmt.setString(3, vio_des);
-            pstmt.setString(4, vio_sev);
-            pstmt.setString(5, vio_stamp);
-            pstmt.setString(6, imagePath);
-            pstmt.setString(7, vio_status);
-            pstmt.setInt(8, user_id);
-        } else {
-            sql = "INSERT INTO vio_table (stud_id, vio_name, vio_des, vio_sev, vio_stamp, vio_status, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, stud_id);
-            pstmt.setString(2, vio_name);
-            pstmt.setString(3, vio_des);
-            pstmt.setString(4, vio_sev);
-            pstmt.setString(5, vio_stamp);
-            pstmt.setString(6, vio_status);
-            pstmt.setInt(7, user_id);
+        if (imageLabel.getIcon() != null) {
+            imagePath = saveImageToFolder(stud_id);
         }
 
-        int rowsInserted = pstmt.executeUpdate();
-        if (rowsInserted > 0) {
-            JOptionPane.showMessageDialog(this, "Violation Added Successfully!");
-            int uid = Session.getInstance().getUid(); 
-            logActivity(uid, "Added Violation: " + vio_name);
+        LocalDateTime currDateTime = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm a");
+        String vio_stamp = currDateTime.format(format);
+
+        if (stud_id.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Student ID doesn't exist!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
 
-        pstmt.close();
-        conn.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
+        // Get the current logged-in user's ID
+        int user_id = Session.getInstance().getUid();
 
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+            String sql;
+            PreparedStatement pstmt;
+
+            if (imagePath != null) {
+                sql = "INSERT INTO vio_table (stud_id, vio_name, vio_des, vio_sev, vio_stamp, image_path, vio_status, user_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, stud_id);
+                pstmt.setString(2, vio_name);
+                pstmt.setString(3, vio_des);
+                pstmt.setString(4, vio_sev);
+                pstmt.setString(5, vio_stamp);
+                pstmt.setString(6, imagePath);
+                pstmt.setString(7, vio_status);
+                pstmt.setInt(8, user_id);
+            } else {
+                sql = "INSERT INTO vio_table (stud_id, vio_name, vio_des, vio_sev, vio_stamp, vio_status, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, stud_id);
+                pstmt.setString(2, vio_name);
+                pstmt.setString(3, vio_des);
+                pstmt.setString(4, vio_sev);
+                pstmt.setString(5, vio_stamp);
+                pstmt.setString(6, vio_status);
+                pstmt.setInt(7, user_id);
+            }
+
+            int rowsInserted = pstmt.executeUpdate();
+            if (rowsInserted > 0) {
+                JOptionPane.showMessageDialog(this, "Violation Added Successfully!");
+                int uid = Session.getInstance().getUid();
+                logActivity(uid, "Added Violation: " + vio_name);
+            }
+
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_addMouseClicked
 
     private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
@@ -1062,98 +907,98 @@ public class adminViolation extends javax.swing.JFrame {
     }//GEN-LAST:event_addMouseExited
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-        String vio_id = vioIDtextfield.getText(); 
-    String vio_name = vioName.getText();
-    String vio_des = vioDes.getText();
-    String vio_sev = vioSev.getText();
-    String imagePath = null;
+        String vio_id = vioIDtextfield.getText();
+        String vio_name = vioName.getText();
+        String vio_des = vioDes.getText();
+        String vio_sev = vioSev.getText();
+        String imagePath = null;
 
-    if (vio_id.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Violation ID doesn't exist!", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+        if (vio_id.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Violation ID doesn't exist!", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
-    String url = "jdbc:mysql://localhost:3306/sumbi_db";
-    String user = "root";
-    String pass = "";
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
 
-    int user_id = Session.getInstance().getUid();
+        int user_id = Session.getInstance().getUid();
 
-    try {
-        Connection conn = DriverManager.getConnection(url, user, pass);
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
 
-        // 👉 Check if the status is "Recorded"
-        String checkSql = "SELECT vio_status FROM vio_table WHERE vio_id = ?";
-        PreparedStatement checkStmt = conn.prepareStatement(checkSql);
-        checkStmt.setString(1, vio_id);
-        ResultSet rs = checkStmt.executeQuery();
+            // 👉 Check if the status is "Recorded"
+            String checkSql = "SELECT vio_status FROM vio_table WHERE vio_id = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkSql);
+            checkStmt.setString(1, vio_id);
+            ResultSet rs = checkStmt.executeQuery();
 
-        if (rs.next()) {
-            String status = rs.getString("vio_status");
-            if ("Recorded".equalsIgnoreCase(status)) {
-                JOptionPane.showMessageDialog(this, "This violation is marked as 'Recorded' and cannot be edited.", "Access Denied", JOptionPane.WARNING_MESSAGE);
+            if (rs.next()) {
+                String status = rs.getString("vio_status");
+                if ("Recorded".equalsIgnoreCase(status)) {
+                    JOptionPane.showMessageDialog(this, "This violation is marked as 'Recorded' and cannot be edited.", "Access Denied", JOptionPane.WARNING_MESSAGE);
+                    rs.close();
+                    checkStmt.close();
+                    conn.close();
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Violation not found.", "Error", JOptionPane.ERROR_MESSAGE);
                 rs.close();
                 checkStmt.close();
                 conn.close();
                 return;
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Violation not found.", "Error", JOptionPane.ERROR_MESSAGE);
+
             rs.close();
             checkStmt.close();
+
+            // Handle the image
+            if (imageLabel.getIcon() != null) {
+                imagePath = saveImageToFolder(vio_id);
+            }
+
+            LocalDateTime currDateTime = LocalDateTime.now();
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm a");
+            String vio_stamp = currDateTime.format(format);
+
+            String sql;
+            if (imageLabel.getIcon() == null) {
+                // No image: Set image_path to NULL in database
+                sql = "UPDATE vio_table SET vio_name = ?, vio_des = ?, vio_sev = ?, vio_stamp = ?, image_path = NULL, user_id = ? WHERE vio_id = ?";
+            } else {
+                // Image is present: Update image_path
+                sql = "UPDATE vio_table SET vio_name = ?, vio_des = ?, vio_sev = ?, vio_stamp = ?, image_path = ?, user_id = ? WHERE vio_id = ?";
+            }
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vio_name);
+            pstmt.setString(2, vio_des);
+            pstmt.setString(3, vio_sev);
+            pstmt.setString(4, vio_stamp);
+
+            if (imageLabel.getIcon() == null) {
+                pstmt.setInt(5, user_id);
+                pstmt.setString(6, vio_id);
+            } else {
+                pstmt.setString(5, imagePath);
+                pstmt.setInt(6, user_id);
+                pstmt.setString(7, vio_id);
+            }
+
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Violation Updated Successfully!");
+                logActivity(user_id, "Updated Violation: " + vio_name);
+            } else {
+                JOptionPane.showMessageDialog(this, "No matching record found!", "Update Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            pstmt.close();
             conn.close();
-            return;
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        rs.close();
-        checkStmt.close();
-
-        // Handle the image
-        if (imageLabel.getIcon() != null) {
-            imagePath = saveImageToFolder(vio_id);
-        }
-
-        LocalDateTime currDateTime = LocalDateTime.now();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm a");
-        String vio_stamp = currDateTime.format(format);
-
-        String sql;
-        if (imageLabel.getIcon() == null) {
-            // No image: Set image_path to NULL in database
-            sql = "UPDATE vio_table SET vio_name = ?, vio_des = ?, vio_sev = ?, vio_stamp = ?, image_path = NULL, user_id = ? WHERE vio_id = ?";
-        } else {
-            // Image is present: Update image_path
-            sql = "UPDATE vio_table SET vio_name = ?, vio_des = ?, vio_sev = ?, vio_stamp = ?, image_path = ?, user_id = ? WHERE vio_id = ?";
-        }
-
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, vio_name);
-        pstmt.setString(2, vio_des);
-        pstmt.setString(3, vio_sev);
-        pstmt.setString(4, vio_stamp);
-
-        if (imageLabel.getIcon() == null) {
-            pstmt.setInt(5, user_id);
-            pstmt.setString(6, vio_id);
-        } else {
-            pstmt.setString(5, imagePath);
-            pstmt.setInt(6, user_id);
-            pstmt.setString(7, vio_id);
-        }
-
-        int rowsUpdated = pstmt.executeUpdate();
-        if (rowsUpdated > 0) {
-            JOptionPane.showMessageDialog(this, "Violation Updated Successfully!");
-            logActivity(user_id, "Updated Violation: " + vio_name);
-        } else {
-            JOptionPane.showMessageDialog(this, "No matching record found!", "Update Error", JOptionPane.ERROR_MESSAGE);
-        }
-
-        pstmt.close();
-        conn.close();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    }
     }//GEN-LAST:event_editMouseClicked
 
     private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
@@ -1250,7 +1095,7 @@ public class adminViolation extends javax.swing.JFrame {
         vioStamp.setText("");
         imageLabel.setIcon(null);
         searchfield.setText("");
-        vioIDtextfield.setText(""); 
+        vioIDtextfield.setText("");
         studID.setText("");
         vioStat.setText("");
     }//GEN-LAST:event_refreshMouseClicked
@@ -1317,61 +1162,165 @@ public class adminViolation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_studLastNameActionPerformed
 
-    private void studIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_studIDActionPerformed
-
-    private void studIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_studIDKeyTyped
-        
-    }//GEN-LAST:event_studIDKeyTyped
-
-    private void studIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_studIDKeyReleased
-        String url = "jdbc:mysql://localhost:3306/sumbi_db"; 
-        String user = "root"; 
-        String pass = ""; 
+    private void studIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_studIDFocusLost
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
 
         String stud_id = studID.getText().trim(); // Get the entered ID
 
-        if (stud_id.isEmpty()) { 
+        if (stud_id.isEmpty()) {
             studFirstName.setText(""); // Clear fields if empty
             studLastName.setText("");
-            return; 
+            return;
         }
 
-        try { 
+        try {
             Connection conn = DriverManager.getConnection(url, user, pass);
 
             // Correct SQL query
             String sql = "SELECT stud_fname, stud_lname FROM stud_table WHERE stud_id = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, stud_id); 
+            pstmt.setString(1, stud_id);
             ResultSet rs = pstmt.executeQuery();
 
-            if (rs.next()) { 
-                studFirstName.setText(rs.getString("stud_fname")); 
+            if (rs.next()) {
+                studFirstName.setText(rs.getString("stud_fname"));
                 studLastName.setText(rs.getString("stud_lname"));
-            } else { 
+            } else {
                 studFirstName.setText(""); // Clear fields if no match
-                studLastName.setText(""); 
+                studLastName.setText("");
             }
 
             rs.close();
             pstmt.close();
             conn.close();
-        } catch (SQLException ex) { 
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
-        } 
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_studIDFocusLost
+
+    private void studIDInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_studIDInputMethodTextChanged
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        String stud_id = studID.getText().trim(); // Get the entered ID
+
+        if (stud_id.isEmpty()) {
+            studFirstName.setText(""); // Clear fields if empty
+            studLastName.setText("");
+            return;
+        }
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            // Correct SQL query
+            String sql = "SELECT stud_fname, stud_lname FROM stud_table WHERE stud_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, stud_id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                studFirstName.setText(rs.getString("stud_fname"));
+                studLastName.setText(rs.getString("stud_lname"));
+            } else {
+                studFirstName.setText(""); // Clear fields if no match
+                studLastName.setText("");
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_studIDInputMethodTextChanged
+
+    private void studIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studIDActionPerformed
+
+    private void studIDPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_studIDPropertyChange
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        String stud_id = studID.getText().trim(); // Get the entered ID
+
+        if (stud_id.isEmpty()) {
+            studFirstName.setText(""); // Clear fields if empty
+            studLastName.setText("");
+            return;
+        }
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            // Correct SQL query
+            String sql = "SELECT stud_fname, stud_lname FROM stud_table WHERE stud_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, stud_id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                studFirstName.setText(rs.getString("stud_fname"));
+                studLastName.setText(rs.getString("stud_lname"));
+            } else {
+                studFirstName.setText(""); // Clear fields if no match
+                studLastName.setText("");
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_studIDPropertyChange
+
+    private void studIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_studIDKeyReleased
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+        String user = "root";
+        String pass = "";
+
+        String stud_id = studID.getText().trim(); // Get the entered ID
+
+        if (stud_id.isEmpty()) {
+            studFirstName.setText(""); // Clear fields if empty
+            studLastName.setText("");
+            return;
+        }
+
+        try {
+            Connection conn = DriverManager.getConnection(url, user, pass);
+
+            // Correct SQL query
+            String sql = "SELECT stud_fname, stud_lname FROM stud_table WHERE stud_id = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, stud_id);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                studFirstName.setText(rs.getString("stud_fname"));
+                studLastName.setText(rs.getString("stud_lname"));
+            } else {
+                studFirstName.setText(""); // Clear fields if no match
+                studLastName.setText("");
+            }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_studIDKeyReleased
 
-    private void studentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseClicked
-        new adminStudent(user_fname).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_studentMouseClicked
+    private void studIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_studIDKeyTyped
 
-    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
-        new adminAccount(user_fname).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_settingsMouseClicked
+    }//GEN-LAST:event_studIDKeyTyped
 
     private void imageLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabel1MouseClicked
         // TODO add your handling code here:
@@ -1397,119 +1346,72 @@ public class adminViolation extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_RECORDMouseExited
 
-    private void studIDPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_studIDPropertyChange
-        String url = "jdbc:mysql://localhost:3306/sumbi_db"; 
-        String user = "root"; 
-        String pass = ""; 
+    private void dashboardMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseClicked
+        new userDashboard(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_dashboardMouseClicked
 
-        String stud_id = studID.getText().trim(); // Get the entered ID
+    private void dashboardMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseEntered
+        dashboard.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_dashboardMouseEntered
 
-        if (stud_id.isEmpty()) { 
-            studFirstName.setText(""); // Clear fields if empty
-            studLastName.setText("");
-            return; 
+    private void dashboardMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dashboardMouseExited
+        dashboard.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_dashboardMouseExited
+
+    private void studentMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseEntered
+        student.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_studentMouseEntered
+
+    private void studentMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentMouseExited
+        student.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_studentMouseExited
+
+    private void violationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_violationMouseClicked
+
+    private void violationMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseEntered
+        violation.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_violationMouseEntered
+
+    private void violationMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violationMouseExited
+        violation.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_violationMouseExited
+
+    private void settingsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseClicked
+        new userAccount(user_fname).setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_settingsMouseClicked
+
+    private void settingsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseEntered
+        settings.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_settingsMouseEntered
+
+    private void settingsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_settingsMouseExited
+        settings.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_settingsMouseExited
+
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
+        int response = JOptionPane.showConfirmDialog(this,
+            "Confirm Log Out?",
+            "Logout Confirmation",
+            JOptionPane.YES_NO_OPTION);
+
+        if (response == JOptionPane.YES_OPTION) {
+            new loginform().setVisible(true);
+            this.dispose();
+        } else {
         }
+    }//GEN-LAST:event_logoutMouseClicked
 
-        try { 
-            Connection conn = DriverManager.getConnection(url, user, pass);
+    private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
+        logout.setForeground(new java.awt.Color(255, 255, 0));
+    }//GEN-LAST:event_logoutMouseEntered
 
-            // Correct SQL query
-            String sql = "SELECT stud_fname, stud_lname FROM stud_table WHERE stud_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, stud_id); 
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) { 
-                studFirstName.setText(rs.getString("stud_fname")); 
-                studLastName.setText(rs.getString("stud_lname"));
-            } else { 
-                studFirstName.setText(""); // Clear fields if no match
-                studLastName.setText(""); 
-            }
-
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException ex) { 
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
-        } 
-    }//GEN-LAST:event_studIDPropertyChange
-
-    private void studIDInputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_studIDInputMethodTextChanged
-        String url = "jdbc:mysql://localhost:3306/sumbi_db"; 
-        String user = "root"; 
-        String pass = ""; 
-
-        String stud_id = studID.getText().trim(); // Get the entered ID
-
-        if (stud_id.isEmpty()) { 
-            studFirstName.setText(""); // Clear fields if empty
-            studLastName.setText("");
-            return; 
-        }
-
-        try { 
-            Connection conn = DriverManager.getConnection(url, user, pass);
-
-            // Correct SQL query
-            String sql = "SELECT stud_fname, stud_lname FROM stud_table WHERE stud_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, stud_id); 
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) { 
-                studFirstName.setText(rs.getString("stud_fname")); 
-                studLastName.setText(rs.getString("stud_lname"));
-            } else { 
-                studFirstName.setText(""); // Clear fields if no match
-                studLastName.setText(""); 
-            }
-
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException ex) { 
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
-        } 
-    }//GEN-LAST:event_studIDInputMethodTextChanged
-
-    private void studIDFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_studIDFocusLost
-        String url = "jdbc:mysql://localhost:3306/sumbi_db"; 
-        String user = "root"; 
-        String pass = ""; 
-
-        String stud_id = studID.getText().trim(); // Get the entered ID
-
-        if (stud_id.isEmpty()) { 
-            studFirstName.setText(""); // Clear fields if empty
-            studLastName.setText("");
-            return; 
-        }
-
-        try { 
-            Connection conn = DriverManager.getConnection(url, user, pass);
-
-            // Correct SQL query
-            String sql = "SELECT stud_fname, stud_lname FROM stud_table WHERE stud_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, stud_id); 
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) { 
-                studFirstName.setText(rs.getString("stud_fname")); 
-                studLastName.setText(rs.getString("stud_lname"));
-            } else { 
-                studFirstName.setText(""); // Clear fields if no match
-                studLastName.setText(""); 
-            }
-
-            rs.close();
-            pstmt.close();
-            conn.close();
-        } catch (SQLException ex) { 
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
-        } 
-    }//GEN-LAST:event_studIDFocusLost
+    private void logoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseExited
+        logout.setForeground(new java.awt.Color(255, 255, 255));
+    }//GEN-LAST:event_logoutMouseExited
 
     /**
      * @param args the command line arguments
@@ -1528,20 +1430,20 @@ public class adminViolation extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(adminViolation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userViolation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(adminViolation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userViolation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(adminViolation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userViolation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(adminViolation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userViolation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new adminViolation().setVisible(true);
+                new userViolation().setVisible(true);
             }
         });
     }
@@ -1561,8 +1463,6 @@ public class adminViolation extends javax.swing.JFrame {
     private javax.swing.JPanel leftpanel;
     private javax.swing.JLabel log_icon;
     private javax.swing.JLabel logout;
-    private javax.swing.JLabel rec_icon;
-    private javax.swing.JLabel record;
     private javax.swing.JLabel refresh;
     private javax.swing.JLabel search;
     private javax.swing.JTextField searchfield;
@@ -1581,9 +1481,7 @@ public class adminViolation extends javax.swing.JFrame {
     private javax.swing.JLabel user_fnamelabel;
     private javax.swing.JLabel user_fnamelabel1;
     private javax.swing.JLabel user_passwordlabel;
-    private javax.swing.JLabel user_type1;
-    private javax.swing.JLabel users;
-    private javax.swing.JLabel users_icon;
+    private javax.swing.JLabel user_type;
     private javax.swing.JTextField vioDes;
     private javax.swing.JTextField vioIDtextfield;
     private javax.swing.JTextField vioName;

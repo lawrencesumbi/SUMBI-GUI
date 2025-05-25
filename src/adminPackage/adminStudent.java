@@ -808,42 +808,56 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_jScrollPane1MouseClicked
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-       String stud_fname = studFirstName.getText();
-        String stud_lname = studLastName.getText();
-        String stud_program = studProgram.getText();
-        String stud_section = studSection.getText();
-        String stud_address = studAddress.getText();
-        String stud_cnumber = studCNumber.getText();
+    String stud_fname = studFirstName.getText();
+    String stud_lname = studLastName.getText();
+    String stud_program = studProgram.getText();
+    String stud_section = studSection.getText();
+    String stud_address = studAddress.getText();
+    String stud_cnumber = studCNumber.getText();
 
-        String url = "jdbc:mysql://localhost:3306/sumbi_db";
-        String user = "root";
-        String pass = "";
+    if (stud_fname.isEmpty() || stud_lname.isEmpty() || stud_cnumber.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        try {
-            Connection conn = DriverManager.getConnection(url, user, pass);
+    if (!stud_cnumber.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    String url = "jdbc:mysql://localhost:3306/sumbi_db";
+    String user = "root";
+    String pass = "";
 
-            String sql = "INSERT INTO stud_table (stud_fname, stud_lname, stud_program, stud_section, stud_address, stud_cnumber) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+    // Get the current user's user_id from Session
+    int user_id = Session.getInstance().getUid();
 
-            pstmt.setString(1, stud_fname);
-            pstmt.setString(2, stud_lname);
-            pstmt.setString(3, stud_program);
-            pstmt.setString(4, stud_section);
-            pstmt.setString(5, stud_address);
-            pstmt.setString(6, stud_cnumber);
+    try {
+        Connection conn = DriverManager.getConnection(url, user, pass);
 
-            int rowsInserted = pstmt.executeUpdate();
-            if (rowsInserted > 0) {
-                JOptionPane.showMessageDialog(this, "Student Added Successfully!");
-                int uid = Session.getInstance().getUid();
-                logActivity(uid, "Added student: " + stud_fname + " " + stud_lname);
-            }
+        String sql = "INSERT INTO stud_table (stud_fname, stud_lname, stud_program, stud_section, stud_address, stud_cnumber, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
 
-            pstmt.close();
-            conn.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        pstmt.setString(1, stud_fname);
+        pstmt.setString(2, stud_lname);
+        pstmt.setString(3, stud_program);
+        pstmt.setString(4, stud_section);
+        pstmt.setString(5, stud_address);
+        pstmt.setString(6, stud_cnumber);
+        pstmt.setInt(7, user_id);  // Add user_id to the query
+
+        int rowsInserted = pstmt.executeUpdate();
+        if (rowsInserted > 0) {
+            JOptionPane.showMessageDialog(this, "Student Added Successfully!");
+            int uid = Session.getInstance().getUid(); 
+            logActivity(uid, "Added student: " + stud_fname + " " + stud_lname);
         }
+
+        pstmt.close();
+        conn.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_addMouseClicked
 
     private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
@@ -855,66 +869,73 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_addMouseExited
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-        String stud_fname = studFirstName.getText();
-        String stud_lname = studLastName.getText();
-        String stud_program = studProgram.getText();
-        String stud_section = studSection.getText();
-        String stud_address = studAddress.getText();
-        String stud_cnumber = studCNumber.getText();
+    String stud_fname = studFirstName.getText();
+    String stud_lname = studLastName.getText();
+    String stud_program = studProgram.getText();
+    String stud_section = studSection.getText();
+    String stud_address = studAddress.getText();
+    String stud_cnumber = studCNumber.getText();
 
-        if (stud_fname.isEmpty() || stud_lname.isEmpty() || stud_cnumber.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+    if (stud_fname.isEmpty() || stud_lname.isEmpty() || stud_cnumber.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (!stud_cnumber.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to update this student?", "Confirm Update", JOptionPane.YES_NO_OPTION);
+    if (confirm != JOptionPane.YES_OPTION) return;
+
+    String url = "jdbc:mysql://localhost:3306/sumbi_db";
+    String user = "root";
+    String pass = "";
+
+    // Get user_id from Session
+    int user_id = Session.getInstance().getUid();
+
+    try (Connection conn = DriverManager.getConnection(url, user, pass)) {
+        String sql;
+
+        if (imageLabel.getIcon() == null) {
+            // No image: Set image_path to NULL in database
+            sql = "UPDATE stud_table SET stud_lname = ?, stud_program = ?, stud_section = ?, stud_address = ?, stud_cnumber = ?, image_path = NULL, user_id = ? WHERE stud_fname = ?";
+        } else {
+            // Image is present: Update image_path
+            sql = "UPDATE stud_table SET stud_lname = ?, stud_program = ?, stud_section = ?, stud_address = ?, stud_cnumber = ?, image_path = ?, user_id = ? WHERE stud_fname = ?";
         }
 
-        if (!stud_cnumber.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, stud_lname);
+            pstmt.setString(2, stud_program);
+            pstmt.setString(3, stud_section);
+            pstmt.setString(4, stud_address);
+            pstmt.setString(5, stud_cnumber);
 
-        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to update this student?", "Confirm Update", JOptionPane.YES_NO_OPTION);
-        if (confirm != JOptionPane.YES_OPTION) return;
-
-        String url = "jdbc:mysql://localhost:3306/sumbi_db";
-        String user = "root";
-        String pass = "";
-
-        try (Connection conn = DriverManager.getConnection(url, user, pass)) {
-            String sql;
-            if (imageLabel.getIcon() == null) {
-                sql = "UPDATE stud_table SET stud_lname = ?, stud_program = ?, stud_section = ?, stud_address = ?, stud_cnumber = ? WHERE stud_fname = ?";
+            if (imageLabel.getIcon() != null) {
+                String imagePath = saveImageToFolder(stud_fname + "_" + stud_lname); // customize filename
+                pstmt.setString(6, imagePath);
+                pstmt.setInt(7, user_id);
+                pstmt.setString(8, stud_fname);
             } else {
-                sql = "UPDATE stud_table SET stud_lname = ?, stud_program = ?, stud_section = ?, stud_address = ?, stud_cnumber = ?, image_path = ? WHERE stud_fname = ?";
+                pstmt.setInt(6, user_id);
+                pstmt.setString(7, stud_fname);
             }
 
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setString(1, stud_lname);
-                pstmt.setString(2, stud_program);
-                pstmt.setString(3, stud_section);
-                pstmt.setString(4, stud_address);
-                pstmt.setString(5, stud_cnumber);
-
-                if (imageLabel.getIcon() != null) {
-                    String imagePath = saveImageToFolder(stud_fname + "_" + stud_lname); // customize filename
-                    pstmt.setString(6, imagePath);
-                    pstmt.setString(7, stud_fname);
-                } else {
-                    pstmt.setString(6, stud_fname);
-                }
-
-                int rowsUpdated = pstmt.executeUpdate();
-                if (rowsUpdated > 0) {
-                    JOptionPane.showMessageDialog(this, "Student information updated successfully!");
-                    int uid = Session.getInstance().getUid();
-                    logActivity(uid, "Updated Student: " + stud_fname + " " + stud_lname);
-                } else {
-                    JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Student information updated successfully!");
+                logActivity(user_id, "Updated Student: " + stud_fname + " " + stud_lname);
+            } else {
+                JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_editMouseClicked
 
     private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
@@ -1149,7 +1170,7 @@ public class adminStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_imageLabel1MouseClicked
 
     private void imageLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_imageLabelMouseClicked
-        imageHandler.chooseImage(imageLabel);
+        imageHandler.chooseStudImage(imageLabel);
     }//GEN-LAST:event_imageLabelMouseClicked
 
     private void violateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_violateMouseClicked

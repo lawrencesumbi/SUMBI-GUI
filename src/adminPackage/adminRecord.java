@@ -235,7 +235,6 @@ public class adminRecord extends javax.swing.JFrame {
         rec_table = new javax.swing.JTable();
         add = new javax.swing.JLabel();
         edit = new javax.swing.JLabel();
-        delete = new javax.swing.JLabel();
         refresh = new javax.swing.JLabel();
         searchfield = new javax.swing.JTextField();
         search = new javax.swing.JLabel();
@@ -486,7 +485,7 @@ public class adminRecord extends javax.swing.JFrame {
                 addMouseExited(evt);
             }
         });
-        violationpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 60, 30));
+        violationpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 60, 30));
 
         edit.setBackground(new java.awt.Color(255, 255, 255));
         edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -505,26 +504,7 @@ public class adminRecord extends javax.swing.JFrame {
                 editMouseExited(evt);
             }
         });
-        violationpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, 60, 30));
-
-        delete.setBackground(new java.awt.Color(255, 255, 255));
-        delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        delete.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        delete.setText("DELETE");
-        delete.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        delete.setOpaque(true);
-        delete.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                deleteMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                deleteMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                deleteMouseExited(evt);
-            }
-        });
-        violationpanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 60, 30));
+        violationpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 300, 60, 30));
 
         refresh.setBackground(new java.awt.Color(255, 255, 255));
         refresh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -543,7 +523,7 @@ public class adminRecord extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        violationpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, 120, 30));
+        violationpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, 120, 30));
 
         searchfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         searchfield.addActionListener(new java.awt.event.ActionListener() {
@@ -556,7 +536,7 @@ public class adminRecord extends javax.swing.JFrame {
                 searchfieldKeyPressed(evt);
             }
         });
-        violationpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, 150, 30));
+        violationpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 190, 30));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -575,7 +555,7 @@ public class adminRecord extends javax.swing.JFrame {
                 searchMouseExited(evt);
             }
         });
-        violationpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 300, 70, 30));
+        violationpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 300, 70, 30));
 
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -693,10 +673,10 @@ public class adminRecord extends javax.swing.JFrame {
             }
         });
         vioID.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 vioIDInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         vioID.addActionListener(new java.awt.event.ActionListener() {
@@ -747,7 +727,7 @@ public class adminRecord extends javax.swing.JFrame {
                 printPrevMouseExited(evt);
             }
         });
-        violationpanel.add(printPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, 90, 30));
+        violationpanel.add(printPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 300, 90, 30));
 
         user_passwordlabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_passwordlabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -956,75 +936,78 @@ public class adminRecord extends javax.swing.JFrame {
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
         String vio_id = vioID.getText();        
-        String rec_sanction = recSanction.getText();
-        String rec_comment = recComment.getText();
-        String imagePath = null;       
-        String vio_status = "Recorded";
+    String rec_sanction = recSanction.getText();
+    String rec_comment = recComment.getText();
+    String imagePath = null;       
+    String vio_status = "Recorded";
 
-        if (imageLabel.getIcon() != null) {
-            imagePath = saveImageToFolder(vio_id);
+    if (imageLabel.getIcon() != null) {
+        imagePath = saveImageToFolder(vio_id);
+    }
+
+    LocalDateTime currDateTime = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm a");
+    String rec_stamp = currDateTime.format(format);
+
+    if (vio_id.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Violation ID doesn't exist!", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String url = "jdbc:mysql://localhost:3306/sumbi_db";
+    String user = "root";
+    String pass = "";
+
+    // Get user_id from Session
+    int user_id = Session.getInstance().getUid(); 
+
+    try {
+        Connection conn = DriverManager.getConnection(url, user, pass);
+
+        // Insert into rec_table first
+        String sql;
+        PreparedStatement pstmt;
+
+        if (imagePath != null) {
+            sql = "INSERT INTO rec_table (vio_id, rec_sanction, rec_comment, rec_stamp, image_path, user_id) VALUES (?, ?, ?, ?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vio_id);
+            pstmt.setString(2, rec_sanction);
+            pstmt.setString(3, rec_comment);
+            pstmt.setString(4, rec_stamp);
+            pstmt.setString(5, imagePath);
+            pstmt.setInt(6, user_id);
+        } else {
+            sql = "INSERT INTO rec_table (vio_id, rec_sanction, rec_comment, rec_stamp, user_id) VALUES (?, ?, ?, ?, ?)";
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, vio_id);
+            pstmt.setString(2, rec_sanction);
+            pstmt.setString(3, rec_comment);
+            pstmt.setString(4, rec_stamp);
+            pstmt.setInt(5, user_id);
         }
 
-        LocalDateTime currDateTime = LocalDateTime.now();
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm a");
-        String rec_stamp = currDateTime.format(format);
+        int rowsInserted = pstmt.executeUpdate();
+        pstmt.close();
 
-        if (vio_id.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Violation ID doesn't exist!", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
+        if (rowsInserted > 0) {
+            // Now update the vio_table to set vio_status to 'Recorded'
+            String updateSql = "UPDATE vio_table SET vio_status = ? WHERE vio_id = ?";
+            PreparedStatement updatePstmt = conn.prepareStatement(updateSql);
+            updatePstmt.setString(1, vio_status);
+            updatePstmt.setString(2, vio_id);
+            updatePstmt.executeUpdate();
+            updatePstmt.close();
+
+            JOptionPane.showMessageDialog(this, "Student Violation Successfully Recorded!");
+            int uid = Session.getInstance().getUid(); 
+            logActivity(uid, "Added New Record for Violation ID: " + vio_id);
         }
 
-        String url = "jdbc:mysql://localhost:3306/sumbi_db";
-        String user = "root";
-        String pass = "";
-
-        try {
-            Connection conn = DriverManager.getConnection(url, user, pass);
-
-            // Insert into rec_table first
-            String sql;
-            PreparedStatement pstmt;
-
-            if (imagePath != null) {
-                sql = "INSERT INTO rec_table (vio_id, rec_sanction, rec_comment, rec_stamp, image_path) VALUES (?, ?, ?, ?, ?)";
-                pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, vio_id);
-                pstmt.setString(2, rec_sanction);
-                pstmt.setString(3, rec_comment);
-                pstmt.setString(4, rec_stamp);
-                pstmt.setString(5, imagePath);
-            } else {
-                sql = "INSERT INTO rec_table (vio_id, rec_sanction, rec_comment, rec_stamp) VALUES (?, ?, ?, ?)";
-                pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, vio_id);
-                pstmt.setString(2, rec_sanction);
-                pstmt.setString(3, rec_comment);
-                pstmt.setString(4, rec_stamp);
-            }
-
-            int rowsInserted = pstmt.executeUpdate();
-            pstmt.close();
-
-            if (rowsInserted > 0) {
-                // Now update the vio_table to set vio_status to 'Recorded'
-                String updateSql = "UPDATE vio_table SET vio_status = ? WHERE vio_id = ?";
-                PreparedStatement updatePstmt = conn.prepareStatement(updateSql);
-                updatePstmt.setString(1, vio_status);
-                updatePstmt.setString(2, vio_id);
-                updatePstmt.executeUpdate();
-                updatePstmt.close();
-
-                JOptionPane.showMessageDialog(this, "Student Violation Successfully Recorded!");
-               
-                int uid = Session.getInstance().getUid(); 
-                logActivity(uid, "Added New Record");
-
-            }
-
-            conn.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        conn.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
 
     }//GEN-LAST:event_addMouseClicked
 
@@ -1035,120 +1018,6 @@ public class adminRecord extends javax.swing.JFrame {
     private void addMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_addMouseExited
-
-    private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
-        // Get the rec_id, rec_sanction, and rec_comment from text fields
-        String rec_id_text = recIDtextfield.getText();  // Assuming recID is the text field for rec_id
-        String rec_sanction = recSanction.getText();
-        String rec_comment = recComment.getText();
-
-        // Check if rec_id is empty or invalid
-        if (rec_id_text.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Record ID is required!", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        int rec_id;
-        try {
-            rec_id = Integer.parseInt(rec_id_text);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Invalid Record ID. Please enter a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Database connection setup
-        String url = "jdbc:mysql://localhost:3306/sumbi_db";
-        String user = "root";
-        String pass = "";
-
-        try {
-            Connection conn = DriverManager.getConnection(url, user, pass);
-
-            // SQL query to update the rec_sanction and rec_comment for the given rec_id
-            String sql = "UPDATE rec_table SET rec_sanction = ?, rec_comment = ? WHERE rec_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, rec_sanction);
-            pstmt.setString(2, rec_comment);
-            pstmt.setInt(3, rec_id);
-
-            int rowsUpdated = pstmt.executeUpdate();
-            pstmt.close();
-
-            if (rowsUpdated > 0) {
-                // Successfully updated the record
-                JOptionPane.showMessageDialog(this, "Record Updated Successfully!");
-
-                int uid = Session.getInstance().getUid(); // Log activity
-                logActivity(uid, "Updated Record for Record ID: " + rec_id);
-
-            } else {
-                // No record found for the given rec_id
-                JOptionPane.showMessageDialog(this, "No record found with Record ID: " + rec_id, "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-            conn.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_editMouseClicked
-
-    private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editMouseEntered
-
-    private void editMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_editMouseExited
-
-    private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
-        String rec_id = recIDtextfield.getText(); // Assuming there's a text field for user_id
-
-        if (rec_id.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter a User ID.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        String url = "jdbc:mysql://localhost:3306/sumbi_db";
-        String user = "root";
-        String pass = "";
-
-        try {
-            Connection conn = DriverManager.getConnection(url, user, pass);
-
-            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this user?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
-            if (confirm != JOptionPane.YES_OPTION) {
-                conn.close();
-                return;
-            }
-
-            String sql = "DELETE FROM rec_table WHERE rec_id = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, rec_id);
-
-            int rowsDeleted = pstmt.executeUpdate();
-            if (rowsDeleted > 0) {
-                JOptionPane.showMessageDialog(this, "Record deleted successfully!");
-                int uid = Session.getInstance().getUid();
-                logActivity(uid, "Deleted student: " + rec_id );
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Deletion failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-            pstmt.close();
-            conn.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_deleteMouseClicked
-
-    private void deleteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deleteMouseEntered
-
-    private void deleteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deleteMouseExited
 
     private void refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseClicked
         displayData();
@@ -1337,7 +1206,7 @@ String recIdText = recIDtextfield.getText().trim();
                     String studPhotoPath = rs.getString("stud_image_path");
                     String vioPhotoPath = rs.getString("vio_image_path");
 
-                    new adminPrintPreview(
+                    new adminPrintPreview(user_fname,
                         fullName, program, section, address, contact,
                         vioName, vioDes, vioSev, vioStamp,
                         recSanction, recComment, recStamp,
@@ -1536,6 +1405,82 @@ String recIdText = recIDtextfield.getText().trim();
         }
     }//GEN-LAST:event_vioIDPropertyChange
 
+    private void editMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editMouseExited
+
+    private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editMouseEntered
+
+    private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
+    // Get the rec_id, rec_sanction, and rec_comment from text fields
+    String rec_id_text = recIDtextfield.getText();  // Assuming recID is the text field for rec_id
+    String rec_sanction = recSanction.getText();
+    String rec_comment = recComment.getText();
+
+    // Check if rec_id is empty or invalid
+    if (rec_id_text.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Record ID is required!", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int rec_id;
+    try {
+        rec_id = Integer.parseInt(rec_id_text);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid Record ID. Please enter a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Get the current user_id from the session
+    int user_id = Session.getInstance().getUid();
+
+    // Create the current timestamp (rec_stamp)
+    LocalDateTime currDateTime = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("yy/MM/dd hh:mm a");
+    String rec_stamp = currDateTime.format(format);
+   
+    int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to update this record?", "Confirm Update", JOptionPane.YES_NO_OPTION);
+    if (confirm != JOptionPane.YES_OPTION) return;
+    
+    // Database connection setup
+    String url = "jdbc:mysql://localhost:3306/sumbi_db";
+    String user = "root";
+    String pass = "";
+
+    try {
+        Connection conn = DriverManager.getConnection(url, user, pass);
+
+        // SQL query to update rec_sanction, rec_comment, rec_stamp, and user_id for the given rec_id
+        String sql = "UPDATE rec_table SET rec_sanction = ?, rec_comment = ?, rec_stamp = ?, user_id = ? WHERE rec_id = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setString(1, rec_sanction);
+        pstmt.setString(2, rec_comment);
+        pstmt.setString(3, rec_stamp);
+        pstmt.setInt(4, user_id);
+        pstmt.setInt(5, rec_id);
+
+        int rowsUpdated = pstmt.executeUpdate();
+        pstmt.close();
+
+        if (rowsUpdated > 0) {
+            // Successfully updated the record
+            JOptionPane.showMessageDialog(this, "Record Updated Successfully!");
+            int uid = Session.getInstance().getUid(); 
+            logActivity(uid, "Updated Record for Record ID: " + rec_id);
+
+        } else {
+            // No record found for the given rec_id
+            JOptionPane.showMessageDialog(this, "No record found with Record ID: " + rec_id, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        conn.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_editMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1576,7 +1521,6 @@ String recIdText = recIDtextfield.getText().trim();
     private javax.swing.JLabel add;
     private javax.swing.JLabel dash_icon;
     private javax.swing.JLabel dashboard;
-    private javax.swing.JLabel delete;
     private javax.swing.JLabel displayImage;
     private javax.swing.JLabel edit;
     private javax.swing.JLabel imageLabel;

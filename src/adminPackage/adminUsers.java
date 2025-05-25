@@ -875,49 +875,48 @@ public class adminUsers extends javax.swing.JFrame {
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
         String user_fname = fullNameTextField.getText();
-        String user_cnumber = contactNumberTextField.getText();
-        String user_email = emailTextField.getText();   
-        String user_type = (userTypeComboBox.getSelectedItem() != null) ? userTypeComboBox.getSelectedItem().toString() : "";
-        String user_status = (userStatusComboBox.getSelectedItem() != null) ? userStatusComboBox.getSelectedItem().toString() : "";
+    String user_cnumber = contactNumberTextField.getText();
+    String user_email = emailTextField.getText();   
+    String user_type = (userTypeComboBox.getSelectedItem() != null) ? userTypeComboBox.getSelectedItem().toString() : "";
+    String user_status = (userStatusComboBox.getSelectedItem() != null) ? userStatusComboBox.getSelectedItem().toString() : "";
 
-        if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+    if (user_fname.isEmpty() || user_cnumber.isEmpty() || user_email.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (!user_cnumber.matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    if (!user_email.toLowerCase().endsWith(".com")) {
+        JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String url = "jdbc:mysql://localhost:3306/sumbi_db";
+    String dbUser = "root";
+    String pass = "";
+
+    try (Connection conn = DriverManager.getConnection(url, dbUser, pass)) {
+        if (!isEmailDuplicate(conn, user_email)) {
+            JOptionPane.showMessageDialog(this, "Email does not exist. Please check the email.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        if (!user_cnumber.matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Contact number must be in digits.", "Error", JOptionPane.ERROR_MESSAGE);
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to update this user?", "Confirm Update", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) {
+            conn.close();
             return;
         }
 
-        if (!user_email.toLowerCase().endsWith(".com")) {
-            JOptionPane.showMessageDialog(this, "Email must be valid. Please enter a valid email account.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        String url = "jdbc:mysql://localhost:3306/sumbi_db";
-        String user = "root";
-        String pass = "";
-
-        try (Connection conn = DriverManager.getConnection(url, user, pass)) {
-            // Check if the user exists before updating
-            if (!isEmailDuplicate(conn, user_email)) {
-                JOptionPane.showMessageDialog(this, "Email does not exist. Please check the email.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-
-            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to update this user?", "Confirm Deletion", JOptionPane.YES_NO_OPTION);
-            if (confirm != JOptionPane.YES_OPTION) {
-                conn.close();
-                return;
-            }
-            
-            // Update user details including the image path
         String sql;
         if (imageLabel.getIcon() == null) {
-            sql = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, user_type = ?, user_status = ? WHERE user_email = ?";
+            // No image: Set image_path to NULL
+            sql = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, user_type = ?, user_status = ?, image_path = NULL WHERE user_email = ?";
         } else {
+            // Image present: Update image_path
             sql = "UPDATE user_table SET user_fname = ?, user_cnumber = ?, user_type = ?, user_status = ?, image_path = ? WHERE user_email = ?";
         }
 
@@ -935,21 +934,20 @@ public class adminUsers extends javax.swing.JFrame {
                 pstmt.setString(5, user_email);
             }
 
-
             int rowsUpdated = pstmt.executeUpdate();
 
             if (rowsUpdated > 0) {
                 JOptionPane.showMessageDialog(this, "User information updated successfully!");
                 int uid = Session.getInstance().getUid();
                 logActivity(uid, "Updated user: " + user_email);
-
             } else {
                 JOptionPane.showMessageDialog(this, "Update failed. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_editMouseClicked
 
     private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
