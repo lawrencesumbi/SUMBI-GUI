@@ -724,16 +724,19 @@ public class userStudent extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsMouseExited
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        int response = JOptionPane.showConfirmDialog(this,
-            "Confirm Log Out?",
-            "Logout Confirmation",
+       int response = JOptionPane.showConfirmDialog(this, 
+            "Confirm Log Out?", 
+            "Logout Confirmation", 
             JOptionPane.YES_NO_OPTION);
 
         if (response == JOptionPane.YES_OPTION) {
+            int uid = Session.getInstance().getUid(); 
+            logActivity(uid, "Logged out");           
+            Session.getInstance().clearSession();    
+
             new loginform().setVisible(true);
             this.dispose();
-        } else {
-        }
+        } 
     }//GEN-LAST:event_logoutMouseClicked
 
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered

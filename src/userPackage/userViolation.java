@@ -61,37 +61,51 @@ public class userViolation extends javax.swing.JFrame {
     }
    
     public void displayData() {
-        try {
-            dbConnector dbc = new dbConnector();
+    try {
+        dbConnector dbc = new dbConnector();
 
-            // Only select the required columns
-            ResultSet rs = dbc.getData(
-                "SELECT vio_id, stud_id, vio_name, vio_des, vio_sev, vio_stamp, vio_status FROM vio_table"
-            );
+        // Get the logged-in user's ID
+        Session session = Session.getInstance();
+        int currentUserId = session.getUid();  // Get the user_id from the session
 
-            // Clear the input fields
-            studFirstName.setText("");  
-            studLastName.setText("");  
-            vioName.setText("");  
-            vioDes.setText("");  
-            vioSev.setText("");  
-            vioStamp.setText(""); 
-            searchfield.setText(""); 
-
-            // Set the table model with only the selected columns
-            vio_table.setModel(DbUtils.resultSetToTableModel(rs));
-
-            // Optional: Rename headers
-            String[] columnNames = {"Violation ID", "Student ID", "Violation", "Description", "Severity", "Timestamp", "Status"};
-            for (int col = 0; col < columnNames.length; col++) {
-                vio_table.getColumnModel().getColumn(col).setHeaderValue(columnNames[col]);
-            }
-            vio_table.getTableHeader().repaint();
-
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
+        if (currentUserId == -1) {
+            System.out.println("Error: No user is currently logged in.");
+            return;
         }
+
+        // Fetch only the violations of the logged-in user
+        String query = "SELECT vio_id, stud_id, vio_name, vio_des, vio_sev, vio_stamp, vio_status FROM vio_table WHERE user_id = ?";
+        PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
+        pstmt.setInt(1, currentUserId);
+        ResultSet rs = pstmt.executeQuery();
+
+        // Clear the input fields
+        studFirstName.setText("");  
+        studLastName.setText("");  
+        vioName.setText("");  
+        vioDes.setText("");  
+        vioSev.setText("");  
+        vioStamp.setText(""); 
+        searchfield.setText(""); 
+
+        // Set the table model with only the selected columns
+        vio_table.setModel(DbUtils.resultSetToTableModel(rs));
+
+        // Optional: Rename headers
+        String[] columnNames = {"Violation ID", "Student ID", "Violation", "Description", "Severity", "Timestamp", "Status"};
+        for (int col = 0; col < columnNames.length; col++) {
+            vio_table.getColumnModel().getColumn(col).setHeaderValue(columnNames[col]);
+        }
+        vio_table.getTableHeader().repaint();
+
+        rs.close();
+        pstmt.close();
+
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
     }
+}
+
 
     
     private String saveImageToFolder(String user_email) {
@@ -269,6 +283,7 @@ public class userViolation extends javax.swing.JFrame {
         user_emaillabel3 = new javax.swing.JLabel();
         vioStat = new javax.swing.JTextField();
         user_emaillabel4 = new javax.swing.JLabel();
+        viewReport = new javax.swing.JLabel();
         leftpanel = new javax.swing.JPanel();
         displayImage = new javax.swing.JLabel();
         user_type = new javax.swing.JLabel();
@@ -334,7 +349,7 @@ public class userViolation extends javax.swing.JFrame {
                 addMouseExited(evt);
             }
         });
-        violationpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 60, 30));
+        violationpanel.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 60, 30));
 
         edit.setBackground(new java.awt.Color(255, 255, 255));
         edit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -353,7 +368,7 @@ public class userViolation extends javax.swing.JFrame {
                 editMouseExited(evt);
             }
         });
-        violationpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 310, 60, 30));
+        violationpanel.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 310, 60, 30));
 
         delete.setBackground(new java.awt.Color(255, 255, 255));
         delete.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -372,7 +387,7 @@ public class userViolation extends javax.swing.JFrame {
                 deleteMouseExited(evt);
             }
         });
-        violationpanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 310, 60, 30));
+        violationpanel.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 310, 60, 30));
 
         refresh.setBackground(new java.awt.Color(255, 255, 255));
         refresh.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -391,7 +406,7 @@ public class userViolation extends javax.swing.JFrame {
                 refreshMouseExited(evt);
             }
         });
-        violationpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 310, 120, 30));
+        violationpanel.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 310, 120, 30));
 
         searchfield.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         searchfield.addActionListener(new java.awt.event.ActionListener() {
@@ -404,7 +419,7 @@ public class userViolation extends javax.swing.JFrame {
                 searchfieldKeyPressed(evt);
             }
         });
-        violationpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 310, 150, 30));
+        violationpanel.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, 140, 30));
 
         search.setBackground(new java.awt.Color(255, 255, 255));
         search.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -423,7 +438,7 @@ public class userViolation extends javax.swing.JFrame {
                 searchMouseExited(evt);
             }
         });
-        violationpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 70, 30));
+        violationpanel.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 310, 70, 30));
 
         user_fnamelabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         user_fnamelabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -598,6 +613,25 @@ public class userViolation extends javax.swing.JFrame {
         user_emaillabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         user_emaillabel4.setText("Violation Name");
         violationpanel.add(user_emaillabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 110, 20));
+
+        viewReport.setBackground(new java.awt.Color(255, 255, 255));
+        viewReport.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        viewReport.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        viewReport.setText("VIEWREPORT");
+        viewReport.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        viewReport.setOpaque(true);
+        viewReport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                viewReportMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                viewReportMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                viewReportMouseExited(evt);
+            }
+        });
+        violationpanel.add(viewReport, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 310, 100, 30));
 
         getContentPane().add(violationpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 710, 600));
 
@@ -1361,16 +1395,19 @@ public class userViolation extends javax.swing.JFrame {
     }//GEN-LAST:event_settingsMouseExited
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        int response = JOptionPane.showConfirmDialog(this,
-            "Confirm Log Out?",
-            "Logout Confirmation",
+        int response = JOptionPane.showConfirmDialog(this, 
+            "Confirm Log Out?", 
+            "Logout Confirmation", 
             JOptionPane.YES_NO_OPTION);
 
         if (response == JOptionPane.YES_OPTION) {
+            int uid = Session.getInstance().getUid(); 
+            logActivity(uid, "Logged out");           
+            Session.getInstance().clearSession();    
+
             new loginform().setVisible(true);
             this.dispose();
-        } else {
-        }
+        } 
     }//GEN-LAST:event_logoutMouseClicked
 
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
@@ -1385,6 +1422,124 @@ public class userViolation extends javax.swing.JFrame {
         new userStudent(user_fname).setVisible(true);
         this.dispose();
     }//GEN-LAST:event_studentMouseClicked
+
+    private void viewReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewReportMouseClicked
+        String vioIdText = vioIDtextfield.getText().trim();
+
+    if (vioIdText.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter a Violation ID!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int vio_id;
+    try {
+        vio_id = Integer.parseInt(vioIdText);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Invalid Violation ID. Please enter a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String url = "jdbc:mysql://localhost:3306/sumbi_db";
+    String user = "root";
+    String pass = "";
+
+    try (Connection conn = DriverManager.getConnection(url, user, pass)) {
+
+        // Fetch rec_id based on vio_id
+        int rec_id = -1;
+        String fetchRecIdQuery = "SELECT rec_id FROM rec_table WHERE vio_id = ?";
+        try (PreparedStatement pstmtRec = conn.prepareStatement(fetchRecIdQuery)) {
+            pstmtRec.setInt(1, vio_id);
+            try (ResultSet rsRec = pstmtRec.executeQuery()) {
+                if (rsRec.next()) {
+                    rec_id = rsRec.getInt("rec_id");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No record found for Violation ID: " + vio_id);
+                    return;
+                }
+            }
+        }
+
+        // Now fetch the details using rec_id
+        String query = "SELECT s.stud_fname, s.stud_lname, s.stud_program, s.stud_section, s.stud_address, s.stud_cnumber, s.image_path AS stud_image_path, " +
+                       "v.vio_name, v.vio_des, v.vio_sev, v.vio_stamp, v.image_path AS vio_image_path, " +
+                       "r.rec_sanction, r.rec_comment, r.rec_stamp, " +
+                       "v.user_id AS vio_user_id, r.user_id AS rec_user_id " +  
+                       "FROM rec_table r " +
+                       "JOIN vio_table v ON r.vio_id = v.vio_id " +
+                       "JOIN stud_table s ON v.stud_id = s.stud_id " +
+                       "WHERE r.rec_id = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, rec_id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String fullName = rs.getString("stud_fname") + " " + rs.getString("stud_lname");
+                    String program = rs.getString("stud_program");
+                    String section = rs.getString("stud_section");
+                    String address = rs.getString("stud_address");
+                    String contact = rs.getString("stud_cnumber");
+
+                    String vioName = rs.getString("vio_name");
+                    String vioDes = rs.getString("vio_des");
+                    String vioSev = rs.getString("vio_sev");
+                    String vioStamp = rs.getString("vio_stamp");
+
+                    String recSanction = rs.getString("rec_sanction");
+                    String recComment = rs.getString("rec_comment");
+                    String recStamp = rs.getString("rec_stamp");
+
+                    String studPhotoPath = rs.getString("stud_image_path");
+                    String vioPhotoPath = rs.getString("vio_image_path");
+
+                    int vio_user_id = rs.getInt("vio_user_id");
+                    int rec_user_id = rs.getInt("rec_user_id");
+
+                    String userName = getUserNameById(conn, vio_user_id);   // Fetch user_fname from user_table
+                    String adminName = getUserNameById(conn, rec_user_id);  // Fetch user_fname from user_table
+
+                    new adminPrintPreview(user_fname, userName, adminName,
+                        fullName, program, section, address, contact,
+                        vioName, vioDes, vioSev, vioStamp,
+                        recSanction, recComment, recStamp,
+                        studPhotoPath, vioPhotoPath
+                    ).setVisible(true);
+
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No data found for Record ID: " + rec_id);
+                }
+            }
+        }
+
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+        }
+
+        // 🧩 Helper method to get user_fname from user_table based on user_id
+        private String getUserNameById(Connection conn, int user_id) {
+            String userName = "";
+            try (PreparedStatement stmt = conn.prepareStatement("SELECT user_fname FROM user_table WHERE user_id = ?")) {
+                stmt.setInt(1, user_id);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        userName = rs.getString("user_fname");
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return userName;
+    }//GEN-LAST:event_viewReportMouseClicked
+
+    private void viewReportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewReportMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_viewReportMouseEntered
+
+    private void viewReportMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewReportMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_viewReportMouseExited
 
     /**
      * @param args the command line arguments
@@ -1454,6 +1609,7 @@ public class userViolation extends javax.swing.JFrame {
     private javax.swing.JLabel user_fnamelabel1;
     private javax.swing.JLabel user_passwordlabel;
     private javax.swing.JLabel user_type;
+    private javax.swing.JLabel viewReport;
     private javax.swing.JTextField vioDes;
     private javax.swing.JTextField vioIDtextfield;
     private javax.swing.JTextField vioName;

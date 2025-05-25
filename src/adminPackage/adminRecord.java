@@ -1214,7 +1214,7 @@ String recIdText = recIDtextfield.getText().trim();
                     String adminName = getUserNameById(conn, rec_user_id);  // Get user_fname from user_table
 
                     // 🖨️ Send all the details to your adminPrintPreview or whatever UI component
-                    new adminPrintPreview(userName, adminName,
+                    new adminPrintPreview(user_fname, userName, adminName,
                         fullName, program, section, address, contact,
                         vioName, vioDes, vioSev, vioStamp,
                         recSanction, recComment, recStamp,

@@ -11,13 +11,16 @@ import config.panelPrinter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.DriverManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -55,11 +58,11 @@ public class adminPrintPreview extends javax.swing.JFrame {
     
     
 
-    public adminPrintPreview(String userName, String adminName, String fullName, String program, String section, String address, String contact,
+    public adminPrintPreview(String user_fname, String userName, String adminName, String fullName, String program, String section, String address, String contact,
                          String vioNameVal, String vioDes, String vioSev, String vioStamp,
                          String recSanction, String recComment, String recStamp,
                          String studPhotoPath, String vioPhotoPath) {
-    this.user_fname = userName;  // Optional, if you still need it
+    this.user_fname = user_fname;  // Optional, if you still need it
 
     initComponents();
 
@@ -187,7 +190,7 @@ public class adminPrintPreview extends javax.swing.JFrame {
         studPhoto = new javax.swing.JLabel();
         vioPhoto = new javax.swing.JLabel();
         printButton = new javax.swing.JButton();
-        printButton4 = new javax.swing.JButton();
+        goBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -413,14 +416,14 @@ public class adminPrintPreview extends javax.swing.JFrame {
         });
         jPanel2.add(printButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 740, 130, 40));
 
-        printButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        printButton4.setText("Go Back");
-        printButton4.addActionListener(new java.awt.event.ActionListener() {
+        goBack.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        goBack.setText("Go Back");
+        goBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                printButton4ActionPerformed(evt);
+                goBackActionPerformed(evt);
             }
         });
-        jPanel2.add(printButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 740, 130, 40));
+        jPanel2.add(goBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 740, 130, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -441,10 +444,38 @@ public class adminPrintPreview extends javax.swing.JFrame {
         printReport();
     }//GEN-LAST:event_printButtonActionPerformed
 
-    private void printButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printButton4ActionPerformed
-        new adminRecord(user_fname, vio_id).setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_printButton4ActionPerformed
+    private void goBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBackActionPerformed
+        String url = "jdbc:mysql://localhost:3306/sumbi_db";
+    String user = "root";
+    String pass = "";
+
+    try (Connection conn = DriverManager.getConnection(url, user, pass)) {
+        String query = "SELECT user_type FROM user_table WHERE user_fname = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, user_fname); // Replace with your actual logged-in user ID variable
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String userType = rs.getString("user_type");
+                    
+                    if ("Admin".equalsIgnoreCase(userType)) {
+                        new adminRecord(user_fname, vio_id).setVisible(true);
+                    } else if ("User".equalsIgnoreCase(userType)) {
+                        new userViolation(user_fname, vio_id).setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Unknown user type: " + userType);
+                    }
+
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "User not found!");
+                }
+            }
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    }//GEN-LAST:event_goBackActionPerformed
 
     private void studPhotoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studPhotoMouseClicked
         imageHandler.chooseImage(studPhoto);
@@ -495,6 +526,7 @@ public class adminPrintPreview extends javax.swing.JFrame {
     private javax.swing.JPanel bodycolorPanel;
     private javax.swing.JLabel comment;
     private javax.swing.JLabel dateRecorded;
+    private javax.swing.JButton goBack;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -522,7 +554,6 @@ public class adminPrintPreview extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton printButton;
-    private javax.swing.JButton printButton4;
     private javax.swing.JLabel scc_icon;
     private javax.swing.JLabel scc_icon1;
     private javax.swing.JLabel studAddress;

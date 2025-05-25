@@ -1,4 +1,5 @@
 
+import config.Session;
 import javax.swing.*;
 import java.sql.*;
 import config.dbConnector;
@@ -127,6 +128,20 @@ public class userDashboard extends javax.swing.JFrame {
 
         g2.dispose();
         return output;
+    }
+    
+    private void logActivity(int user_id, String action) {
+        String sql = "INSERT INTO logs_table (user_id, logs_action, logs_stamp) VALUES (?, ?, NOW())";
+        dbConnector db = new dbConnector();
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pst = conn.prepareStatement(sql)) {
+            pst.setInt(1, user_id);
+            pst.setString(2, action);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error logging activity: " + e.getMessage());
+        }
     }
 
     /**
@@ -406,16 +421,19 @@ public class userDashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_accountMouseExited
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        int response = JOptionPane.showConfirmDialog(this,
-            "Confirm Log Out?",
-            "Logout Confirmation",
+        int response = JOptionPane.showConfirmDialog(this, 
+            "Confirm Log Out?", 
+            "Logout Confirmation", 
             JOptionPane.YES_NO_OPTION);
 
         if (response == JOptionPane.YES_OPTION) {
+            int uid = Session.getInstance().getUid(); 
+            logActivity(uid, "Logged out");           
+            Session.getInstance().clearSession();    
+
             new loginform().setVisible(true);
             this.dispose();
-        } else {
-        }
+        } 
     }//GEN-LAST:event_logoutMouseClicked
 
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
