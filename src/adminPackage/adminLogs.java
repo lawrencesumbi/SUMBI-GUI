@@ -148,7 +148,6 @@ public class adminLogs extends javax.swing.JFrame {
     private void initComponents() {
 
         userspanel = new javax.swing.JPanel();
-        activityLogs2 = new javax.swing.JLabel();
         settings2 = new javax.swing.JLabel();
         settings3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -177,20 +176,6 @@ public class adminLogs extends javax.swing.JFrame {
 
         userspanel.setBackground(new java.awt.Color(204, 0, 0));
         userspanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        activityLogs2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        activityLogs2.setForeground(new java.awt.Color(255, 255, 255));
-        activityLogs2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        activityLogs2.setText("About System");
-        activityLogs2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                activityLogs2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                activityLogs2MouseExited(evt);
-            }
-        });
-        userspanel.add(activityLogs2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 150, 30));
 
         settings2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         settings2.setForeground(new java.awt.Color(255, 255, 255));
@@ -221,7 +206,7 @@ public class adminLogs extends javax.swing.JFrame {
                 settings3MouseExited(evt);
             }
         });
-        userspanel.add(settings3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 150, 30));
+        userspanel.add(settings3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 150, 30));
 
         logs_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -250,7 +235,7 @@ public class adminLogs extends javax.swing.JFrame {
                 activityLogsMouseExited(evt);
             }
         });
-        userspanel.add(activityLogs, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, 150, 30));
+        userspanel.add(activityLogs, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 150, 30));
 
         leftpanel.setBackground(new java.awt.Color(0, 0, 0));
         leftpanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -555,14 +540,6 @@ public class adminLogs extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_settings2MouseEntered
 
-    private void activityLogs2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs2MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_activityLogs2MouseExited
-
-    private void activityLogs2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogs2MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_activityLogs2MouseEntered
-
     private void activityLogsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activityLogsMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_activityLogsMouseEntered
@@ -614,7 +591,6 @@ public class adminLogs extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel J_user_fname;
     private javax.swing.JLabel activityLogs;
-    private javax.swing.JLabel activityLogs2;
     private javax.swing.JLabel dash_icon1;
     private javax.swing.JLabel dashboard;
     private javax.swing.JLabel displayImage;

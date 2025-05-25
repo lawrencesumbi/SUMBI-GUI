@@ -253,7 +253,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="adminName">
+            <Component class="javax.swing.JLabel" name="adminNAME">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="Admin Name"/>
@@ -462,7 +462,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="userName">
+            <Component class="javax.swing.JLabel" name="userNAME">
               <Properties>
                 <Property name="horizontalAlignment" type="int" value="0"/>
                 <Property name="text" type="java.lang.String" value="User Name"/>

@@ -1178,7 +1178,8 @@ String recIdText = recIDtextfield.getText().trim();
 
         String query = "SELECT s.stud_fname, s.stud_lname, s.stud_program, s.stud_section, s.stud_address, s.stud_cnumber, s.image_path AS stud_image_path, " +
                        "v.vio_name, v.vio_des, v.vio_sev, v.vio_stamp, v.image_path AS vio_image_path, " +
-                       "r.rec_sanction, r.rec_comment, r.rec_stamp " +
+                       "r.rec_sanction, r.rec_comment, r.rec_stamp, " +
+                       "v.user_id AS vio_user_id, r.user_id AS rec_user_id " +  // Fetch user_ids from vio_table and rec_table
                        "FROM rec_table r " +
                        "JOIN vio_table v ON r.vio_id = v.vio_id " +
                        "JOIN stud_table s ON v.stud_id = s.stud_id " +
@@ -1206,7 +1207,14 @@ String recIdText = recIDtextfield.getText().trim();
                     String studPhotoPath = rs.getString("stud_image_path");
                     String vioPhotoPath = rs.getString("vio_image_path");
 
-                    new adminPrintPreview(user_fname,
+                    int vio_user_id = rs.getInt("vio_user_id");
+                    int rec_user_id = rs.getInt("rec_user_id");
+
+                    String userName = getUserNameById(conn, vio_user_id);   // Get user_fname from user_table
+                    String adminName = getUserNameById(conn, rec_user_id);  // Get user_fname from user_table
+
+                    // 🖨️ Send all the details to your adminPrintPreview or whatever UI component
+                    new adminPrintPreview(userName, adminName,
                         fullName, program, section, address, contact,
                         vioName, vioDes, vioSev, vioStamp,
                         recSanction, recComment, recStamp,
@@ -1223,6 +1231,22 @@ String recIdText = recIDtextfield.getText().trim();
     } catch (SQLException ex) {
         ex.printStackTrace();
     }                 
+}
+
+// 🧩 Helper method to get user_fname from user_table based on user_id
+private String getUserNameById(Connection conn, int user_id) {
+    String userName = "";
+    try (PreparedStatement stmt = conn.prepareStatement("SELECT user_fname FROM user_table WHERE user_id = ?")) {
+        stmt.setInt(1, user_id);
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                userName = rs.getString("user_fname");
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return userName;                 
     }//GEN-LAST:event_printPrevMouseClicked
 
     private void rec_tableMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rec_tableMouseEntered

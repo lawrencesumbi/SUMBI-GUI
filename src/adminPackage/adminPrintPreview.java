@@ -55,60 +55,65 @@ public class adminPrintPreview extends javax.swing.JFrame {
     
     
 
-    public adminPrintPreview(String user_fname, String fullName, String program, String section, String address, String contact,
+    public adminPrintPreview(String userName, String adminName, String fullName, String program, String section, String address, String contact,
                          String vioNameVal, String vioDes, String vioSev, String vioStamp,
                          String recSanction, String recComment, String recStamp,
                          String studPhotoPath, String vioPhotoPath) {
-        this.user_fname = user_fname;
-        initComponents();
-        
+    this.user_fname = userName;  // Optional, if you still need it
 
-        // Student Info
-        studFullName.setText(fullName);
-        studProgramSection.setText(program + " - " + section);
-        studAddress.setText(address);
-        studCNumber.setText(contact);
+    initComponents();
 
-        // Violation Info
-        vioName.setText(vioNameVal);
-        vioDesc.setText(vioDes);
-        vioSevi.setText(vioSev);
-        vioDate.setText(vioStamp);
+    // Student Info
+    studFullName.setText(fullName);
+    studProgramSection.setText(program + " - " + section);
+    studAddress.setText(address);
+    studCNumber.setText(contact);
 
-        // Record Info
-        actionTaken.setText(recSanction);
-        comment.setText(recComment);
-        dateRecorded.setText(recStamp);
+    // Violation Info
+    vioName.setText(vioNameVal);
+    vioDesc.setText(vioDes);
+    vioSevi.setText(vioSev);
+    vioDate.setText(vioStamp);
 
-        // Image handling (use default icon if path is null or file doesn't exist)
-        if (studPhotoPath != null && new File(studPhotoPath).exists()) {
-            studPhoto.setIcon(new ImageIcon(studPhotoPath));
-        } else {
-            studPhoto.setIcon(new ImageIcon("default_student.png")); // fallback image
-        }
+    // Record Info
+    actionTaken.setText(recSanction);
+    comment.setText(recComment);
+    dateRecorded.setText(recStamp);
 
-        if (vioPhotoPath != null && new File(vioPhotoPath).exists()) {
-            vioPhoto.setIcon(new ImageIcon(vioPhotoPath));
-        } else {
-            vioPhoto.setIcon(new ImageIcon("default_violation.png")); // fallback image
-        }
+    // Display the User and Admin names somewhere in the UI (add labels in your form)
+    userNAME.setText(userName);
+    adminNAME.setText(adminName);
 
-        // Optional: Print Button
-        if (reportPanel == null) {
-            reportPanel = new JPanel(); 
-        }
-
-        JButton printButton = new JButton("Print");
-        printButton.setBounds(50, 500, 100, 30);
-        printButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                printReport();
-            }
-        });
-
-        this.add(printButton); 
+    // Image handling (use default icon if path is null or file doesn't exist)
+    if (studPhotoPath != null && new File(studPhotoPath).exists()) {
+        studPhoto.setIcon(new ImageIcon(studPhotoPath));
+    } else {
+        studPhoto.setIcon(new ImageIcon("default_student.png")); // fallback image
     }
+
+    if (vioPhotoPath != null && new File(vioPhotoPath).exists()) {
+        vioPhoto.setIcon(new ImageIcon(vioPhotoPath));
+    } else {
+        vioPhoto.setIcon(new ImageIcon("default_violation.png")); // fallback image
+    }
+
+    // Optional: Print Button
+    if (reportPanel == null) {
+        reportPanel = new JPanel();
+    }
+
+    JButton printButton = new JButton("Print");
+    printButton.setBounds(50, 500, 100, 30);
+    printButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            printReport();
+        }
+    });
+
+    this.add(printButton);
+}
+
 
 
     private void printReport() {
@@ -153,7 +158,7 @@ public class adminPrintPreview extends javax.swing.JFrame {
         jLabel20 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         studFullName = new javax.swing.JLabel();
-        adminName = new javax.swing.JLabel();
+        adminNAME = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -168,7 +173,7 @@ public class adminPrintPreview extends javax.swing.JFrame {
         jLabel28 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        userName = new javax.swing.JLabel();
+        userNAME = new javax.swing.JLabel();
         studProgramSection = new javax.swing.JLabel();
         studAddress = new javax.swing.JLabel();
         studCNumber = new javax.swing.JLabel();
@@ -259,9 +264,9 @@ public class adminPrintPreview extends javax.swing.JFrame {
         studFullName.setText("studFullName");
         bodycolorPanel.add(studFullName, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, 150, 20));
 
-        adminName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        adminName.setText("Admin Name");
-        bodycolorPanel.add(adminName, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 650, 190, 40));
+        adminNAME.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        adminNAME.setText("Admin Name");
+        bodycolorPanel.add(adminNAME, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 650, 190, 40));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -333,9 +338,9 @@ public class adminPrintPreview extends javax.swing.JFrame {
         jLabel29.setText("Reported by:");
         bodycolorPanel.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 630, 110, 20));
 
-        userName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        userName.setText("User Name");
-        bodycolorPanel.add(userName, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 650, 190, 40));
+        userNAME.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userNAME.setText("User Name");
+        bodycolorPanel.add(userNAME, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 650, 190, 40));
 
         studProgramSection.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         studProgramSection.setText("studProgramSection");
@@ -486,7 +491,7 @@ public class adminPrintPreview extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel actionTaken;
-    private javax.swing.JLabel adminName;
+    private javax.swing.JLabel adminNAME;
     private javax.swing.JPanel bodycolorPanel;
     private javax.swing.JLabel comment;
     private javax.swing.JLabel dateRecorded;
@@ -525,7 +530,7 @@ public class adminPrintPreview extends javax.swing.JFrame {
     private javax.swing.JLabel studFullName;
     private javax.swing.JLabel studPhoto;
     private javax.swing.JLabel studProgramSection;
-    private javax.swing.JLabel userName;
+    private javax.swing.JLabel userNAME;
     private javax.swing.JLabel vioDate;
     private javax.swing.JLabel vioDesc;
     private javax.swing.JLabel vioName;
